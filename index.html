@@ -226,41 +226,31 @@
         <svg class="w-5 h-5 ic text-red-500" aria-hidden="true"><use href="#i-swords"/></svg> World of Warcraft Profiles
       </h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <a href="https://raider.io/characters/eu/ragnaros/Gredush" target="_blank" rel="noopener noreferrer" class="group vault-card p-5 rounded-xl flex flex-col justify-between">
-          <div>
-            <div class="flex justify-between items-start mb-2.5">
-              <div class="flex items-center gap-2.5">
-                <svg class="w-5 h-5 fill-red-500 group-hover:fill-purple-400 transition-colors flex-shrink-0" aria-hidden="true"><use href="#i-rio"/></svg>
-                <span class="font-horde font-bold text-red-400 text-xl group-hover:text-purple-300 transition-colors">Raider.io</span>
-              </div>
-              <svg class="w-4 h-4 ic text-slate-400 group-hover:text-purple-400 transition-colors" aria-hidden="true"><use href="#i-ext"/></svg>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <!-- Raider.io (live) -->
+        <div class="vault-card p-5 rounded-xl flex flex-col justify-between space-y-4">
+          <div class="flex justify-between items-start">
+            <div class="flex items-center gap-2.5">
+              <svg class="w-5 h-5 fill-red-500 flex-shrink-0" aria-hidden="true"><use href="#i-rio"/></svg>
+              <span class="font-horde font-bold text-red-400 text-xl">Raider.io</span>
             </div>
-            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Check Mythic+ scores, dungeon breakdowns, and top key runs.</p>
+            <a href="https://raider.io/characters/eu/ragnaros/Gredush" target="_blank" rel="noopener noreferrer" aria-label="Open Raider.io profile" class="text-slate-400 hover:text-purple-400"><svg class="w-4 h-4 ic" aria-hidden="true"><use href="#i-ext"/></svg></a>
           </div>
-          <div class="mt-5 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs text-purple-300 font-bold uppercase tracking-wider">
-            <span>View M+ Rating</span>
-            <svg class="w-4 h-4 ic group-hover:translate-x-1 transition-transform" aria-hidden="true"><use href="#i-chev"/></svg>
-          </div>
-        </a>
-
-        <a href="https://www.warcraftlogs.com/character/id/486135" target="_blank" rel="noopener noreferrer" class="group vault-card p-5 rounded-xl flex flex-col justify-between">
-          <div>
-            <div class="flex justify-between items-start mb-2.5">
-              <div class="flex items-center gap-2.5">
-                <svg class="w-5 h-5 fill-red-500 group-hover:fill-purple-400 transition-colors flex-shrink-0" aria-hidden="true"><use href="#i-logs"/></svg>
-                <span class="font-horde font-bold text-red-400 text-xl group-hover:text-purple-300 transition-colors">Warcraft Logs</span>
-              </div>
-              <svg class="w-4 h-4 ic text-slate-400 group-hover:text-purple-400 transition-colors" aria-hidden="true"><use href="#i-ext"/></svg>
+          <p class="text-sm text-slate-300"><span id="rio-name" class="font-bold text-white">Gredush</span> · <span id="rio-realm">Ragnaros</span> (EU)</p>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="rounded-lg bg-slate-950/70 border border-slate-800/80 p-3">
+              <p id="rio-cur-label" class="text-xs text-slate-300">Current season</p>
+              <p id="rio-cur" class="font-horde text-3xl font-black text-white">…</p>
             </div>
-            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Raid performance metrics, DPS rankings, and combat execution analysis.</p>
+            <div class="rounded-lg bg-slate-950/70 border border-slate-800/80 p-3">
+              <p id="rio-prev-label" class="text-xs text-slate-300">Previous season</p>
+              <p id="rio-prev" class="font-horde text-3xl font-black text-slate-200">…</p>
+            </div>
           </div>
-          <div class="mt-5 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs text-purple-300 font-bold uppercase tracking-wider">
-            <span>View Raid Parses</span>
-            <svg class="w-4 h-4 ic group-hover:translate-x-1 transition-transform" aria-hidden="true"><use href="#i-chev"/></svg>
-          </div>
-        </a>
+          <p id="rio-status" class="text-xs text-slate-400">Loading live scores…</p>
+        </div>
 
+        <!-- WoWProgress -->
         <a href="https://www.wowprogress.com/character/eu/ragnaros/Gredush" target="_blank" rel="noopener noreferrer" class="group vault-card p-5 rounded-xl flex flex-col justify-between">
           <div>
             <div class="flex justify-between items-start mb-2.5">
@@ -270,13 +260,40 @@
               </div>
               <svg class="w-4 h-4 ic text-slate-400 group-hover:text-purple-400 transition-colors" aria-hidden="true"><use href="#i-ext"/></svg>
             </div>
-            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">Guild rankings, character history, and server standings.</p>
+            <p class="text-sm text-slate-300 leading-relaxed">Guild rankings, character history, and server standings.</p>
           </div>
           <div class="mt-5 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs text-purple-300 font-bold uppercase tracking-wider">
             <span>View Progress</span>
             <svg class="w-4 h-4 ic group-hover:translate-x-1 transition-transform" aria-hidden="true"><use href="#i-chev"/></svg>
           </div>
         </a>
+
+        <!-- Warcraft Logs (data from data/wcl.json, refreshed by GitHub Action) -->
+        <div class="vault-card p-5 rounded-xl space-y-4 md:col-span-2">
+          <div class="flex justify-between items-start">
+            <div class="flex items-center gap-2.5">
+              <svg class="w-5 h-5 fill-red-500 flex-shrink-0" aria-hidden="true"><use href="#i-logs"/></svg>
+              <span class="font-horde font-bold text-red-400 text-xl">Warcraft Logs</span>
+            </div>
+            <a href="https://www.warcraftlogs.com/character/id/486135" target="_blank" rel="noopener noreferrer" aria-label="Open Warcraft Logs profile" class="text-slate-400 hover:text-purple-400"><svg class="w-4 h-4 ic" aria-hidden="true"><use href="#i-ext"/></svg></a>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <label class="text-xs text-slate-300 space-y-1">Expansion
+              <select id="wcl-exp" class="w-full bg-slate-950 border border-slate-700 rounded-md px-2 py-2 text-sm text-slate-100"></select></label>
+            <label class="text-xs text-slate-300 space-y-1">Raid
+              <select id="wcl-zone" class="w-full bg-slate-950 border border-slate-700 rounded-md px-2 py-2 text-sm text-slate-100"></select></label>
+            <label class="text-xs text-slate-300 space-y-1">Difficulty
+              <select id="wcl-diff" class="w-full bg-slate-950 border border-slate-700 rounded-md px-2 py-2 text-sm text-slate-100"></select></label>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead><tr class="text-left text-xs text-slate-400 border-b border-slate-800">
+                <th class="py-2 pr-3 font-semibold">Boss</th><th class="py-2 px-3 font-semibold text-right">Best %</th><th class="py-2 px-3 font-semibold text-right">Median %</th><th class="py-2 pl-3 font-semibold text-right">Kills</th></tr></thead>
+              <tbody id="wcl-body"><tr><td colspan="4" class="py-4 text-slate-400">Loading parses…</td></tr></tbody>
+            </table>
+          </div>
+          <p id="wcl-status" class="text-xs text-slate-400"></p>
+        </div>
       </div>
     </section>
 
@@ -362,6 +379,58 @@
         box.replaceChildren(f);
       });
     });
+
+    // ---- Raider.io: live scores (public API, no key needed) ----
+    (async () => {
+      const q = 'region=eu&realm=ragnaros&name=Gredush&fields=mythic_plus_scores_by_season:current:previous';
+      const $ = id => document.getElementById(id);
+      // Optional overrides if Raider.io's slug doesn't format nicely, e.g. {'season-mn-1-post': 'MN Season 1 Full'}
+      const SEASON_NAMES = {};
+      const nice = slug => SEASON_NAMES[slug] || slug.replace(/^season-/, '').split('-')
+        .map((w, i) => i === 0 ? w.toUpperCase() : /^\d+$/.test(w) ? w : w[0].toUpperCase() + w.slice(1))
+        .reduce((o, w, i) => i === 1 ? o + ' Season ' + w : o + ' ' + w);
+      try {
+        const r = await fetch('https://raider.io/api/v1/characters/profile?' + q);
+        if (!r.ok) throw new Error(r.status);
+        const d = await r.json();
+        $('rio-name').textContent = d.name; $('rio-realm').textContent = d.realm;
+        const [cur, prev] = d.mythic_plus_scores_by_season || [];
+        const put = (s, l, v) => { if (!s) return; $(l).textContent = nice(s.season); $(v).textContent = Math.round(s.scores.all); };
+        put(cur, 'rio-cur-label', 'rio-cur'); put(prev, 'rio-prev-label', 'rio-prev');
+        $('rio-status').textContent = 'Live from Raider.io · overall score';
+      } catch (e) {
+        $('rio-cur').textContent = $('rio-prev').textContent = '—';
+        $('rio-status').textContent = 'Could not load scores. Open the profile with the icon above.';
+      }
+    })();
+
+    // ---- Warcraft Logs: dropdown table from data/wcl.json ----
+    (async () => {
+      const $ = id => document.getElementById(id);
+      const color = p => p == null ? '#94a3b8' : p >= 100 ? '#e5cc80' : p >= 99 ? '#e268a8' : p >= 95 ? '#ff8000' : p >= 75 ? '#a335ee' : p >= 50 ? '#0070ff' : p >= 25 ? '#1eff00' : '#9d9d9d';
+      const opts = (el, list, sel) => { el.innerHTML = list.map(o => `<option value="${o.id}"${o.id == sel ? ' selected' : ''}>${o.name}</option>`).join(''); };
+      let D;
+      try { D = await (await fetch('data/wcl.json', { cache: 'no-cache' })).json(); }
+      catch (e) { $('wcl-body').innerHTML = '<tr><td colspan="4" class="py-4 text-slate-400">Parse data is not available yet.</td></tr>'; return; }
+      const exps = D.expansions.slice().sort((a, b) => b.id - a.id);
+      const curExp = () => exps.find(e => e.id == $('wcl-exp').value);
+      const curZone = () => curExp().zones.find(z => z.id == $('wcl-zone').value);
+      const zonesOf = e => e.zones.slice().sort((a, b) => b.id - a.id);
+      function fillZones() { const z = zonesOf(curExp()); opts($('wcl-zone'), z, z[0].id); fillDiffs(); }
+      function fillDiffs() { const d = curZone().difficulties.slice().sort((a, b) => b.id - a.id); opts($('wcl-diff'), d, d[0].id); render(); }
+      function render() {
+        const z = curZone(), diff = $('wcl-diff').value, rk = (z.rankings || {})[diff] || {}, rows = rk.rows || [];
+        $('wcl-body').innerHTML = z.encounters.map(en => {
+          const r = rows.find(x => x.id === en.id) || {};
+          const cell = v => `<td class="py-2 px-3 text-right font-bold" style="color:${color(v)}">${v == null ? '—' : Math.floor(v)}</td>`;
+          return `<tr class="border-b border-slate-800/60"><td class="py-2 pr-3 text-slate-100">${en.name}</td>${cell(r.rankPercent)}${cell(r.medianPercent)}<td class="py-2 pl-3 text-right text-slate-300">${r.totalKills || 0}</td></tr>`;
+        }).join('');
+        $('wcl-status').textContent = `Percentiles for ${D.character.name}-${D.character.realm} (DPS). Updated ${new Date(D.updated).toLocaleString()}.`;
+      }
+      opts($('wcl-exp'), exps, exps[0].id);
+      $('wcl-exp').onchange = fillZones; $('wcl-zone').onchange = fillDiffs; $('wcl-diff').onchange = render;
+      fillZones();
+    })();
   </script>
 </body>
 </html>
