@@ -202,30 +202,36 @@
         </a>
       </div>
 
-      <!-- Embedded YouTube Playlist Player -->
-      <div class="bg-slate-900/90 border border-slate-800 p-4 md:p-6 rounded-2xl space-y-6 shadow-2xl">
-        <div class="relative w-full aspect-video rounded-xl overflow-hidden border border-amber-900/40 bg-slate-950">
-          <iframe 
-            class="absolute top-0 left-0 w-full h-full"
-            src="https://www.youtube.com/embed/videoseries?list=PLsuEuHcW7KBKVJB7hGwUPUyFzYYSfCSr2&enablejsapi=1" 
-            title="Gredush YouTube Playlist"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen>
-          </iframe>
+      <!-- Side-by-Side YouTube Player Container -->
+      <div class="bg-slate-900/90 border border-slate-800 p-4 md:p-6 rounded-2xl shadow-2xl flex flex-col md:flex-row items-center gap-6">
+        <!-- Left: Half-Width Embedded Player -->
+        <div class="w-full md:w-1/2 flex-shrink-0">
+          <div class="relative w-full aspect-video rounded-xl overflow-hidden border border-amber-900/40 bg-slate-950">
+            <iframe 
+              class="absolute top-0 left-0 w-full h-full"
+              src="https://www.youtube.com/embed/videoseries?list=PLsuEuHcW7KBKVJB7hGwUPUyFzYYSfCSr2&enablejsapi=1" 
+              title="Gredush YouTube Playlist"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen>
+            </iframe>
+          </div>
         </div>
 
-        <div class="flex flex-col md:flex-row items-center justify-between gap-4 pt-2">
-          <div class="space-y-1 text-center md:text-left">
+        <!-- Right: Description & Subscribe Button -->
+        <div class="w-full md:w-1/2 flex flex-col justify-between space-y-4">
+          <div class="space-y-2">
             <h3 class="font-horde text-xl font-bold text-slate-100">Latest Mythic+ & Raid Highlights</h3>
-            <p class="text-xs text-slate-400">
-              Browse through all recent uploads directly from the embedded playlist player above.
+            <p class="text-xs md:text-sm text-slate-300 leading-relaxed">
+              Catch up on recent dungeon pushes, boss progression kills, and gameplay highlights directly from the embedded playlist player.
             </p>
           </div>
-          <a href="https://www.youtube.com/@gredush?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 bg-red-600 hover:bg-red-500 text-white font-bold text-xs rounded-lg transition-colors flex items-center gap-2 shadow-lg flex-shrink-0">
-            <i data-lucide="youtube" class="w-4 h-4"></i> Subscribe on YouTube
-          </a>
+          <div>
+            <a href="https://www.youtube.com/@gredush?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 bg-red-600 hover:bg-red-500 text-white font-bold text-xs rounded-lg transition-colors shadow-lg">
+              <i data-lucide="youtube" class="w-4 h-4"></i> Subscribe on YouTube
+            </a>
+          </div>
         </div>
       </div>
     </section>
