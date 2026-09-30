@@ -419,13 +419,20 @@
       function fillZones() { const z = zonesOf(curExp()); opts($('wcl-zone'), z, z[0].id); fillDiffs(); }
       function fillDiffs() { const d = curZone().difficulties.slice().sort((a, b) => b.id - a.id); opts($('wcl-diff'), d, d[0].id); render(); }
       function render() {
-        const z = curZone(), diff = $('wcl-diff').value, rk = (z.rankings || {})[diff] || {}, rows = rk.rows || [];
-        $('wcl-body').innerHTML = z.encounters.map(en => {
-          const r = rows.find(x => x.id === en.id) || {};
+        try {
+          const z = curZone(), diff = $('wcl-diff').value, rows = (((z.rankings || {})[diff]) || {}).rows || [];
+          const bosses = (z.encounters && z.encounters.length) ? z.encounters : rows.map(r => ({ id: r.id, name: r.name || ('Boss ' + r.id) }));
+          if (!bosses.length) { $('wcl-body').innerHTML = '<tr><td colspan="4" class="py-4 text-slate-400">No boss list found for this raid.</td></tr>'; return; }
           const cell = v => `<td class="py-2 px-3 text-right font-bold" style="color:${color(v)}">${v == null ? '—' : Math.floor(v)}</td>`;
-          return `<tr class="border-b border-slate-800/60"><td class="py-2 pr-3 text-slate-100">${en.name}</td>${cell(r.rankPercent)}${cell(r.medianPercent)}<td class="py-2 pl-3 text-right text-slate-300">${r.totalKills || 0}</td></tr>`;
-        }).join('');
-        $('wcl-status').textContent = `Percentiles for ${D.character.name}-${D.character.realm} (DPS). Updated ${new Date(D.updated).toLocaleString()}.`;
+          $('wcl-body').innerHTML = bosses.map(en => {
+            const r = rows.find(x => x.id === en.id) || {};
+            return `<tr class="border-b border-slate-800/60"><td class="py-2 pr-3 text-slate-100">${en.name}</td>${cell(r.rankPercent)}${cell(r.medianPercent)}<td class="py-2 pl-3 text-right text-slate-300">${r.totalKills || 0}</td></tr>`;
+          }).join('');
+          $('wcl-status').textContent = `Percentiles for ${D.character.name}-${D.character.realm} (DPS). Updated ${new Date(D.updated).toLocaleString()}.`;
+        } catch (err) {
+          console.error(err);
+          $('wcl-body').innerHTML = `<tr><td colspan="4" class="py-4 text-red-300">Could not draw the table: ${err.message}</td></tr>`;
+        }
       }
       opts($('wcl-exp'), exps, exps[0].id);
       $('wcl-exp').onchange = fillZones; $('wcl-zone').onchange = fillDiffs; $('wcl-diff').onchange = render;
