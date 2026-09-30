@@ -94,45 +94,77 @@
         <i data-lucide="radio" class="w-5 h-5 text-red-500"></i> Live Broadcasts
       </h2>
 
-      <div class="grid md:grid-cols-2 gap-4">
+      <div class="grid md:grid-cols-2 gap-6">
         <!-- Twitch Card -->
-        <div class="bg-slate-900/90 border border-purple-900/50 hover:border-purple-500/50 rounded-xl p-5 flex items-center justify-between transition-all">
-          <div class="flex items-center gap-4">
-            <div class="p-3 bg-purple-950/60 text-purple-400 rounded-lg">
-              <i data-lucide="twitch" class="w-8 h-8"></i>
-            </div>
-            <div>
-              <div class="flex items-center gap-2">
-                <h3 class="font-bold text-slate-100">Twitch</h3>
-                <span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800/50">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Main Stream
-                </span>
+        <div class="bg-slate-900/90 border border-purple-900/50 hover:border-purple-500/50 rounded-xl p-5 flex flex-col justify-between transition-all space-y-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="p-2 bg-purple-950/60 text-purple-400 rounded-lg">
+                <i data-lucide="twitch" class="w-6 h-6"></i>
               </div>
-              <p class="text-xs text-slate-400 mt-1">Primary home for live WoW Mythic+ & raiding.</p>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="font-bold text-slate-100">Twitch</h3>
+                  <span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800/50">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Main Stream
+                  </span>
+                </div>
+                <p class="text-xs text-slate-400 mt-0.5">Primary home for live WoW Mythic+ & raiding.</p>
+              </div>
             </div>
           </div>
-          <a href="https://www.twitch.tv/gredush" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-purple-600/20 hover:bg-purple-600 text-purple-300 hover:text-white border border-purple-500/30 text-xs font-semibold rounded-md transition-colors">
-            Watch Live
-          </a>
+
+          <!-- Embedded Twitch Player -->
+          <div class="relative w-full aspect-video rounded-lg overflow-hidden border border-purple-900/40 bg-slate-950">
+            <iframe
+              src="https://player.twitch.tv/?channel=gredush&parent=localhost"
+              title="Twitch Live Stream"
+              class="absolute top-0 left-0 w-full h-full"
+              allowfullscreen>
+            </iframe>
+          </div>
+
+          <!-- Watch Live Button Alignment: LEFT SIDE -->
+          <div class="flex justify-start pt-2">
+            <a href="https://www.twitch.tv/gredush" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-purple-600/20 hover:bg-purple-600 text-purple-300 hover:text-white border border-purple-500/30 text-xs font-semibold rounded-md transition-colors flex items-center gap-2">
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Watch Live on Twitch
+            </a>
+          </div>
         </div>
 
         <!-- Kick Card -->
-        <div class="bg-slate-900/90 border border-emerald-900/50 hover:border-emerald-500/50 rounded-xl p-5 flex items-center justify-between transition-all">
-          <div class="flex items-center gap-4">
-            <div class="p-3 bg-emerald-950/60 text-emerald-400 rounded-lg">
-              <i data-lucide="video" class="w-8 h-8"></i>
-            </div>
-            <div>
-              <div class="flex items-center gap-2">
-                <h3 class="font-bold text-slate-100">Kick</h3>
-                <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-800 px-2 py-0.5 rounded">Secondary</span>
+        <div class="bg-slate-900/90 border border-emerald-900/50 hover:border-emerald-500/50 rounded-xl p-5 flex flex-col justify-between transition-all space-y-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="p-2 bg-emerald-950/60 text-emerald-400 rounded-lg">
+                <i data-lucide="video" class="w-6 h-6"></i>
               </div>
-              <p class="text-xs text-slate-400 mt-1">Occasional broadcast & chill streams.</p>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="font-bold text-slate-100">Kick</h3>
+                  <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-800 px-2 py-0.5 rounded">Secondary</span>
+                </div>
+                <p class="text-xs text-slate-400 mt-0.5">Occasional broadcast & chill streams.</p>
+              </div>
             </div>
           </div>
-          <a href="https://kick.com/gredush" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 text-xs font-semibold rounded-md transition-colors">
-            Watch Live
-          </a>
+
+          <!-- Embedded Kick Player -->
+          <div class="relative w-full aspect-video rounded-lg overflow-hidden border border-emerald-900/40 bg-slate-950">
+            <iframe
+              src="https://player.kick.com/gredush"
+              title="Kick Live Stream"
+              class="absolute top-0 left-0 w-full h-full"
+              allowfullscreen>
+            </iframe>
+          </div>
+
+          <!-- Watch Live Button Alignment: RIGHT SIDE -->
+          <div class="flex justify-end pt-2">
+            <a href="https://kick.com/gredush" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 text-xs font-semibold rounded-md transition-colors flex items-center gap-2">
+              Watch Live on Kick <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
         </div>
       </div>
     </section>
