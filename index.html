@@ -311,7 +311,7 @@
   </div>
 </a>
 
-        <!-- Warcraft Logs Card with Interactive Difficulty Selection -->
+       <!-- Warcraft Logs Card with Interactive Difficulty Selection -->
         <div class="group vault-card p-5 rounded-xl flex flex-col justify-between">
           <div class="space-y-3">
             <div class="flex justify-between items-start">
@@ -328,13 +328,27 @@
 
             <!-- Difficulty Selector Header -->
             <div class="flex items-center justify-between bg-slate-950/80 rounded-lg p-2.5 border border-slate-800/80">
-              <span class="text-xs font-bold text-slate-300">Raid Performance</span>
+              <span class="text-xs font-bold text-slate-300">Venomous Abyss Parses</span>
               <!-- Interactive Dropdown -->
               <select id="wlog-difficulty" class="bg-slate-900 border border-purple-800/60 rounded text-xs font-bold text-purple-300 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-purple-500 cursor-pointer">
                 <option value="mythic" selected>Mythic</option>
                 <option value="heroic">Heroic</option>
               </select>
             </div>
+
+            <!-- Dynamic Per-Boss Parse List Container -->
+            <div id="parse-list-container" class="bg-slate-900/60 p-3 rounded-lg border border-slate-800/50 space-y-2 text-xs">
+              <!-- Populated via JavaScript -->
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs text-purple-400 font-bold uppercase tracking-wider">
+            <a href="https://www.warcraftlogs.com/character/id/486135" target="_blank" rel="noopener noreferrer" class="w-full flex items-center justify-between hover:text-purple-300">
+              <span>View Full Warcraft Logs</span>
+              <i data-lucide="chevron-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+            </a>
+          </div>
+        </div>
 
             <!-- Dynamic Stat Display -->
             <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800/50 space-y-2 text-center">
@@ -458,7 +472,7 @@
     <p>© <span id="year"></span> Gredush. Built with GitHub Pages.</p>
   </footer>
 
-  <script>
+ <script>
     lucide.createIcons();
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -468,24 +482,56 @@
       twitchIframe.src = `https://player.twitch.tv/?channel=gredush&parent=${currentHost}`;
     }
 
-    // Warcraft Logs Difficulty Toggle Logic
-    const difficultySelect = document.getElementById('wlog-difficulty');
-    const parseVal = document.getElementById('wlog-parse-val');
-    const parseDesc = document.getElementById('wlog-parse-desc');
+    // Venomous Abyss Boss Parse Data for Mythic and Heroic
+    const venomousAbyssData = {
+      mythic: [
+        { boss: "Boss 1", percent: "98.4%", color: "text-amber-400" },
+        { boss: "Boss 2", percent: "94.2%", color: "text-amber-400" },
+        { boss: "Boss 3", percent: "99.1%", color: "text-pink-400" },
+        { boss: "Boss 4", percent: "91.8%", color: "text-amber-400" },
+        { boss: "Boss 5", percent: "88.5%", color: "text-purple-400" },
+        { boss: "Boss 6", percent: "95.6%", color: "text-amber-400" },
+        { boss: "Boss 7", percent: "97.0%", color: "text-amber-400" },
+        { boss: "Boss 8", percent: "93.3%", color: "text-amber-400" }
+      ],
+      heroic: [
+        { boss: "Boss 1", percent: "99.8%", color: "text-pink-400" },
+        { boss: "Boss 2", percent: "98.9%", color: "text-amber-400" },
+        { boss: "Boss 3", percent: "100%", color: "text-orange-400" },
+        { boss: "Boss 4", percent: "97.5%", color: "text-amber-400" },
+        { boss: "Boss 5", percent: "96.1%", color: "text-amber-400" },
+        { boss: "Boss 6", percent: "99.2%", color: "text-pink-400" },
+        { boss: "Boss 7", percent: "98.0%", color: "text-amber-400" },
+        { boss: "Boss 8", percent: "97.4%", color: "text-amber-400" }
+      ]
+    };
 
-    if (difficultySelect && parseVal && parseDesc) {
-      difficultySelect.addEventListener('change', (e) => {
-        const value = e.target.value;
-        if (value === 'heroic') {
-          parseVal.textContent = '98.6%';
-          parseVal.className = 'text-3xl font-black font-horde parse-epic';
-          parseDesc.textContent = 'Top Epic/Legendary DPS parses across Heroic encounters.';
-        } else {
-          parseVal.textContent = '94.2%';
-          parseVal.className = 'text-3xl font-black font-horde parse-legendary';
-          parseDesc.textContent = 'Top Legendary DPS parses across Mythic encounters.';
-        }
+    const difficultySelect = document.getElementById('wlog-difficulty');
+    const parseListContainer = document.getElementById('parse-list-container');
+
+    function renderParses(difficulty) {
+      if (!parseListContainer) return;
+      const data = venomousAbyssData[difficulty] || venomousAbyssData.mythic;
+      
+      let html = '<div class="max-h-44 overflow-y-auto space-y-1 pr-1">';
+      data.forEach(item => {
+        html += `
+          <div class="flex justify-between items-center py-1 px-1.5 rounded bg-slate-950/40 border border-slate-800/40">
+            <span class="text-slate-300 font-medium">${item.boss}</span>
+            <span class="font-horde font-bold ${item.color}">${item.percent}</span>
+          </div>
+        `;
       });
+      html += '</div>';
+      parseListContainer.innerHTML = html;
+    }
+
+    if (difficultySelect) {
+      difficultySelect.addEventListener('change', (e) => {
+        renderParses(e.target.value);
+      });
+      // Initial render
+      renderParses('mythic');
     }
   </script>
 
