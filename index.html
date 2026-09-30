@@ -228,34 +228,52 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
         <!-- Raider.io (live) -->
-        <div class="vault-card p-5 rounded-xl flex flex-col justify-between space-y-4">
+        <a href="https://raider.io/characters/eu/ragnaros/Gredush" target="_blank" rel="noopener noreferrer" class="group vault-card p-5 rounded-xl flex flex-col justify-between space-y-4">
           <div class="flex justify-between items-start">
             <div class="flex items-center gap-2.5">
-              <svg class="w-5 h-5 fill-red-500 flex-shrink-0" aria-hidden="true"><use href="#i-rio"/></svg>
-              <span class="font-horde font-bold text-red-400 text-xl">Raider.io</span>
+              <img src="https://www.google.com/s2/favicons?domain=raider.io&sz=64" width="24" height="24" alt="" class="w-6 h-6 rounded-sm flex-shrink-0" loading="lazy">
+              <span class="font-horde font-bold text-red-400 text-xl group-hover:text-purple-300 transition-colors">Raider.io</span>
             </div>
-            <a href="https://raider.io/characters/eu/ragnaros/Gredush" target="_blank" rel="noopener noreferrer" aria-label="Open Raider.io profile" class="text-slate-400 hover:text-purple-400"><svg class="w-4 h-4 ic" aria-hidden="true"><use href="#i-ext"/></svg></a>
+            <svg class="w-4 h-4 ic text-slate-400 group-hover:text-purple-400 transition-colors" aria-hidden="true"><use href="#i-ext"/></svg>
           </div>
           <p class="text-sm text-slate-300"><span id="rio-name" class="font-bold text-white">Gredush</span> · <span id="rio-realm">Ragnaros</span> (EU)</p>
-          <div class="grid grid-cols-2 gap-3">
-            <div class="rounded-lg bg-slate-950/70 border border-slate-800/80 p-3">
-              <p id="rio-cur-label" class="text-xs text-slate-300">Current season</p>
-              <p id="rio-cur" class="font-horde text-3xl font-black text-white">…</p>
-            </div>
-            <div class="rounded-lg bg-slate-950/70 border border-slate-800/80 p-3">
-              <p id="rio-prev-label" class="text-xs text-slate-300">Previous season</p>
-              <p id="rio-prev" class="font-horde text-3xl font-black text-slate-200">…</p>
+
+          <div class="space-y-2">
+            <h3 class="text-xs uppercase tracking-wider text-slate-300 font-bold">Mythic+ Rating</h3>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="rounded-lg bg-slate-950/70 border border-slate-800/80 p-3">
+                <p id="rio-cur-label" class="text-xs text-slate-300">Current season</p>
+                <p id="rio-cur" class="font-horde text-3xl font-black text-white">…</p>
+              </div>
+              <div class="rounded-lg bg-slate-950/70 border border-slate-800/80 p-3">
+                <p id="rio-prev-label" class="text-xs text-slate-300">Previous season</p>
+                <p id="rio-prev" class="font-horde text-3xl font-black text-slate-200">…</p>
+              </div>
             </div>
           </div>
-          <p id="rio-status" class="text-xs text-slate-400">Loading live scores…</p>
-        </div>
+
+          <div class="space-y-2">
+            <h3 class="text-xs uppercase tracking-wider text-slate-300 font-bold">Raid Progress</h3>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="rounded-lg bg-slate-950/70 border border-slate-800/80 p-3 space-y-1">
+                <p class="text-xs text-slate-300">Current raids</p>
+                <div id="rio-raid-cur" class="text-sm text-slate-100">…</div>
+              </div>
+              <div class="rounded-lg bg-slate-950/70 border border-slate-800/80 p-3 space-y-1">
+                <p class="text-xs text-slate-300">Previous raids</p>
+                <div id="rio-raid-prev" class="text-sm text-slate-200">…</div>
+              </div>
+            </div>
+          </div>
+          <p id="rio-status" class="text-xs text-slate-400">Loading live data…</p>
+        </a>
 
         <!-- WoWProgress -->
         <a href="https://www.wowprogress.com/character/eu/ragnaros/Gredush" target="_blank" rel="noopener noreferrer" class="group vault-card p-5 rounded-xl flex flex-col justify-between">
           <div>
             <div class="flex justify-between items-start mb-2.5">
               <div class="flex items-center gap-2.5">
-                <svg class="w-5 h-5 fill-red-500 group-hover:fill-purple-400 transition-colors flex-shrink-0" aria-hidden="true"><use href="#i-wp"/></svg>
+                <img src="https://www.google.com/s2/favicons?domain=wowprogress.com&sz=64" width="24" height="24" alt="" class="w-6 h-6 rounded-sm flex-shrink-0" loading="lazy">
                 <span class="font-horde font-bold text-red-400 text-xl group-hover:text-purple-300 transition-colors">WoWProgress</span>
               </div>
               <svg class="w-4 h-4 ic text-slate-400 group-hover:text-purple-400 transition-colors" aria-hidden="true"><use href="#i-ext"/></svg>
@@ -272,8 +290,10 @@
         <div class="vault-card p-5 rounded-xl space-y-4 md:col-span-2">
           <div class="flex justify-between items-start">
             <div class="flex items-center gap-2.5">
-              <svg class="w-5 h-5 fill-red-500 flex-shrink-0" aria-hidden="true"><use href="#i-logs"/></svg>
-              <span class="font-horde font-bold text-red-400 text-xl">Warcraft Logs</span>
+              <a href="https://www.warcraftlogs.com/character/id/486135" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-2.5">
+                <img src="https://www.google.com/s2/favicons?domain=warcraftlogs.com&sz=64" width="24" height="24" alt="" class="w-6 h-6 rounded-sm flex-shrink-0" loading="lazy">
+                <span class="font-horde font-bold text-red-400 text-xl group-hover:text-purple-300 transition-colors">Warcraft Logs</span>
+              </a>
             </div>
             <a href="https://www.warcraftlogs.com/character/id/486135" target="_blank" rel="noopener noreferrer" aria-label="Open Warcraft Logs profile" class="text-slate-400 hover:text-purple-400"><svg class="w-4 h-4 ic" aria-hidden="true"><use href="#i-ext"/></svg></a>
           </div>
@@ -380,28 +400,51 @@
       });
     });
 
-    // ---- Raider.io: live scores (public API, no key needed) ----
+    // ---- Raider.io: live scores + raid progress (public API, no key needed) ----
     (async () => {
-      const q = 'region=eu&realm=ragnaros&name=Gredush&fields=mythic_plus_scores_by_season:current:previous';
-      const $ = id => document.getElementById(id);
-      // Optional overrides if Raider.io's slug doesn't format nicely, e.g. {'season-mn-1-post': 'MN Season 1 Full'}
+      const $ = id => document.getElementById(id), API = 'https://raider.io/api/v1';
+      const get = u => fetch(u).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+      // Optional overrides if a season slug doesn't format nicely, e.g. {'season-mn-1-post': 'MN Season 1 Full'}
       const SEASON_NAMES = {};
       const nice = slug => SEASON_NAMES[slug] || slug.replace(/^season-/, '').split('-')
         .map((w, i) => i === 0 ? w.toUpperCase() : /^\d+$/.test(w) ? w : w[0].toUpperCase() + w.slice(1))
         .reduce((o, w, i) => i === 1 ? o + ' Season ' + w : o + ' ' + w);
+      let d;
       try {
-        const r = await fetch('https://raider.io/api/v1/characters/profile?' + q);
-        if (!r.ok) throw new Error(r.status);
-        const d = await r.json();
-        $('rio-name').textContent = d.name; $('rio-realm').textContent = d.realm;
-        const [cur, prev] = d.mythic_plus_scores_by_season || [];
-        const put = (s, l, v) => { if (!s) return; $(l).textContent = nice(s.season); $(v).textContent = Math.round(s.scores.all); };
-        put(cur, 'rio-cur-label', 'rio-cur'); put(prev, 'rio-prev-label', 'rio-prev');
-        $('rio-status').textContent = 'Live from Raider.io · overall score';
+        d = await get(`${API}/characters/profile?region=eu&realm=ragnaros&name=Gredush&fields=mythic_plus_scores_by_season:current:previous,raid_progression`);
       } catch (e) {
-        $('rio-cur').textContent = $('rio-prev').textContent = '—';
-        $('rio-status').textContent = 'Could not load scores. Open the profile with the icon above.';
+        ['rio-cur', 'rio-prev', 'rio-raid-cur', 'rio-raid-prev'].forEach(i => $(i).textContent = '—');
+        $('rio-status').textContent = 'Could not load data. Click the card to open the profile.'; return;
       }
+      $('rio-name').textContent = d.name; $('rio-realm').textContent = d.realm;
+      const [cur, prev] = d.mythic_plus_scores_by_season || [];
+      const put = (s, l, v) => { if (!s) return; $(l).textContent = nice(s.season); $(v).textContent = Math.round(s.scores.all); };
+      put(cur, 'rio-cur-label', 'rio-cur'); put(prev, 'rio-prev-label', 'rio-prev');
+
+      // Raid progress: pick current / previous raids from Raider.io's raid schedule (EU dates)
+      const prog = d.raid_progression || {};
+      const row = r => {
+        const p = prog[r.slug], total = p ? p.total_bosses : (r.encounters || []).length;
+        return `<div class="flex justify-between gap-2"><span>${r.short_name || r.name}</span><span class="font-bold text-white">${p ? p.summary : '0/' + total}</span></div>`;
+      };
+      try {
+        const res = await Promise.allSettled([11, 10].map(id => get(`${API}/raiding/static-data?expansion_id=${id}`)));
+        const raids = res.flatMap(x => x.status === 'fulfilled' ? x.value.raids : []);
+        const t = v => v ? Date.parse(v) : NaN, now = Date.now();
+        const live = raids.filter(r => t(r.starts && r.starts.eu) <= now && !(t(r.ends && r.ends.eu) <= now));
+        const old = raids.filter(r => t(r.ends && r.ends.eu) <= now);
+        const last = Math.max(...old.map(r => t(r.ends.eu)));
+        const before = old.filter(r => Math.abs(t(r.ends.eu) - last) < 7 * 864e5);
+        if (!live.length) throw new Error('no raids');
+        $('rio-raid-cur').innerHTML = live.map(row).join('');
+        $('rio-raid-prev').innerHTML = before.length ? before.map(row).join('') : '—';
+      } catch (e) {
+        // Fallback: use the order Raider.io returns the character's raids in
+        const keys = Object.keys(prog).reverse();
+        const fmt = k => keys[k] ? `<div class="flex justify-between gap-2"><span>${keys[k].replace(/-/g, ' ')}</span><span class="font-bold text-white">${prog[keys[k]].summary}</span></div>` : '—';
+        $('rio-raid-cur').innerHTML = fmt(0); $('rio-raid-prev').innerHTML = fmt(1);
+      }
+      $('rio-status').textContent = 'Live from Raider.io · overall score · best difficulty per raid';
     })();
 
     // ---- Warcraft Logs: dropdown table from data/wcl.json ----
