@@ -412,7 +412,10 @@
       let D;
       try { D = await (await fetch('data/wcl.json', { cache: 'no-cache' })).json(); }
       catch (e) { $('wcl-body').innerHTML = '<tr><td colspan="4" class="py-4 text-slate-400">Parse data is not available yet.</td></tr>'; return; }
-      const exps = D.expansions.slice().sort((a, b) => b.id - a.id);
+      // Hide beta/PTR/"complete" pseudo-raids so only normal raids show, like on warcraftlogs.com
+      const HIDE = /beta|complete|\bptr\b|\btest\b/i;
+      D.expansions.forEach(e => { e.zones = e.zones.filter(z => !HIDE.test(z.name)); });
+      const exps = D.expansions.filter(e => e.zones.length).sort((a, b) => b.id - a.id);
       const curExp = () => exps.find(e => e.id == $('wcl-exp').value);
       const curZone = () => curExp().zones.find(z => z.id == $('wcl-zone').value);
       const zonesOf = e => e.zones.slice().sort((a, b) => b.id - a.id);
