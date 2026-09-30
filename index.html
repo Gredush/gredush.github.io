@@ -1,37 +1,211 @@
-<!-- YouTube Content Hub -->
-    <section id="youtube" class="space-y-6">
-      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-amber-900/30 pb-2">
-        <h2 class="font-horde text-2xl font-bold text-amber-400 flex items-center gap-2">
-          <i data-lucide="youtube" class="w-6 h-6 text-red-500"></i> YouTube Playlist & Highlights
-        </h2>
-        <a href="https://www.youtube.com/playlist?list=PLsuEuHcW7KBKVJB7hGwUPUyFzYYSfCSr2" target="_blank" class="text-xs font-bold text-red-400 hover:text-red-300 flex items-center gap-1">
-          Open Full Playlist <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
-        </a>
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gredush | Orc Hunter & WoW Streamer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Inter:wght@400;500;700&display=swap');
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0b0d12;
+      color: #e2e8f0;
+    }
+    .font-horde {
+      font-family: 'Cinzel', serif;
+    }
+    .glow-gold {
+      text-shadow: 0 0 12px rgba(200, 155, 60, 0.5);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-red-900 selection:text-amber-200">
+
+  <!-- Navigation Bar -->
+  <header class="sticky top-0 z-50 backdrop-blur-md bg-slate-950/80 border-b border-amber-900/30">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-full border-2 border-amber-600 bg-red-950 flex items-center justify-center font-horde font-bold text-amber-500 group-hover:scale-105 transition-transform">
+          G
+        </div>
+        <span class="font-horde text-xl font-bold tracking-wider text-amber-400 group-hover:text-amber-300">GREDUSH</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
+        <a href="#livestreams" class="hover:text-amber-400 transition-colors">Streams</a>
+        <a href="#profiles" class="hover:text-amber-400 transition-colors">WoW Profiles</a>
+        <a href="#youtube" class="hover:text-amber-400 transition-colors">Videos & Shorts</a>
+        <a href="#community" class="hover:text-amber-400 transition-colors">Discord & Socials</a>
+      </nav>
+
+      <a href="https://discord.gg/qScBpyq5gM" target="_blank" class="px-4 py-2 text-xs font-bold uppercase tracking-wider bg-amber-600 hover:bg-amber-500 text-slate-950 rounded-md transition-colors flex items-center gap-2">
+        <i data-lucide="message-square" class="w-4 h-4"></i> Join Discord
+      </a>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-8 space-y-16 flex-grow">
+
+    <!-- Hero Section -->
+    <section class="relative rounded-2xl overflow-hidden border border-amber-900/40 bg-gradient-to-b from-slate-900 via-red-950/20 to-slate-950 p-8 md:p-12 text-center md:text-left flex flex-col md:flex-row items-center gap-8 shadow-2xl">
+      <div class="relative group">
+        <div class="w-40 h-40 md:w-52 md:h-52 rounded-full border-4 border-amber-600/70 p-1 bg-slate-900 flex-shrink-0 overflow-hidden shadow-2xl">
+          <img src="./gigachad_gredush2.jpg" alt="Gredush Orc Hunter Avatar" class="w-full h-full object-cover rounded-full group-hover:scale-110 transition-transform duration-500 filter brightness-90 contrast-125">
+        </div>
+        <span class="absolute bottom-2 right-2 bg-red-800 text-amber-200 text-xs font-bold px-3 py-1 rounded-full border border-amber-500 uppercase tracking-widest">Horde</span>
       </div>
 
-      <!-- Embedded YouTube Playlist Player -->
-      <div class="bg-slate-900/90 border border-slate-800 p-4 md:p-6 rounded-2xl space-y-6 shadow-2xl">
-        <div class="relative w-full aspect-video rounded-xl overflow-hidden border border-amber-900/40 bg-slate-950">
-          <iframe 
-            class="absolute top-0 left-0 w-full h-full"
-            src="https://www.youtube.com/embed/videoseries?list=PLsuEuHcW7KBKVJB7hGwUPUyFzYYSfCSr2" 
-            title="Gredush YouTube Playlist"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            allowfullscreen>
-          </iframe>
+      <div class="space-y-4 max-w-2xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/80 border border-amber-800/40 text-xs text-amber-400">
+          <i data-lucide="crosshair" class="w-3.5 h-3.5"></i> Orc Hunter • World of Warcraft
         </div>
+        <h1 class="font-horde text-4xl md:text-6xl font-black tracking-tight text-slate-100 glow-gold">
+          GREDUSH
+        </h1>
+        <p class="text-slate-300 text-base md:text-lg leading-relaxed">
+          High-level World of Warcraft gameplay, Mythic+ pushes, and raid content. Join the community live on Twitch and Kick, or catch up on YouTube.
+        </p>
 
-        <div class="flex flex-col md:flex-row items-center justify-between gap-4 pt-2">
-          <div class="space-y-1 text-center md:text-left">
-            <h3 class="font-horde text-xl font-bold text-slate-100">Latest Mythic+ & Raid Highlights</h3>
-            <p class="text-xs text-slate-400">
-              Browse through all recent uploads directly from the embedded playlist player above.
-            </p>
-          </div>
-          <a href="https://www.youtube.com/@gredush?sub_confirmation=1" target="_blank" class="px-5 py-2.5 bg-red-600 hover:bg-red-500 text-white font-bold text-xs rounded-lg transition-colors flex items-center gap-2 shadow-lg flex-shrink-0">
-            <i data-lucide="youtube" class="w-4 h-4"></i> Subscribe on YouTube
+        <!-- CTA Buttons -->
+        <div class="flex flex-wrap items-center gap-3 pt-2 justify-center md:justify-start">
+          <a href="https://www.twitch.tv/gredush" target="_blank" class="px-5 py-2.5 bg-purple-700 hover:bg-purple-600 text-white font-semibold rounded-lg flex items-center gap-2 transition-transform hover:-translate-y-0.5 shadow-lg">
+            <i data-lucide="twitch" class="w-4 h-4"></i> Twitch Channel
+          </a>
+          <a href="https://kick.com/gredush" target="_blank" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold rounded-lg flex items-center gap-2 transition-transform hover:-translate-y-0.5 shadow-lg">
+            <i data-lucide="tv" class="w-4 h-4"></i> Kick Stream
+          </a>
+          <a href="#profiles" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-medium rounded-lg flex items-center gap-2 transition-colors">
+            <i data-lucide="shield" class="w-4 h-4 text-amber-500"></i> View WoW Stats
           </a>
         </div>
       </div>
     </section>
+
+    <!-- Livestream Status Bar -->
+    <section id="livestreams" class="space-y-4">
+      <h2 class="font-horde text-2xl font-bold text-amber-400 flex items-center gap-2 border-b border-amber-900/30 pb-2">
+        <i data-lucide="radio" class="w-5 h-5 text-red-500"></i> Live Broadcasts
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-4">
+        <!-- Twitch Card -->
+        <div class="bg-slate-900/90 border border-purple-900/50 hover:border-purple-500/50 rounded-xl p-5 flex items-center justify-between transition-all">
+          <div class="flex items-center gap-4">
+            <div class="p-3 bg-purple-950/60 text-purple-400 rounded-lg">
+              <i data-lucide="twitch" class="w-8 h-8"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="font-bold text-slate-100">Twitch</h3>
+                <span class="inline-flex items-center gap-1 text-[10px] uppercase font-bold text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800/50">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Main Stream
+                </span>
+              </div>
+              <p class="text-xs text-slate-400 mt-1">Primary home for live WoW Mythic+ & raiding.</p>
+            </div>
+          </div>
+          <a href="https://www.twitch.tv/gredush" target="_blank" class="px-4 py-2 bg-purple-600/20 hover:bg-purple-600 text-purple-300 hover:text-white border border-purple-500/30 text-xs font-semibold rounded-md transition-colors">
+            Watch Live
+          </a>
+        </div>
+
+        <!-- Kick Card -->
+        <div class="bg-slate-900/90 border border-emerald-900/50 hover:border-emerald-500/50 rounded-xl p-5 flex items-center justify-between transition-all">
+          <div class="flex items-center gap-4">
+            <div class="p-3 bg-emerald-950/60 text-emerald-400 rounded-lg">
+              <i data-lucide="video" class="w-8 h-8"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="font-bold text-slate-100">Kick</h3>
+                <span class="text-[10px] uppercase font-bold text-slate-400 bg-slate-800 px-2 py-0.5 rounded">Secondary</span>
+              </div>
+              <p class="text-xs text-slate-400 mt-1">Occasional broadcast & chill streams.</p>
+            </div>
+          </div>
+          <a href="https://kick.com/gredush" target="_blank" class="px-4 py-2 bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 text-xs font-semibold rounded-md transition-colors">
+            Watch Live
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- WoW Competitive Hub -->
+    <section id="profiles" class="space-y-4">
+      <h2 class="font-horde text-2xl font-bold text-amber-400 flex items-center gap-2 border-b border-amber-900/30 pb-2">
+        <i data-lucide="swords" class="w-5 h-5 text-amber-500"></i> World of Warcraft Profiles
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Raider.io -->
+        <a href="https://raider.io/characters/eu/ragnaros/Gredush" target="_blank" class="group bg-slate-900/70 hover:bg-slate-900 border border-amber-900/30 hover:border-amber-500/50 p-5 rounded-xl transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-start mb-3">
+              <span class="font-horde font-bold text-amber-400 text-lg group-hover:text-amber-300">Raider.io</span>
+              <i data-lucide="external-link" class="w-4 h-4 text-slate-500 group-hover:text-amber-400 transition-colors"></i>
+            </div>
+            <p class="text-xs text-slate-400">Check Mythic+ scores, dungeon breakdowns, and top key runs.</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-amber-500 font-medium">
+            <span>View M+ Rating</span>
+            <i data-lucide="chevron-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+          </div>
+        </a>
+
+        <!-- Warcraft Logs -->
+        <a href="https://www.warcraftlogs.com/character/id/486135" target="_blank" class="group bg-slate-900/70 hover:bg-slate-900 border border-amber-900/30 hover:border-amber-500/50 p-5 rounded-xl transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-start mb-3">
+              <span class="font-horde font-bold text-amber-400 text-lg group-hover:text-amber-300">Warcraft Logs</span>
+              <i data-lucide="external-link" class="w-4 h-4 text-slate-500 group-hover:text-amber-400 transition-colors"></i>
+            </div>
+            <p class="text-xs text-slate-400">Raid performance metrics, DPS rankings, and combat execution analysis.</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-amber-500 font-medium">
+            <span>View Raid Parses</span>
+            <i data-lucide="chevron-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+          </div>
+        </a>
+
+        <!-- WoWProgress -->
+        <a href="https://www.wowprogress.com/character/eu/ragnaros/Gredush" target="_blank" class="group bg-slate-900/70 hover:bg-slate-900 border border-amber-900/30 hover:border-amber-500/50 p-5 rounded-xl transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-start mb-3">
+              <span class="font-horde font-bold text-amber-400 text-lg group-hover:text-amber-300">WoWProgress</span>
+              <i data-lucide="external-link" class="w-4 h-4 text-slate-500 group-hover:text-amber-400 transition-colors"></i>
+            </div>
+            <p class="text-xs text-slate-400">Guild rankings, character history, and server standings.</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-amber-500 font-medium">
+            <span>View Progress</span>
+            <i data-lucide="chevron-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- YouTube Content Hub -->
+    <section id="youtube" class="space-y-6">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-amber-900/30 pb-2">
+        <h2 class="font-hordeIt looks like part of our conversation is missing! To give you the exact `index` file code you need, could you clarify what project or application this is for? 
+
+If you are looking for a standard template, here are the base setups for common environments:
+
+### Standard HTML5 (`index.html`)
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="root"></div>
+    <script src="script.js"></script>
+</body>
+</html>
