@@ -379,57 +379,41 @@
     <!-- YouTube Content Hub -->
 
     <section id="youtube" class="space-y-6">
-
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-amber-900/30 pb-2">
-
         <h2 class="font-horde text-2xl font-bold text-amber-400 flex items-center gap-2">
-
-          <i data-lucide="youtube" class="w-6 h-6 text-red-500"></i> YouTube Channel
-
+          <i data-lucide="youtube" class="w-6 h-6 text-red-500"></i> YouTube Playlist & Highlights
         </h2>
-
-        <a href="https://www.youtube.com/@gredush" target="_blank" class="text-xs font-bold text-red-400 hover:text-red-300 flex items-center gap-1">
-
-          Visit Channel (@gredush) <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
-
+        <a href="https://www.youtube.com/playlist?list=PLsuEuHcW7KBKVJB7hGwUPUyFzYYSfCSr2" target="_blank" class="text-xs font-bold text-red-400 hover:text-red-300 flex items-center gap-1">
+          Open Full Playlist <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
         </a>
-
       </div>
 
-
-
-      <!-- Embedded YouTube Showcase -->
-
-      <div class="bg-slate-900/90 border border-slate-800 p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6">
-
-        <div class="space-y-3 max-w-xl">
-
-          <span class="text-xs font-bold uppercase tracking-wider text-red-500 flex items-center gap-2">
-
-            <i data-lucide="play-circle" class="w-4 h-4"></i> Latest Uploads & Shorts
-
-          </span>
-
-          <h3 class="font-horde text-2xl font-bold text-slate-100">Watch the Latest WoW Mythic+ & Raid Content</h3>
-
-          <p class="text-sm text-slate-400">
-
-            Subscribe to catch all gameplay highlights, boss guides, and dungeon Shorts directly on YouTube.
-
-          </p>
-
+      <!-- Embedded YouTube Playlist Player -->
+      <div class="bg-slate-900/90 border border-slate-800 p-4 md:p-6 rounded-2xl space-y-6 shadow-2xl">
+        <div class="relative w-full aspect-video rounded-xl overflow-hidden border border-amber-900/40 bg-slate-950">
+          <iframe 
+            class="absolute top-0 left-0 w-full h-full"
+            src="https://www.youtube.com/embed/videoseries?list=PLsuEuHcW7KBKVJB7hGwUPUyFzYYSfCSr2" 
+            title="Gredush YouTube Playlist"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen>
+          </iframe>
         </div>
 
-        <a href="https://www.youtube.com/@gredush?sub_confirmation=1" target="_blank" class="px-6 py-3 bg-red-600 hover:bg-red-500 text-white font-bold text-sm rounded-lg transition-colors flex items-center gap-2 shadow-lg flex-shrink-0">
-
-          <i data-lucide="youtube" class="w-5 h-5"></i> Subscribe on YouTube
-
-        </a>
-
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4 pt-2">
+          <div class="space-y-1 text-center md:text-left">
+            <h3 class="font-horde text-xl font-bold text-slate-100">Latest Mythic+ & Raid Highlights</h3>
+            <p class="text-xs text-slate-400">
+              Browse through all recent uploads directly from the embedded playlist player above.
+            </p>
+          </div>
+          <a href="https://www.youtube.com/@gredush?sub_confirmation=1" target="_blank" class="px-5 py-2.5 bg-red-600 hover:bg-red-500 text-white font-bold text-xs rounded-lg transition-colors flex items-center gap-2 shadow-lg flex-shrink-0">
+            <i data-lucide="youtube" class="w-4 h-4"></i> Subscribe on YouTube
+          </a>
+        </div>
       </div>
-
     </section>
-
 
 
     <!-- Community & Social Connections -->
