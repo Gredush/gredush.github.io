@@ -40,7 +40,7 @@ for (const e of world.worldData.expansions.filter(e => e.id >= MIN_EXPANSION_ID)
       const data = await gql(`{ characterData { character(${cq}) { ${fields} } } }`);
       for (const d of diffs) {
         const zr = data.characterData.character?.[`d${d.id}`];
-        rankings[d.id] = { rows: (zr?.rankings || []).map(r => ({ id: r.encounter.id, rankPercent: r.rankPercent, medianPercent: r.medianPercent, totalKills: r.totalKills })) };
+        rankings[d.id] = { rows: (zr?.rankings || []).map(r => ({ id: r.encounter.id, name: r.encounter.name, rankPercent: r.rankPercent, medianPercent: r.medianPercent, totalKills: r.totalKills })) };
       }
     } catch (err) { console.warn('skip', z.name, err.message); }
     zones.push({ id: z.id, name: z.name, difficulties: diffs, encounters: z.encounters, rankings });
