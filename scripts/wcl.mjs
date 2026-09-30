@@ -32,6 +32,7 @@ const out = { updated: new Date().toISOString(), character: { name: c.name, real
 for (const e of world.worldData.expansions.filter(e => e.id >= MIN_EXPANSION_ID)) {
   const zones = [];
   for (const z of e.zones) {
+    if (/beta|complete|\bptr\b|\btest\b/i.test(z.name)) continue; // skip beta / "complete raids" entries
     const diffs = (z.difficulties || []).filter(d => RAID_DIFFS.has(d.id));
     if (!diffs.length || !z.encounters?.length) continue;
     const fields = diffs.map(d => `d${d.id}: zoneRankings(zoneID:${z.id}, difficulty:${d.id}, metric:dps)`).join(' ');
