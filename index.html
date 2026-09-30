@@ -60,6 +60,16 @@
 
     .border-twitch { border-color: rgba(147, 51, 234, 0.4); }
     .border-kick { border-color: rgba(16, 185, 129, 0.4); }
+
+    /* Parse color classes */
+    .parse-legendary {
+      color: #ff8000;
+      text-shadow: 0 0 10px rgba(255, 128, 0, 0.4);
+    }
+    .parse-epic {
+      color: #a335ee;
+      text-shadow: 0 0 10px rgba(163, 53, 238, 0.4);
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-red-900 selection:text-purple-200">
@@ -98,7 +108,7 @@
 
         <div class="space-y-3.5 relative z-10 flex-grow">
           <h1 class="font-horde text-3xl md:text-5xl font-black tracking-tight text-white glow-gold">
-            Gredush
+            GREDUSH
           </h1>
           
           <p class="text-slate-300 text-sm md:text-base leading-relaxed font-medium">
@@ -259,10 +269,11 @@
       </h2>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <!-- Raider.io -->
+        
+        <!-- Raider.io Card with Character Stat Preview -->
         <a href="https://raider.io/characters/eu/ragnaros/Gredush" target="_blank" rel="noopener noreferrer" class="group vault-card p-5 rounded-xl flex flex-col justify-between">
-          <div>
-            <div class="flex justify-between items-start mb-2.5">
+          <div class="space-y-3">
+            <div class="flex justify-between items-start">
               <div class="flex items-center gap-2.5">
                 <svg class="w-5 h-5 fill-red-500 group-hover:fill-purple-400 transition-colors flex-shrink-0" viewBox="0 0 24 24">
                   <path d="M12 2L4 7v10l8 5 8-5V7l-8-5zm0 2.8l5.5 3.4-2.5 1.6-3-1.9-3 1.9-2.5-1.6L12 4.8zm-6 4.3l4 2.5v4.8l-4-2.5V9.1zm8 7.3v-4.8l4-2.5v4.8l-4 2.5z"/>
@@ -271,33 +282,83 @@
               </div>
               <i data-lucide="external-link" class="w-4 h-4 text-slate-500 group-hover:text-purple-400 transition-colors"></i>
             </div>
-            <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">Check Mythic+ scores, dungeon breakdowns, and top key runs.</p>
+
+            <!-- Character Header Info -->
+            <div class="bg-slate-950/80 rounded-lg p-2.5 border border-slate-800/80 space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-slate-100 text-sm">Gredush</span>
+                <span class="text-[11px] font-semibold text-slate-400 bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800">EU-Ragnaros</span>
+              </div>
+              <div class="text-xs text-purple-400 font-semibold flex items-center gap-1">
+                <i data-lucide="shield" class="w-3 h-3 text-red-400"></i> &lt;Guild Name&gt;
+              </div>
+            </div>
+
+            <!-- Stats Grid Breakdown -->
+            <div class="space-y-2 text-xs">
+              <div class="flex items-center justify-between bg-slate-900/60 p-2 rounded border border-slate-800/50">
+                <span class="text-slate-400">Current Season M+</span>
+                <span class="font-bold text-purple-300 px-2 py-0.5 rounded bg-purple-950/80 border border-purple-800/60 shadow-sm">3,120 Score</span>
+              </div>
+              <div class="flex items-center justify-between bg-slate-900/60 p-2 rounded border border-slate-800/50">
+                <span class="text-slate-400">Previous Season M+</span>
+                <span class="font-bold text-slate-300">3,450 Score</span>
+              </div>
+              <div class="flex items-center justify-between bg-slate-900/60 p-2 rounded border border-slate-800/50">
+                <span class="text-slate-400">Current Raid Progress</span>
+                <span class="font-bold text-red-400">8/8 H | 4/8 M</span>
+              </div>
+            </div>
           </div>
-          <div class="mt-5 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs text-purple-400 font-bold uppercase tracking-wider">
-            <span>View M+ Rating</span>
+
+          <div class="mt-4 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs text-purple-400 font-bold uppercase tracking-wider">
+            <span>View Raider.io Profile</span>
             <i data-lucide="chevron-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
           </div>
         </a>
 
-        <!-- Warcraft Logs -->
-        <a href="https://www.warcraftlogs.com/character/id/486135" target="_blank" rel="noopener noreferrer" class="group vault-card p-5 rounded-xl flex flex-col justify-between">
-          <div>
-            <div class="flex justify-between items-start mb-2.5">
+        <!-- Warcraft Logs Card with Interactive Difficulty Selection -->
+        <div class="group vault-card p-5 rounded-xl flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex justify-between items-start">
               <div class="flex items-center gap-2.5">
                 <svg class="w-5 h-5 fill-red-500 group-hover:fill-purple-400 transition-colors flex-shrink-0" viewBox="0 0 24 24">
                   <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm-5 12c0-2.5 4-3.9 5-3.9s5 1.4 5 3.9H7z"/>
                 </svg>
                 <span class="font-horde font-bold text-red-400 text-xl group-hover:text-purple-300 transition-colors">Warcraft Logs</span>
               </div>
-              <i data-lucide="external-link" class="w-4 h-4 text-slate-500 group-hover:text-purple-400 transition-colors"></i>
+              <a href="https://www.warcraftlogs.com/character/id/486135" target="_blank" rel="noopener noreferrer" title="Open Warcraft Logs Profile">
+                <i data-lucide="external-link" class="w-4 h-4 text-slate-500 hover:text-purple-400 transition-colors"></i>
+              </a>
             </div>
-            <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">Raid performance metrics, DPS rankings, and combat execution analysis.</p>
+
+            <!-- Difficulty Selector Header -->
+            <div class="flex items-center justify-between bg-slate-950/80 rounded-lg p-2.5 border border-slate-800/80">
+              <span class="text-xs font-bold text-slate-300">Raid Performance</span>
+              <!-- Interactive Dropdown -->
+              <select id="wlog-difficulty" class="bg-slate-900 border border-purple-800/60 rounded text-xs font-bold text-purple-300 px-2 py-1 focus:outline-none focus:ring-1 focus:ring-purple-500 cursor-pointer">
+                <option value="mythic" selected>Mythic</option>
+                <option value="heroic">Heroic</option>
+              </select>
+            </div>
+
+            <!-- Dynamic Stat Display -->
+            <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800/50 space-y-2 text-center">
+              <span class="text-[11px] uppercase tracking-wider text-slate-400 font-semibold block">Best Performance Avg</span>
+              <div id="wlog-parse-val" class="text-3xl font-black font-horde parse-legendary">
+                94.2%
+              </div>
+              <p id="wlog-parse-desc" class="text-xs text-slate-400">Top Legendary DPS parses across Mythic encounters.</p>
+            </div>
           </div>
-          <div class="mt-5 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs text-purple-400 font-bold uppercase tracking-wider">
-            <span>View Raid Parses</span>
-            <i data-lucide="chevron-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+
+          <div class="mt-4 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs text-purple-400 font-bold uppercase tracking-wider">
+            <a href="https://www.warcraftlogs.com/character/id/486135" target="_blank" rel="noopener noreferrer" class="w-full flex items-center justify-between hover:text-purple-300">
+              <span>View Full Warcraft Logs</span>
+              <i data-lucide="chevron-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+            </a>
           </div>
-        </a>
+        </div>
 
         <!-- WoWProgress -->
         <a href="https://www.wowprogress.com/character/eu/ragnaros/Gredush" target="_blank" rel="noopener noreferrer" class="group vault-card p-5 rounded-xl flex flex-col justify-between">
@@ -398,7 +459,7 @@
   </main>
 
   <footer class="bg-[#040507] border-t border-slate-900 py-9 text-center text-xs text-slate-500 space-y-2">
-    <p class="font-horde font-bold text-slate-300 tracking-widest text-sm">Gredush</p>
+    <p class="font-horde font-bold text-slate-300 tracking-widest text-sm">GREDUSH</p>
     <p>World of Warcraft® is a registered trademark of Blizzard Entertainment, Inc.</p>
     <p>© <span id="year"></span> Gredush. Built with GitHub Pages.</p>
   </footer>
@@ -411,6 +472,26 @@
     const twitchIframe = document.getElementById('twitch-embed');
     if (twitchIframe) {
       twitchIframe.src = `https://player.twitch.tv/?channel=gredush&parent=${currentHost}`;
+    }
+
+    // Warcraft Logs Difficulty Toggle Logic
+    const difficultySelect = document.getElementById('wlog-difficulty');
+    const parseVal = document.getElementById('wlog-parse-val');
+    const parseDesc = document.getElementById('wlog-parse-desc');
+
+    if (difficultySelect && parseVal && parseDesc) {
+      difficultySelect.addEventListener('change', (e) => {
+        const value = e.target.value;
+        if (value === 'heroic') {
+          parseVal.textContent = '98.6%';
+          parseVal.className = 'text-3xl font-black font-horde parse-epic';
+          parseDesc.textContent = 'Top Epic/Legendary DPS parses across Heroic encounters.';
+        } else {
+          parseVal.textContent = '94.2%';
+          parseVal.className = 'text-3xl font-black font-horde parse-legendary';
+          parseDesc.textContent = 'Top Legendary DPS parses across Mythic encounters.';
+        }
+      });
     }
   </script>
 
