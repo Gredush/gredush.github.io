@@ -80,55 +80,88 @@
 
   <main class="max-w-5xl mx-auto px-4 py-8 space-y-10 flex-grow">
 
-    <!-- Hero Section -->
-    <section class="relative rounded-2xl overflow-hidden vault-card p-6 md:p-8 text-center md:text-left flex flex-col md:flex-row items-center gap-6 shadow-xl relative">
-      <div class="absolute -top-24 -left-24 w-60 h-60 bg-red-900/20 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="absolute -bottom-24 -right-24 w-60 h-60 bg-purple-900/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 items-stretch">
+      <!-- Hero Section -->
+      <section class="lg:col-span-2 relative rounded-2xl overflow-hidden vault-card p-6 text-center md:text-left flex flex-col md:flex-row items-center gap-6 shadow-xl relative">
+        <div class="absolute -top-24 -left-24 w-60 h-60 bg-red-900/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -right-24 w-60 h-60 bg-purple-900/20 rounded-full blur-3xl pointer-events-none"></div>
 
-      <div class="relative group">
-        <div class="w-32 h-32 md:w-40 md:h-40 rounded-xl border-2 border-red-500/30 p-1 bg-slate-950 flex-shrink-0 overflow-hidden shadow-xl group-hover:border-purple-500/50 transition-colors duration-500">
-          <img src="./gigachad_gredush2.jpg" alt="Gredush Orc Hunter Avatar" class="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-500 filter brightness-95">
+        <div class="relative group flex-shrink-0">
+          <div class="w-32 h-32 md:w-36 md:h-36 rounded-xl border-2 border-red-500/30 p-1 bg-slate-950 overflow-hidden shadow-xl group-hover:border-purple-500/50 transition-colors duration-500">
+            <img src="./gigachad_gredush2.jpg" alt="Gredush Orc Hunter Avatar" class="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-500 filter brightness-95">
+          </div>
+        </div>
+
+        <div class="space-y-3 relative z-10 flex-grow">
+          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-red-950/40 border border-red-800/40 text-[11px] font-semibold text-red-300">
+            <i data-lucide="crosshair" class="w-3 h-3 text-red-400"></i> Orc Hunter • World of Warcraft
+          </div>
+          
+          <h1 class="font-horde text-3xl md:text-4xl font-black tracking-tight text-white glow-gold">
+            GREDUSH
+          </h1>
+          
+          <p class="text-slate-300 text-xs md:text-sm leading-relaxed font-medium">
+            High-level World of Warcraft gameplay, Mythic+ pushes, and raid content. Join the community live on Twitch and Kick, or catch up on YouTube.
+          </p>
+
+          <!-- CTA Buttons with Brand Icons -->
+          <div class="flex flex-wrap items-center gap-2.5 pt-1 justify-center md:justify-start">
+            <a href="https://www.twitch.tv/gredush" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 bg-purple-700 hover:bg-purple-600 text-white text-xs font-bold rounded-lg flex items-center gap-1.5 transition-all hover:-translate-y-0.5 shadow-md shadow-purple-900/30">
+              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/>
+              </svg>
+              Twitch Channel
+            </a>
+
+            <a href="https://kick.com/gredush" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-slate-950 text-xs font-bold rounded-lg flex items-center gap-1.5 transition-all hover:-translate-y-0.5 shadow-md shadow-emerald-950/30">
+              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                <path d="M3 3h4.5v6.75L12 3h5.25l-5.625 7.875L18 21h-5.25l-4.125-6.375V21H3V3z"/>
+              </svg>
+              Kick Stream
+            </a>
+
+            <a href="#profiles" class="btn-vault-primary px-3.5 py-2 text-slate-100 text-xs font-bold rounded-lg flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 fill-current text-purple-300" viewBox="0 0 24 24">
+                <path d="M12 2L9.5 7.5L3 8.5L7.5 13L6.5 19.5L12 16.5L17.5 19.5L16.5 13L21 8.5L14.5 7.5L12 2ZM12 5.5L13.6 9L17.7 9.6L14.8 12.5L15.5 16.6L12 14.7L8.5 16.6L9.2 12.5L6.3 9.6L10.4 9L12 5.5Z"/>
+              </svg>
+              WoW Stats
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <div class="lg:col-span-1 vault-card rounded-2xl p-5 space-y-3 flex flex-col justify-between">
+        <div>
+          <h3 class="font-horde font-bold text-lg text-red-400 mb-0.5">Other Socials</h3>
+          <p class="text-[11px] text-slate-400">Follow for updates and announcements.</p>
+        </div>
+
+        <div class="space-y-2.5">
+          <!-- Instagram Button -->
+          <a href="https://www.instagram.com/gredush/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-2.5 rounded-lg bg-slate-950/70 hover:bg-slate-900 border border-slate-800/80 transition-colors text-xs text-slate-300 font-bold">
+            <span class="flex items-center gap-2">
+              <svg class="w-3.5 h-3.5 fill-pink-500" viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+              Instagram
+            </span>
+            <span class="text-slate-500 font-normal text-[11px]">@gredush</span>
+          </a>
+
+          <!-- X / Twitter Button -->
+          <a href="https://x.com/balvag" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-2.5 rounded-lg bg-slate-950/70 hover:bg-slate-900 border border-slate-800/80 transition-colors text-xs text-slate-300 font-bold">
+            <span class="flex items-center gap-2">
+              <svg class="w-3.5 h-3.5 fill-slate-100" viewBox="0 0 24 24">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+              X / Twitter
+            </span>
+            <span class="text-slate-500 font-normal text-[11px]">@balvag</span>
+          </a>
         </div>
       </div>
-
-      <div class="space-y-3 max-w-xl relative z-10">
-        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-red-950/40 border border-red-800/40 text-[11px] font-semibold text-red-300">
-          <i data-lucide="crosshair" class="w-3 h-3 text-red-400"></i> Orc Hunter • World of Warcraft
-        </div>
-        
-        <h1 class="font-horde text-4xl md:text-5xl font-black tracking-tight text-white glow-gold">
-          GREDUSH
-        </h1>
-        
-        <p class="text-slate-300 text-xs md:text-sm leading-relaxed font-medium">
-          High-level World of Warcraft gameplay, Mythic+ pushes, and raid content. Join the community live on Twitch and Kick, or catch up on YouTube.
-        </p>
-
-        <!-- CTA Buttons with Brand Icons -->
-        <div class="flex flex-wrap items-center gap-2.5 pt-1 justify-center md:justify-start">
-          <a href="https://www.twitch.tv/gredush" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-purple-700 hover:bg-purple-600 text-white text-xs font-bold rounded-lg flex items-center gap-1.5 transition-all hover:-translate-y-0.5 shadow-md shadow-purple-900/30">
-            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-              <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/>
-            </svg>
-            Twitch Channel
-          </a>
-
-          <a href="https://kick.com/gredush" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-slate-950 text-xs font-bold rounded-lg flex items-center gap-1.5 transition-all hover:-translate-y-0.5 shadow-md shadow-emerald-950/30">
-            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-              <path d="M3 3h4.5v6.75L12 3h5.25l-5.625 7.875L18 21h-5.25l-4.125-6.375V21H3V3z"/>
-            </svg>
-            Kick Stream
-          </a>
-
-          <a href="#profiles" class="btn-vault-primary px-4 py-2 text-slate-100 text-xs font-bold rounded-lg flex items-center gap-1.5">
-            <svg class="w-3.5 h-3.5 fill-current text-purple-300" viewBox="0 0 24 24">
-              <path d="M12 2L9.5 7.5L3 8.5L7.5 13L6.5 19.5L12 16.5L17.5 19.5L16.5 13L21 8.5L14.5 7.5L12 2ZM12 5.5L13.6 9L17.7 9.6L14.8 12.5L15.5 16.6L12 14.7L8.5 16.6L9.2 12.5L6.3 9.6L10.4 9L12 5.5Z"/>
-            </svg>
-            WoW Stats
-          </a>
-        </div>
-      </div>
-    </section>
+    </div>
 
     <!-- Livestream Status Bar -->
     <section id="livestreams" class="space-y-4">
@@ -321,67 +354,32 @@
     </section>
 
     <!-- Community & Social Connections -->
-    <section id="community" class="grid md:grid-cols-3 gap-4">
-
+    <section id="community" class="w-full">
       <!-- Discord Card -->
-      <div class="md:col-span-2 vault-card border-indigo-900/30 rounded-2xl p-5 flex flex-col justify-between">
-        <div class="space-y-3">
-          <div class="flex items-center gap-2.5">
-            <div class="p-2.5 bg-indigo-950/80 border border-indigo-800/40 text-indigo-400 rounded-xl">
-              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.093.252-.19.373-.287a.075.075 0 0 1 .078-.01c3.927 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .079.009c.12.098.245.195.372.288a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-              </svg>
-            </div>
-            <div>
-              <h3 class="font-horde font-bold text-xl text-white">Community Discord</h3>
-              <p class="text-[11px] text-indigo-300 font-semibold">Live notifications, WoW chat, memes and other stuff.</p>
-            </div>
+      <div class="w-full vault-card border-indigo-900/30 rounded-2xl p-6 text-center space-y-4 flex flex-col justify-between items-center">
+        <div class="space-y-3 max-w-xl mx-auto flex flex-col items-center">
+          <div class="p-3 bg-indigo-950/80 border border-indigo-800/40 text-indigo-400 rounded-xl inline-flex">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+              <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.093.252-.19.373-.287a.075.075 0 0 1 .078-.01c3.927 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .079.009c.12.098.245.195.372.288a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+            </svg>
           </div>
-          <p class="text-xs text-slate-300 leading-relaxed">
+          <div>
+            <h3 class="font-horde font-bold text-2xl text-white">Community Discord</h3>
+            <p class="text-xs text-indigo-300 font-semibold mt-1">Live notifications, WoW chat, memes and community events.</p>
+          </div>
+          <p class="text-xs md:text-sm text-slate-300 leading-relaxed">
             Connect directly with Gredush and the community. Get notified the moment streams go live, share key runs, and hang out off-stream.
           </p>
         </div>
-        <div class="pt-4 flex flex-wrap items-center gap-3">
-          <a href="https://discord.gg/qScBpyq5gM" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-all shadow-md shadow-indigo-950/50 flex items-center gap-1.5">
-            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+        <div class="pt-2 flex justify-center w-full">
+          <a href="https://discord.gg/qScBpyq5gM" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs uppercase tracking-wider rounded-lg transition-all shadow-md shadow-indigo-950/50 flex items-center gap-2">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
               <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.093.252-.19.373-.287a.075.075 0 0 1 .078-.01c3.927 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .079.009c.12.098.245.195.372.288a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-            </svg> Join community <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </svg>
+            Join Community Discord <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
           </a>
         </div>
       </div>
-
-      <!-- Other Socials -->
-      <div class="vault-card rounded-2xl p-5 space-y-3 flex flex-col justify-between">
-        <div>
-          <h3 class="font-horde font-bold text-lg text-red-400 mb-0.5">Other Socials</h3>
-          <p class="text-[11px] text-slate-400">Follow for updates and announcements.</p>
-        </div>
-
-        <div class="space-y-2.5">
-          <!-- Instagram Button -->
-          <a href="https://www.instagram.com/gredush/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-2.5 rounded-lg bg-slate-950/70 hover:bg-slate-900 border border-slate-800/80 transition-colors text-xs text-slate-300 font-bold">
-            <span class="flex items-center gap-2">
-              <svg class="w-3.5 h-3.5 fill-pink-500" viewBox="0 0 24 24">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-              </svg>
-              Instagram
-            </span>
-            <span class="text-slate-500 font-normal text-[11px]">@gredush</span>
-          </a>
-
-          <!-- X / Twitter Button -->
-          <a href="https://x.com/balvag" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-2.5 rounded-lg bg-slate-950/70 hover:bg-slate-900 border border-slate-800/80 transition-colors text-xs text-slate-300 font-bold">
-            <span class="flex items-center gap-2">
-              <svg class="w-3.5 h-3.5 fill-slate-100" viewBox="0 0 24 24">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-              </svg>
-              X / Twitter
-            </span>
-            <span class="text-slate-500 font-normal text-[11px]">@balvag</span>
-          </a>
-        </div>
-      </div>
-
     </section>
 
   </main>
@@ -396,7 +394,6 @@
     lucide.createIcons();
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Dynamically set Twitch iframe source based on current host domain
     const currentHost = window.location.hostname || 'localhost';
     const twitchIframe = document.getElementById('twitch-embed');
     if (twitchIframe) {
@@ -405,5 +402,4 @@
   </script>
 
 </body>
-
 </html>
