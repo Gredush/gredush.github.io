@@ -26,9 +26,16 @@ async function viaPage() {
   console.log('Playlist page status:', r.status);
   if (!r.ok) throw new Error('playlist page ' + r.status);
   const html = await r.text();
-  const m = /"playlistVideoRenderer":\{"videoId":"([\w-]{11})"[\s\S]{0,2500}?"title":\{"runs":\[\{"text":"((?:[^"\\]|\\.)*)"/.exec(html);
-  if (!m) throw new Error('could not find a video in the playlist page');
-  return { id: m[1], title: JSON.parse('"' + m[2] + '"') }; // first video = the one the embedded playlist starts with
+  console.log('Page length:', html.length, '| page title:', ((/<title>([^<]*)</.exec(html) || [])[1] || '').slice(0, 80));
+  // YouTube changes its page markup often, so try several known patterns; the first match is the playlist's first video.
+  const patterns = [/"playlistVideoRenderer":\{"videoId":"([\w-]{11})"/, /"contentId":"([\w-]{11})"/, /"watchEndpoint":\{"videoId":"([\w-]{11})"/, /"videoId":"([\w-]{11})"/];
+  let id = null;
+  for (const p of patterns) { const m = p.exec(html); if (m) { id = m[1]; console.log('Found video id', id, 'using', p); break; } }
+  if (!id) throw new Error('could not find a video in the playlist page');
+  const o = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent('https://www.youtube.com/watch?v=' + id)}&format=json`);
+  console.log('oEmbed status:', o.status);
+  if (!o.ok) throw new Error('oEmbed ' + o.status);
+  return { id, title: (await o.json()).title };
 }
 
 async function viaFeed() {
