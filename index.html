@@ -58,6 +58,10 @@
     .border-kick { border-color: rgba(16, 185, 129, 0.4); }
     /* stroke-style UI icons; brand icons use fill */
     .ic { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .liveb { display:inline-flex; align-items:center; gap:.3rem; font-size:10px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#fff; background:#dc2626; padding:.1rem .45rem; border-radius:.25rem; line-height:1.4; }
+    .liveb::before { content:''; width:.4rem; height:.4rem; border-radius:9999px; background:#fff; animation:livepulse 1.2s ease-in-out infinite; }
+    .liveb[hidden] { display:none; }
+    @keyframes livepulse { 50% { opacity:.3; } }
     a:focus-visible, button:focus-visible { outline: 2px solid #c084fc; outline-offset: 2px; }
     @media (prefers-reduced-motion: reduce) {
       * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
@@ -126,10 +130,10 @@
           </p>
           <div class="flex flex-wrap items-center gap-3 pt-1 justify-center md:justify-start">
             <a href="https://www.twitch.tv/gredush" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 bg-purple-700 hover:bg-purple-600 text-white text-xs sm:text-sm font-bold rounded-lg flex items-center gap-2 transition-all hover:-translate-y-0.5 shadow-md shadow-purple-900/30">
-              <svg class="w-4 h-4 fill-current" aria-hidden="true"><use href="#i-twitch"/></svg> Twitch
+              <svg class="w-4 h-4 fill-current" aria-hidden="true"><use href="#i-twitch"/></svg> Twitch <span class="liveb" data-live="twitch" hidden>Live</span>
             </a>
             <a href="https://kick.com/gredush" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-slate-950 text-xs sm:text-sm font-bold rounded-lg flex items-center gap-2 transition-all hover:-translate-y-0.5 shadow-md shadow-emerald-950/30">
-              <svg class="w-4 h-4 fill-current" aria-hidden="true"><use href="#i-kick"/></svg> Kick
+              <svg class="w-4 h-4 fill-current" aria-hidden="true"><use href="#i-kick"/></svg> Kick <span class="liveb" data-live="kick" hidden>Live</span>
             </a>
             <a href="#profiles" class="btn-vault-primary px-4 py-2.5 text-slate-100 text-xs sm:text-sm font-bold rounded-lg flex items-center gap-2">
               <svg class="w-4 h-4 ic" aria-hidden="true"><use href="#i-swords"/></svg> WoW Stats
@@ -173,13 +177,14 @@
             <div>
               <div class="flex items-center gap-2">
                 <h3 class="font-bold text-slate-100 text-lg">Twitch</h3>
+                <span class="liveb" data-live="twitch" hidden>Live</span>
                 <span class="text-[10px] uppercase font-bold text-purple-300 bg-purple-950/80 px-2 py-0.5 rounded border border-purple-700/50">Main</span>
               </div>
               <p class="text-xs sm:text-sm text-slate-300">Primary home for live WoW M+ & raiding.</p>
             </div>
           </div>
 
-          <div class="facade relative w-full aspect-video rounded-lg overflow-hidden border border-purple-950/60 bg-black" data-src="https://player.twitch.tv/?channel=gredush&parent={host}" data-title="Twitch live stream">
+          <div id="tw-facade" class="facade relative w-full aspect-video rounded-lg overflow-hidden border border-purple-950/60 bg-black" data-src="https://player.twitch.tv/?channel=gredush&parent={host}" data-title="Twitch live stream">
             <button type="button" class="absolute inset-0 w-full h-full flex flex-col items-center justify-center gap-2 text-slate-200 hover:text-white bg-gradient-to-br from-purple-950/60 to-black transition-colors">
               <svg class="w-10 h-10 fill-current text-purple-400" aria-hidden="true"><use href="#i-twitch"/></svg>
               <span class="font-bold text-sm">Load Twitch player</span>
@@ -200,6 +205,7 @@
             <div>
               <div class="flex items-center gap-2">
                 <h3 class="font-bold text-slate-100 text-lg">Kick</h3>
+                <span class="liveb" data-live="kick" hidden>Live</span>
                 <span class="text-[10px] uppercase font-bold text-slate-300 bg-slate-900 px-2 py-0.5 rounded border border-slate-700">Secondary</span>
               </div>
               <p class="text-xs sm:text-sm text-slate-300">Occasional broadcast & chill streams.</p>
@@ -268,19 +274,23 @@
           <p id="rio-status" class="text-xs text-slate-400">Loading live data…</p>
         </a>
 
-        <!-- WoWProgress -->
-        <a href="https://www.wowprogress.com/character/eu/ragnaros/Gredush" target="_blank" rel="noopener noreferrer" class="group vault-card p-5 rounded-xl flex flex-col justify-between">
-          <div>
-            <div class="flex justify-between items-start mb-2.5">
-              <div class="flex items-center gap-2.5">
-                <img src="https://www.google.com/s2/favicons?domain=wowprogress.com&sz=64" width="24" height="24" alt="" class="w-6 h-6 rounded-sm flex-shrink-0" loading="lazy">
-                <span class="font-horde font-bold text-red-400 text-xl group-hover:text-purple-300 transition-colors">WoWProgress</span>
-              </div>
-              <svg class="w-4 h-4 ic text-slate-400 group-hover:text-purple-400 transition-colors" aria-hidden="true"><use href="#i-ext"/></svg>
+        <!-- WoWProgress (data/wowprogress.json, refreshed by GitHub Action) -->
+        <a href="https://www.wowprogress.com/character/eu/ragnaros/Gredush" target="_blank" rel="noopener noreferrer" class="group vault-card p-5 rounded-xl flex flex-col justify-between space-y-4">
+          <div class="flex justify-between items-start">
+            <div class="flex items-center gap-2.5">
+              <img src="https://www.google.com/s2/favicons?domain=wowprogress.com&sz=64" width="24" height="24" alt="" class="w-6 h-6 rounded-sm flex-shrink-0" loading="lazy">
+              <span class="font-horde font-bold text-red-400 text-xl group-hover:text-purple-300 transition-colors">WoWProgress</span>
             </div>
-            <p class="text-sm text-slate-300 leading-relaxed">Guild rankings, character history, and server standings.</p>
+            <svg class="w-4 h-4 ic text-slate-400 group-hover:text-purple-400 transition-colors" aria-hidden="true"><use href="#i-ext"/></svg>
           </div>
-          <div class="mt-5 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs text-purple-300 font-bold uppercase tracking-wider">
+          <p id="wp-guild" class="text-sm text-slate-300">Orc Hunter · Ragnaros (EU)</p>
+          <div id="wp-stats" class="grid grid-cols-2 gap-3"></div>
+          <div class="space-y-2">
+            <h3 class="text-xs uppercase tracking-wider text-slate-300 font-bold">Raid Progress</h3>
+            <div id="wp-raids" class="rounded-lg bg-slate-950/70 border border-slate-800/80 p-3 text-sm text-slate-100 space-y-1">…</div>
+          </div>
+          <p id="wp-status" class="text-xs text-slate-400">Loading…</p>
+          <div class="pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs text-purple-300 font-bold uppercase tracking-wider">
             <span>View Progress</span>
             <svg class="w-4 h-4 ic group-hover:translate-x-1 transition-transform" aria-hidden="true"><use href="#i-chev"/></svg>
           </div>
@@ -330,7 +340,7 @@
 
       <div class="vault-card p-5 md:p-6 rounded-2xl flex flex-col md:flex-row items-center gap-6">
         <div class="w-full md:w-1/2 flex-shrink-0">
-          <div class="facade relative w-full aspect-video rounded-xl overflow-hidden border border-red-950/60 bg-black" data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLsuEuHcW7KBKVJB7hGwUPUyFzYYSfCSr2&autoplay=1" data-title="Gredush YouTube playlist" data-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
+          <div id="yt-facade" class="facade relative w-full aspect-video rounded-xl overflow-hidden border border-red-950/60 bg-black" data-src="https://www.youtube-nocookie.com/embed/videoseries?list=PLsuEuHcW7KBKVJB7hGwUPUyFzYYSfCSr2&autoplay=1" data-title="Gredush YouTube playlist" data-allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
             <button type="button" class="absolute inset-0 w-full h-full flex flex-col items-center justify-center gap-2 text-slate-200 hover:text-white bg-gradient-to-br from-red-950/60 to-black transition-colors">
               <svg class="w-12 h-12 fill-current text-red-500" aria-hidden="true"><use href="#i-yt"/></svg>
               <span class="font-bold text-sm">Play highlights</span>
@@ -342,6 +352,7 @@
           <div class="space-y-2">
             <h3 class="font-horde text-2xl font-bold text-white">Latest Mythic+ & Raid Highlights</h3>
             <p class="text-sm text-slate-300 leading-relaxed font-medium">Recent dungeon pushes, boss kills, and gameplay highlights, playable right here.</p>
+            <p id="yt-latest" class="text-sm text-slate-100 font-bold" hidden></p>
           </div>
           <div>
             <a href="https://www.youtube.com/@gredush?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 bg-red-600 hover:bg-red-500 text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-lg transition-all shadow-md shadow-red-950/50">
@@ -387,18 +398,18 @@
 
     // Click-to-load players: nothing third-party loads until the visitor asks for it.
     const host = window.location.hostname || 'localhost';
-    document.querySelectorAll('.facade').forEach(box => {
-      box.querySelector('button').addEventListener('click', () => {
-        const f = document.createElement('iframe');
-        f.src = box.dataset.src.replace('{host}', host);
-        f.title = box.dataset.title;
-        f.className = 'absolute top-0 left-0 w-full h-full';
-        f.allowFullscreen = true;
-        f.setAttribute('allow', box.dataset.allow || 'autoplay; fullscreen');
-        f.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
-        box.replaceChildren(f);
-      });
-    });
+    function loadFacade(box) {
+      if (box.querySelector('iframe')) return;
+      const f = document.createElement('iframe');
+      f.src = box.dataset.src.replace('{host}', host);
+      f.title = box.dataset.title;
+      f.className = 'absolute top-0 left-0 w-full h-full';
+      f.allowFullscreen = true;
+      f.setAttribute('allow', box.dataset.allow || 'autoplay; fullscreen');
+      f.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+      box.replaceChildren(f);
+    }
+    document.querySelectorAll('.facade').forEach(box => box.querySelector('button').addEventListener('click', () => loadFacade(box)));
 
     // ---- Raider.io: live scores + raid progress (public API, no key needed) ----
     (async () => {
@@ -483,6 +494,67 @@
       opts($('wcl-exp'), exps, exps[0].id);
       $('wcl-exp').onchange = fillZones; $('wcl-zone').onchange = fillDiffs; $('wcl-diff').onchange = render;
       fillZones();
+    })();
+
+    // ---- Live status: Twitch via decapi.me, Kick via its public channel endpoint (checked every minute) ----
+    (() => {
+      const setLive = (k, on) => document.querySelectorAll(`[data-live="${k}"]`).forEach(el => { el.hidden = !on; });
+      let auto = false;
+      async function twitch() {
+        try {
+          const r = await fetch('https://decapi.me/twitch/uptime/gredush'), t = (await r.text()).trim();
+          const on = r.ok && t && !/offline|not found|could not|error|invalid|unable/i.test(t);
+          setLive('twitch', on);
+          if (on && !auto) { // live: load the player and start it (muted, as browsers require)
+            auto = true;
+            const box = document.getElementById('tw-facade');
+            box.dataset.src += '&autoplay=true&muted=true';
+            loadFacade(box);
+          }
+        } catch (e) { /* unknown: show nothing */ }
+      }
+      async function kick() {
+        try { const j = await (await fetch('https://kick.com/api/v2/channels/gredush')).json(); setLive('kick', !!j.livestream); }
+        catch (e) { /* Kick may block browser requests: show nothing */ }
+      }
+      const run = () => { twitch(); kick(); };
+      run(); setInterval(() => { if (!document.hidden) run(); }, 60000);
+    })();
+
+    // ---- WoWProgress: stats from data/wowprogress.json ----
+    (async () => {
+      const $ = id => document.getElementById(id);
+      let d;
+      try { d = await (await fetch('data/wowprogress.json', { cache: 'no-cache' })).json(); }
+      catch (e) { $('wp-stats').innerHTML = ''; $('wp-raids').textContent = '—'; $('wp-status').textContent = 'Stats are not available yet. Click the card to open the profile.'; return; }
+      const n = v => v == null ? '—' : Number(v).toLocaleString('en-GB', { maximumFractionDigits: 2 });
+      const rank = o => o && o.eu != null ? `EU #${n(o.eu)}` + (o.realm != null ? ` · Realm #${n(o.realm)}` : '') : '';
+      const tile = (label, val, sub) => `<div class="rounded-lg bg-slate-950/70 border border-slate-800/80 p-3"><p class="text-xs text-slate-300">${label}</p><p class="font-horde text-2xl font-black text-white">${val}</p><p class="text-[11px] text-slate-400">${sub || '&nbsp;'}</p></div>`;
+      $('wp-guild').textContent = [d.guild && `<${d.guild}>`, d.team].filter(Boolean).join(' · ') || 'Orc Hunter · Ragnaros (EU)';
+      $('wp-stats').innerHTML =
+        tile('Item Level', n(d.itemLevel && d.itemLevel.value), rank(d.itemLevel)) +
+        tile('SimDPS', n(d.simdps && d.simdps.value != null ? Math.round(d.simdps.value) : null), rank(d.simdps)) +
+        tile('PvE Score', n(d.pveScore != null ? Math.round(d.pveScore) : null), '') +
+        tile('Ach. Points', n(d.achievements && d.achievements.value), rank(d.achievements));
+      const best = r => r.mythic ? `${r.mythic}/${r.total} M` : r.heroic ? `${r.heroic}/${r.total} H` : r.normal ? `${r.normal}/${r.total} N` : `0/${r.total}`;
+      $('wp-raids').innerHTML = (d.raids || []).map(r => `<div class="flex justify-between gap-2"><span>${r.name}</span><span class="font-bold text-white">${best(r)}</span></div>`).join('') || '—';
+      $('wp-status').textContent = 'From WoWProgress · updated ' + new Date(d.updated).toLocaleDateString();
+    })();
+
+    // ---- YouTube: show the latest playlist video before the player loads ----
+    (async () => {
+      let v;
+      try { v = await (await fetch('data/youtube.json', { cache: 'no-cache' })).json(); } catch (e) { return; }
+      if (!v || !v.id) return;
+      const box = document.getElementById('yt-facade'), btn = box.querySelector('button');
+      box.dataset.src = `https://www.youtube-nocookie.com/embed/${v.id}?list=${v.playlist}&autoplay=1`;
+      btn.style.backgroundImage = `linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,.15)), url(https://i.ytimg.com/vi/${v.id}/hqdefault.jpg)`;
+      btn.style.backgroundSize = 'cover'; btn.style.backgroundPosition = 'center';
+      const t = document.createElement('span');
+      t.className = 'absolute bottom-0 inset-x-0 p-3 text-left text-sm font-bold text-white'; t.textContent = v.title;
+      btn.appendChild(t);
+      const p = document.getElementById('yt-latest'); p.hidden = false;
+      p.textContent = 'Latest video: ' + v.title + ' · ' + new Date(v.published).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
     })();
   </script>
 </body>
