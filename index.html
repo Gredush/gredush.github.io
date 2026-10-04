@@ -274,7 +274,7 @@
           <p id="rio-status" class="text-xs text-slate-400">Loading live data…</p>
         </a>
 
-        <!-- WoWProgress (data/wowprogress.json, refreshed by GitHub Action) -->
+        <!-- WoWProgress: links to the WoWProgress profile; numbers come from the Raider.io API -->
         <a href="https://www.wowprogress.com/character/eu/ragnaros/Gredush" target="_blank" rel="noopener noreferrer" class="group vault-card p-5 rounded-xl flex flex-col justify-between space-y-4">
           <div class="flex justify-between items-start">
             <div class="flex items-center gap-2.5">
@@ -283,13 +283,22 @@
             </div>
             <svg class="w-4 h-4 ic text-slate-400 group-hover:text-purple-400 transition-colors" aria-hidden="true"><use href="#i-ext"/></svg>
           </div>
-          <p id="wp-desc" class="text-sm text-slate-300 leading-relaxed">Guild rankings, character history, and server standings.</p>
-          <div id="wp-data" class="space-y-3" hidden>
-            <p class="text-sm text-slate-300">Guild <span id="wp-guild" class="font-bold text-white"></span></p>
-            <h3 class="text-xs uppercase tracking-wider text-slate-300 font-bold">Guild Ranking</h3>
-            <div id="wp-stats" class="grid grid-cols-3 gap-3"></div>
+          <p class="text-sm text-slate-300">Guild <span id="wp-guild" class="font-bold text-white">…</span></p>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="rounded-lg bg-slate-950/70 border border-slate-800/80 p-3">
+              <p class="text-xs text-slate-300">Item Level</p>
+              <p id="wp-ilvl" class="font-horde text-3xl font-black text-white">…</p>
+            </div>
+            <div class="rounded-lg bg-slate-950/70 border border-slate-800/80 p-3">
+              <p class="text-xs text-slate-300">Achievement Points</p>
+              <p id="wp-ach" class="font-horde text-3xl font-black text-white">…</p>
+            </div>
           </div>
-          <p id="wp-status" class="text-xs text-slate-400"></p>
+          <div class="space-y-2">
+            <h3 class="text-xs uppercase tracking-wider text-slate-300 font-bold">Current Raid Progress</h3>
+            <div id="wp-raids" class="rounded-lg bg-slate-950/70 border border-slate-800/80 p-3 text-sm text-slate-100 space-y-1">…</div>
+          </div>
+          <p class="text-xs text-slate-400">Stats via Raider.io</p>
           <div class="pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs text-purple-300 font-bold uppercase tracking-wider">
             <span>View Progress</span>
             <svg class="w-4 h-4 ic group-hover:translate-x-1 transition-transform" aria-hidden="true"><use href="#i-chev"/></svg>
@@ -422,12 +431,16 @@
         .reduce((o, w, i) => i === 1 ? o + ' Season ' + w : o + ' ' + w);
       let d;
       try {
-        d = await get(`${API}/characters/profile?region=eu&realm=ragnaros&name=Gredush&fields=mythic_plus_scores_by_season:current:previous,raid_progression`);
+        d = await get(`${API}/characters/profile?region=eu&realm=ragnaros&name=Gredush&fields=mythic_plus_scores_by_season:current:previous,raid_progression,gear,guild`);
       } catch (e) {
-        ['rio-cur', 'rio-prev', 'rio-raid-cur', 'rio-raid-prev'].forEach(i => $(i).textContent = '—');
+        ['rio-cur', 'rio-prev', 'rio-raid-cur', 'rio-raid-prev', 'wp-guild', 'wp-ilvl', 'wp-ach', 'wp-raids'].forEach(i => $(i).textContent = '—');
         $('rio-status').textContent = 'Could not load data. Click the card to open the profile.'; return;
       }
       $('rio-name').textContent = d.name; $('rio-realm').textContent = d.realm;
+      // WoWProgress card (numbers from Raider.io)
+      $('wp-guild').textContent = d.guild && d.guild.name ? '<' + d.guild.name + '>' : 'None';
+      $('wp-ilvl').textContent = d.gear && d.gear.item_level_equipped != null ? d.gear.item_level_equipped : '—';
+      $('wp-ach').textContent = d.achievement_points != null ? Number(d.achievement_points).toLocaleString('en-GB') : '—';
       const [cur, prev] = d.mythic_plus_scores_by_season || [];
       const put = (s, l, v) => { if (!s) return; $(l).textContent = nice(s.season); $(v).textContent = Math.round(s.scores.all); };
       put(cur, 'rio-cur-label', 'rio-cur'); put(prev, 'rio-prev-label', 'rio-prev');
@@ -447,13 +460,13 @@
         const last = Math.max(...old.map(r => t(r.ends.eu)));
         const before = old.filter(r => Math.abs(t(r.ends.eu) - last) < 7 * 864e5);
         if (!live.length) throw new Error('no raids');
-        $('rio-raid-cur').innerHTML = live.map(row).join('');
+        $('rio-raid-cur').innerHTML = $('wp-raids').innerHTML = live.map(row).join('');
         $('rio-raid-prev').innerHTML = before.length ? before.map(row).join('') : '—';
       } catch (e) {
         // Fallback: use the order Raider.io returns the character's raids in
         const keys = Object.keys(prog).reverse();
         const fmt = k => keys[k] ? `<div class="flex justify-between gap-2"><span>${keys[k].replace(/-/g, ' ')}</span><span class="font-bold text-white">${prog[keys[k]].summary}</span></div>` : '—';
-        $('rio-raid-cur').innerHTML = fmt(0); $('rio-raid-prev').innerHTML = fmt(1);
+        $('rio-raid-cur').innerHTML = $('wp-raids').innerHTML = fmt(0); $('rio-raid-prev').innerHTML = fmt(1);
       }
       $('rio-status').textContent = 'Live from Raider.io · overall score · best difficulty per raid';
     })();
@@ -519,20 +532,6 @@
       }
       const run = () => { twitch(); kick(); };
       run(); setInterval(() => { if (!document.hidden) run(); }, 60000);
-    })();
-
-    // ---- WoWProgress: guild ranking from data/wowprogress.json (card keeps its default text if unavailable) ----
-    (async () => {
-      const $ = id => document.getElementById(id);
-      let d;
-      try { d = await (await fetch('data/wowprogress.json', { cache: 'no-cache' })).json(); } catch (e) { return; }
-      if (!d || !d.world_rank) return;
-      const n = v => Number(v).toLocaleString('en-GB');
-      const tile = (label, rank, total) => `<div class="rounded-lg bg-slate-950/70 border border-slate-800/80 p-3"><p class="text-xs text-slate-300">${label}</p><p class="font-horde text-2xl font-black text-white">#${n(rank)}</p><p class="text-[11px] text-slate-400">of ${n(total)}</p></div>`;
-      $('wp-guild').textContent = '<' + d.guild + '>';
-      $('wp-stats').innerHTML = tile('World', d.world_rank, d.world_total) + tile('EU', d.area_rank, d.area_total) + tile('Realm', d.realm_rank, d.realm_total);
-      $('wp-desc').hidden = true; $('wp-data').hidden = false;
-      $('wp-status').textContent = 'Data from WoWProgress.com · updated ' + new Date(d.updated).toLocaleDateString();
     })();
 
     // ---- YouTube: show the latest playlist video before the player loads ----
