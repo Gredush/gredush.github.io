@@ -17,9 +17,6 @@ jobs:
         env:
           WCL_CLIENT_ID: ${{ secrets.WCL_CLIENT_ID }}
           WCL_CLIENT_SECRET: ${{ secrets.WCL_CLIENT_SECRET }}
-      - name: WoWProgress
-        run: node scripts/wowprogress.mjs
-        continue-on-error: true
       - name: YouTube
         run: node scripts/youtube.mjs
         continue-on-error: true
