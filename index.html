@@ -558,7 +558,11 @@
         } catch (e) { console.warn('YouTube latest video unavailable', e); return null; }
       }
       const v = await latestVideo();
-      if (!v) return;
+      if (!v) {
+        const p = document.getElementById('yt-latest'); p.hidden = false;
+        p.textContent = 'Latest video could not be loaded right now.';
+        return;
+      }
       const box = document.getElementById('yt-facade'), btn = box.querySelector('button');
       box.dataset.src = `https://www.youtube-nocookie.com/embed/${v.id}?list=${v.playlist}&autoplay=1`;
       btn.style.backgroundImage = `linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,.15)), url(https://i.ytimg.com/vi/${v.id}/hqdefault.jpg)`;
