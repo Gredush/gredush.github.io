@@ -283,13 +283,13 @@
             </div>
             <svg class="w-4 h-4 ic text-slate-400 group-hover:text-purple-400 transition-colors" aria-hidden="true"><use href="#i-ext"/></svg>
           </div>
-          <p id="wp-guild" class="text-sm text-slate-300">Orc Hunter · Ragnaros (EU)</p>
-          <div id="wp-stats" class="grid grid-cols-2 gap-3"></div>
-          <div class="space-y-2">
-            <h3 class="text-xs uppercase tracking-wider text-slate-300 font-bold">Raid Progress</h3>
-            <div id="wp-raids" class="rounded-lg bg-slate-950/70 border border-slate-800/80 p-3 text-sm text-slate-100 space-y-1">…</div>
+          <p id="wp-desc" class="text-sm text-slate-300 leading-relaxed">Guild rankings, character history, and server standings.</p>
+          <div id="wp-data" class="space-y-3" hidden>
+            <p class="text-sm text-slate-300">Guild <span id="wp-guild" class="font-bold text-white"></span></p>
+            <h3 class="text-xs uppercase tracking-wider text-slate-300 font-bold">Guild Ranking</h3>
+            <div id="wp-stats" class="grid grid-cols-3 gap-3"></div>
           </div>
-          <p id="wp-status" class="text-xs text-slate-400">Loading…</p>
+          <p id="wp-status" class="text-xs text-slate-400"></p>
           <div class="pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs text-purple-300 font-bold uppercase tracking-wider">
             <span>View Progress</span>
             <svg class="w-4 h-4 ic group-hover:translate-x-1 transition-transform" aria-hidden="true"><use href="#i-chev"/></svg>
@@ -521,24 +521,18 @@
       run(); setInterval(() => { if (!document.hidden) run(); }, 60000);
     })();
 
-    // ---- WoWProgress: stats from data/wowprogress.json ----
+    // ---- WoWProgress: guild ranking from data/wowprogress.json (card keeps its default text if unavailable) ----
     (async () => {
       const $ = id => document.getElementById(id);
       let d;
-      try { d = await (await fetch('data/wowprogress.json', { cache: 'no-cache' })).json(); }
-      catch (e) { $('wp-stats').innerHTML = ''; $('wp-raids').textContent = '—'; $('wp-status').textContent = 'Stats are not available yet. Click the card to open the profile.'; return; }
-      const n = v => v == null ? '—' : Number(v).toLocaleString('en-GB', { maximumFractionDigits: 2 });
-      const rank = o => o && o.eu != null ? `EU #${n(o.eu)}` + (o.realm != null ? ` · Realm #${n(o.realm)}` : '') : '';
-      const tile = (label, val, sub) => `<div class="rounded-lg bg-slate-950/70 border border-slate-800/80 p-3"><p class="text-xs text-slate-300">${label}</p><p class="font-horde text-2xl font-black text-white">${val}</p><p class="text-[11px] text-slate-400">${sub || '&nbsp;'}</p></div>`;
-      $('wp-guild').textContent = [d.guild && `<${d.guild}>`, d.team].filter(Boolean).join(' · ') || 'Orc Hunter · Ragnaros (EU)';
-      $('wp-stats').innerHTML =
-        tile('Item Level', n(d.itemLevel && d.itemLevel.value), rank(d.itemLevel)) +
-        tile('SimDPS', n(d.simdps && d.simdps.value != null ? Math.round(d.simdps.value) : null), rank(d.simdps)) +
-        tile('PvE Score', n(d.pveScore != null ? Math.round(d.pveScore) : null), '') +
-        tile('Ach. Points', n(d.achievements && d.achievements.value), rank(d.achievements));
-      const best = r => r.mythic ? `${r.mythic}/${r.total} M` : r.heroic ? `${r.heroic}/${r.total} H` : r.normal ? `${r.normal}/${r.total} N` : `0/${r.total}`;
-      $('wp-raids').innerHTML = (d.raids || []).map(r => `<div class="flex justify-between gap-2"><span>${r.name}</span><span class="font-bold text-white">${best(r)}</span></div>`).join('') || '—';
-      $('wp-status').textContent = 'From WoWProgress · updated ' + new Date(d.updated).toLocaleDateString();
+      try { d = await (await fetch('data/wowprogress.json', { cache: 'no-cache' })).json(); } catch (e) { return; }
+      if (!d || !d.world_rank) return;
+      const n = v => Number(v).toLocaleString('en-GB');
+      const tile = (label, rank, total) => `<div class="rounded-lg bg-slate-950/70 border border-slate-800/80 p-3"><p class="text-xs text-slate-300">${label}</p><p class="font-horde text-2xl font-black text-white">#${n(rank)}</p><p class="text-[11px] text-slate-400">of ${n(total)}</p></div>`;
+      $('wp-guild').textContent = '<' + d.guild + '>';
+      $('wp-stats').innerHTML = tile('World', d.world_rank, d.world_total) + tile('EU', d.area_rank, d.area_total) + tile('Realm', d.realm_rank, d.realm_total);
+      $('wp-desc').hidden = true; $('wp-data').hidden = false;
+      $('wp-status').textContent = 'Data from WoWProgress.com · updated ' + new Date(d.updated).toLocaleDateString();
     })();
 
     // ---- YouTube: show the latest playlist video before the player loads ----
@@ -571,7 +565,7 @@
       t.className = 'absolute bottom-0 inset-x-0 p-3 text-left text-sm font-bold text-white'; t.textContent = v.title;
       btn.appendChild(t);
       const p = document.getElementById('yt-latest'); p.hidden = false;
-      p.textContent = 'Latest video: ' + v.title + ' · ' + new Date(v.published).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+      const dt = new Date(v.published); p.textContent = 'Latest video: ' + v.title + (isNaN(dt) ? '' : ' · ' + dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }));
     })();
   </script>
 </body>
