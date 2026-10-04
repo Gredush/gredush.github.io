@@ -543,9 +543,22 @@
 
     // ---- YouTube: show the latest playlist video before the player loads ----
     (async () => {
-      let v;
-      try { v = await (await fetch('data/youtube.json', { cache: 'no-cache' })).json(); } catch (e) { return; }
-      if (!v || !v.id) return;
+      const PL = 'PLsuEuHcW7KBKVJB7hGwUPUyFzYYSfCSr2';
+      async function latestVideo() {
+        // 1) file written by the GitHub Action
+        try { const j = await (await fetch('data/youtube.json', { cache: 'no-cache' })).json(); if (j && j.id) return j; } catch (e) {}
+        // 2) fallback: read the playlist feed live through rss2json (a free public converter)
+        try {
+          const r = await (await fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent('https://www.youtube.com/feeds/videos.xml?playlist_id=' + PL))).json();
+          const items = (r.items || []).map(i => ({
+            id: ((i.guid || '').replace('yt:video:', '')) || ((/v=([\w-]{11})/.exec(i.link || '') || [])[1]),
+            title: i.title, published: i.pubDate.replace(' ', 'T') + 'Z', playlist: PL
+          })).filter(i => i.id).sort((a, b) => Date.parse(b.published) - Date.parse(a.published));
+          return items[0] || null;
+        } catch (e) { console.warn('YouTube latest video unavailable', e); return null; }
+      }
+      const v = await latestVideo();
+      if (!v) return;
       const box = document.getElementById('yt-facade'), btn = box.querySelector('button');
       box.dataset.src = `https://www.youtube-nocookie.com/embed/${v.id}?list=${v.playlist}&autoplay=1`;
       btn.style.backgroundImage = `linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,.15)), url(https://i.ytimg.com/vi/${v.id}/hqdefault.jpg)`;
