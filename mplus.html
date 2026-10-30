@@ -124,7 +124,7 @@
         <div id="team-a-score" class="text-5xl font-black font-horde text-red-500 mt-2">0</div>
       </div>
 
-      <!-- Current Dungeon (Diavazei apeutheias to keli G6 sto CSV) -->
+      <!-- Current Dungeon -->
       <div class="vault-card rounded-2xl p-6 text-center space-y-3 bg-slate-950/80">
         <div class="text-xs uppercase tracking-widest text-slate-400 font-bold">Current Dungeon</div>
         <div id="current-dungeon" class="text-2xl font-black font-horde text-purple-300 glow-gold">Dungeon TBD</div>
@@ -157,7 +157,7 @@
             </tr>
           </thead>
           <tbody id="rankings-tbody" class="text-sm divide-y divide-slate-800/60">
-            <tr><td colspan="4" class="py-4 text-center text-slate-500">Syncing rankings from TV Dashboard...</td></tr>
+            <tr><td colspan="4" class="py-4 text-center text-slate-500">Syncing rankings directly from Sheet...</td></tr>
           </tbody>
         </table>
       </div>
@@ -167,13 +167,20 @@
 
   <footer class="bg-[#040507] border-t border-slate-900 py-9 text-center text-xs text-slate-400 space-y-2">
     <p class="font-horde font-bold text-slate-300 tracking-widest text-sm">GREDUSH M+ EVENT BROADCAST</p>
-    <p>© <span id="year"></span> Gredush. Live sync powered by TV Dashboard.</p>
+    <p>© <span id="year"></span> Gredush. Live sync powered by Google Sheets API.</p>
   </footer>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnLyEV_JrIV3Ohaq6jFFNpZhHMLpqpBztTSpVT96e1A__LREOv5T_p-Px5AZZvqzcESzEIwkFJ2XT9/pub?output=csv';
+    // Χρησιμοποιούμε το επίσημο Google Sheets JSON Feed URL που δεν έχει καθόλου cache
+    const SPREADSHEET_ID = '2PACX-1vSnLyEV_JrIV3Ohaq6jFFNpZhHMLpqpBztTSpVT96e1A__LREOv5T_p-Px5AZZvqzcESzEIwkFJ2XT9';
+    // Χρησιμοποιούμε το JSON endpoint του Google Drive/Sheets για το φύλλο TV Dashboard (gid=671222144)
+    const JSON_URL = `https://spreadsheets.google.com/feeds/cells/1vSnLyEV_JrIV3Ohaq6jFFNpZhHMLpqpBztTSpVT96e1A__LREOv5T_p-Px5AZZvqzcESzEIwkFJ2XT9/671222144/public/full?alt=json`;
+
+    // Εναλλακτικά, επειδή το JSON feed μπορεί να απαιτεί auth, θα τραβήξουμε απευθείας το CSV 
+    // αλλά προσθέτοντας ένα μοναδικό token αποφυγής cache ανά milisecond.
+    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnLyEV_JrIV3Ohaq6jFFNpZhHMLpqpBztTSpVT96e1A__LREOv5T_p-Px5AZZvqzcESzEIwkFJ2XT9/pub?gid=671222144&single=true&output=csv';
 
     function parseCSVLine(line) {
       const result = [];
@@ -196,11 +203,15 @@
 
     async function fetchSheetData() {
       try {
-        const response = await fetch(CSV_URL + '&_nc=' + Date.now(), { cache: 'no-store' });
+        // Προσθέτουμε τυχαίο token στο URL για να μην αποθηκεύεται ποτέ στη μνήμη του browser ή του Google CDN
+        const response = await fetch(CSV_URL + '&nocache=' + Date.now() + Math.random(), { 
+          cache: 'no-store',
+          headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate' }
+        });
         const data = await response.text();
         parseAndApplyData(data);
       } catch (err) {
-        console.error("Error fetching data:", err);
+        console.error("Error fetching sheet data:", err);
       }
     }
 
@@ -212,7 +223,7 @@
       lines.forEach((rawLine, index) => {
         const parts = parseCSVLine(rawLine);
         
-        // Stin grammi 6 (index 5) tou CSV, to keli G brisketai sto index 6 (Stili G)
+        // Απόλυτη ανάγνωση Dungeon από τη γραμμή 6, στήλη G (index 6)
         if (index === 5 && parts[6]) {
           document.getElementById('current-dungeon').textContent = parts[6];
         }
@@ -221,7 +232,7 @@
           map[parts[0]] = parts[1];
         }
 
-        // Rankings apothikefsi seires 1 eos 15
+        // Power Rankings από σειρές 1 έως 15
         const rowId = parts[0];
         if (rowId && !isNaN(rowId) && Number(rowId) >= 1 && Number(rowId) <= 15) {
           const team = parts[1] || '';
@@ -236,7 +247,7 @@
         }
       });
 
-      // Ananeosi Live Controls
+      // Ενημέρωση Live Controls (Team Names, Scores κλπ)
       if (map['Show Status']) document.getElementById('show-status').textContent = map['Show Status'];
       if (map['Round']) document.getElementById('round-stage').textContent = map['Round'];
       if (map['Match Title']) document.getElementById('match-title').textContent = map['Match Title'];
@@ -252,7 +263,7 @@
       // Total Pot
       document.getElementById('total-pot').textContent = map['TOTAL POT'] ? (map['TOTAL POT'].includes('g') ? map['TOTAL POT'] : map['TOTAL POT'] + ' g') : "300,000 g";
 
-      // Render Power Rankings Table
+      // Render Rankings Table
       if (rankingsRows.length > 0) {
         const tbody = document.getElementById('rankings-tbody');
         tbody.innerHTML = rankingsRows.map(r => `
@@ -266,6 +277,7 @@
       }
     }
 
+    // Άμεση εκτέλεση και συνεχής ανανέωση κάθε 2 δευτερόλεπτα
     fetchSheetData();
     setInterval(fetchSheetData, 2000);
   </script>
