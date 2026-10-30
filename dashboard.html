@@ -79,6 +79,7 @@
   <header class="sticky top-0 z-50 backdrop-blur-xl bg-[#06070a]/80 border-b border-red-950/40">
     <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
       <nav aria-label="Main" class="flex items-center gap-4 sm:gap-8 text-[11px] sm:text-sm font-semibold tracking-wide sm:tracking-wider uppercase text-slate-300">
+        <a href="index.html" class="hover:text-red-400 transition-colors">Home</a>
         <a href="index.html#livestreams" class="hover:text-red-400 transition-colors">Streams</a>
         <a href="wow.html" class="hover:text-purple-400 transition-colors">World Of Warcraft</a>
         <a href="index.html#youtube" class="hover:text-red-400 transition-colors">Videos</a>
@@ -125,7 +126,7 @@
     <!-- Live Matchup Board -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full items-center">
       <div class="vault-card rounded-2xl p-6 text-center border-l-4 border-red-500 shadow-xl space-y-2">
-        <span class="text-xs font-bold uppercase text-red-400 tracking-wider">Team A</span>
+        <span class="text-xs font-bold uppercase text-red-400 tracking-wider">TEAM A</span>
         <h2 id="team-a" class="font-horde text-2xl font-black text-white">Team Alpha</h2>
       </div>
 
@@ -224,8 +225,6 @@
       return result.map(s => s.replace(/^"|"$/g, ''));
     }
 
-    let isFirstFetch = true;
-
     async function fetchData() {
       try {
         const response = await fetch(CSV_URL + '&_t=' + Date.now() + '&nocache=' + Math.random(), { cache: 'no-store' });
@@ -318,7 +317,6 @@
           }
         }
 
-        // Ενημέρωση DOM ομαλά χωρίς flickering
         if (newTitle) document.getElementById('event-title').textContent = newTitle;
         if (newInfo) document.getElementById('sheet-info').textContent = newInfo;
         document.getElementById('team-a').textContent = teamAVal;
@@ -333,15 +331,13 @@
           document.getElementById('betting-list').innerHTML = bettingHTML.join('');
         }
 
-        isFirstFetch = false;
-
       } catch (err) {
         console.error('Error fetching sheet data:', err);
       }
     }
 
     fetchData();
-    setInterval(fetchData, 3000);
+    setInterval(fetchData, 4000);
   </script>
 </body>
 </html>
