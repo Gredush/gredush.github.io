@@ -3,24 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>M+ Event | Gredush</title>
-  <meta name="description" content="Gredush Mythic+ community events, rules, and details." />
+  <title>M+ Live Broadcast Dashboard | Gredush</title>
+  <meta name="description" content="Live broadcast coverage and dashboard for Gredush Mythic+ events." />
   <meta name="theme-color" content="#06070a" />
 
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-CZLTE6SXJ5"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-CZLTE6SXJ5');
-</script>
-  
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="M+ Event | Gredush" />
-  <meta property="og:description" content="Mythic+ community events hosted by Gredush." />
-  <meta name="twitter:card" content="summary_large_image" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏹</text></svg>" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CZLTE6SXJ5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CZLTE6SXJ5');
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -62,25 +56,26 @@
     }
     .vault-card:hover { border-color: rgba(168, 85, 247, 0.3); box-shadow: 0 10px 30px -10px rgba(147, 51, 234, 0.2); }
     .ic { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    a:focus-visible, button:focus-visible { outline: 2px solid #c084fc; outline-offset: 2px; }
-    @media (prefers-reduced-motion: reduce) {
-      * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+    .pulse-live {
+      animation: livePulse 1.5s infinite;
+    }
+    @keyframes livePulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
     }
   </style>
 </head>
 
 <body class="min-h-screen flex flex-col justify-between selection:bg-red-900 selection:text-purple-200">
 
-  <!-- SVG sprite -->
+  <!-- SVG Sprite -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
     <symbol id="i-discord" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.093.252-.19.373-.287a.075.075 0 0 1 .078-.01c3.927 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .079.009c.12.098.245.195.372.288a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></symbol>
     <symbol id="i-radio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8a6 6 0 0 1 0 8.4M7.8 16.2a6 6 0 0 1 0-8.4M19.1 4.9a10 10 0 0 1 0 14.2M4.9 19.1a10 10 0 0 1 0-14.2"/></symbol>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
   </svg>
 
-  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-[60] focus:top-2 focus:left-2 focus:bg-purple-700 focus:text-white focus:px-3 focus:py-2 focus:rounded">Skip to content</a>
-
-  <!-- NAVIGATION BAR (Me to M+ Event energopoimeno) -->
+  <!-- Navigation Bar -->
   <header class="sticky top-0 z-50 backdrop-blur-xl bg-[#06070a]/80 border-b border-red-950/40">
     <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
       <nav aria-label="Main" class="flex items-center gap-4 sm:gap-8 text-[11px] sm:text-sm font-semibold tracking-wide sm:tracking-wider uppercase text-slate-300">
@@ -90,54 +85,137 @@
         <a href="mplus.html" class="text-purple-400 font-bold transition-colors">M+ Event</a>
         <a href="index.html#community" class="hover:text-purple-400 transition-colors">Community</a>
       </nav>
-      <a href="https://discord.gg/qScBpyq5gM" target="_blank" rel="noopener noreferrer" aria-label="Join Discord" class="btn-vault-primary flex-shrink-0 px-3 sm:px-4 py-2 text-xs font-bold uppercase tracking-widest text-white rounded-lg flex items-center gap-2">
-        <svg class="w-4 h-4 fill-current" aria-hidden="true"><use href="#i-discord"/></svg>
+      <a href="https://discord.gg/qScBpyq5gM" target="_blank" rel="noopener noreferrer" class="btn-vault-primary flex-shrink-0 px-3 sm:px-4 py-2 text-xs font-bold uppercase tracking-widest text-white rounded-lg flex items-center gap-2">
+        <svg class="w-4 h-4 fill-current"><use href="#i-discord"/></svg>
         <span class="hidden sm:inline">Join Discord</span>
       </a>
     </div>
   </header>
 
-  <main id="main" class="max-w-6xl mx-auto px-5 py-9 space-y-12 flex-grow w-full">
+  <main id="main" class="max-w-6xl mx-auto px-5 py-9 space-y-8 flex-grow w-full">
 
-    <!-- Page Header -->
-    <div class="vault-card rounded-2xl p-7 text-center md:text-left flex flex-col md:flex-row items-center gap-6 shadow-xl">
-      <div class="p-4 bg-purple-950/80 border border-purple-800/40 text-purple-400 rounded-xl">
-        <svg class="w-10 h-10 ic" aria-hidden="true"><use href="#i-radio"/></svg>
+    <!-- Broadcast Header Banner -->
+    <div class="vault-card rounded-2xl p-6 border border-purple-900/40 flex flex-col md:flex-row justify-between items-center gap-4 shadow-2xl">
+      <div class="flex items-center gap-4">
+        <div class="p-3 bg-red-950/80 border border-red-800/50 text-red-400 rounded-xl">
+          <svg class="w-8 h-8 ic pulse-live"><use href="#i-radio"/></svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-3">
+            <span id="show-status" class="px-2.5 py-0.5 text-xs font-black uppercase tracking-wider rounded bg-red-600 text-white pulse-live">LIVE</span>
+            <span id="round-stage" class="text-xs font-bold uppercase tracking-widest text-purple-400">STAGE TBD</span>
+          </div>
+          <h1 id="match-title" class="font-horde text-2xl md:text-3xl font-black text-white glow-gold mt-1">M+ SHOWDOWN</h1>
+        </div>
       </div>
-      <div class="space-y-2">
-        <h1 class="font-horde text-3xl md:text-4xl font-black text-white glow-gold">Mythic+ Community Event</h1>
-        <p class="text-slate-300 text-sm md:text-base">
-          Special community M+ runs, challenges, and events hosted by Gredush.
-        </p>
+      <div class="text-right flex flex-col items-center md:items-end">
+        <span class="text-xs uppercase text-slate-400 font-bold">Auto Refresh</span>
+        <span class="text-xs text-purple-400 font-mono">Syncing with Google Sheet...</span>
       </div>
     </div>
 
-    <!-- Content Placeholder -->
-    <section class="vault-card rounded-2xl p-10 text-center space-y-6">
-      <div class="max-w-xl mx-auto space-y-3">
-        <h2 class="font-horde text-2xl font-bold text-white">Coming Soon</h2>
-        <p class="text-slate-300 text-sm md:text-base leading-relaxed">
-          Οι πληροφορίες και το πρόγραμμα για το επερχόμενο M+ Event ετοιμάζονται. Μείνετε συντονισμένοι ή γίνετε μέλος στο Discord για να μαθαίνετε πρώτοι τα νέα!
-        </p>
+    <!-- Live Matchup Board -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 items-center">
+      <!-- Team A -->
+      <div class="vault-card rounded-2xl p-6 text-center border-l-4 border-red-500">
+        <span class="text-xs font-bold uppercase text-red-400 tracking-wider">TEAM A</span>
+        <h2 id="team-a-name" class="font-horde text-2xl font-black text-white mt-1">Team Alpha</h2>
+        <div id="team-a-score" class="text-5xl font-black font-horde text-red-500 mt-2">0</div>
       </div>
-      <div>
-        <a href="https://discord.gg/qScBpyq5gM" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2.5 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-lg transition-all shadow-md shadow-indigo-950/50">
-          <svg class="w-5 h-5 fill-current" aria-hidden="true"><use href="#i-discord"/></svg>
-          Join Discord for Updates <svg class="w-4 h-4 ic" aria-hidden="true"><use href="#i-arrow"/></svg>
-        </a>
+
+      <!-- Match Info / Dungeon / Timer -->
+      <div class="vault-card rounded-2xl p-6 text-center space-y-3 bg-slate-950/80">
+        <div class="text-xs uppercase tracking-widest text-slate-400 font-bold">Dungeon & Key</div>
+        <div id="current-dungeon" class="text-xl font-bold text-purple-300">Dungeon TBD</div>
+        <div class="inline-block px-3 py-1 rounded bg-purple-950/80 border border-purple-800/60 font-mono text-sm font-bold text-slate-200">
+          Key Level: <span id="key-level" class="text-purple-400">+12</span>
+        </div>
+        <div class="pt-2 border-t border-slate-800">
+          <span class="text-xs uppercase text-slate-400 block mb-1">Live Timer</span>
+          <div id="match-timer" class="font-mono text-3xl font-black text-white glow-gold">00:00</div>
+        </div>
       </div>
-    </section>
+
+      <!-- Team B -->
+      <div class="vault-card rounded-2xl p-6 text-center border-r-4 border-purple-500">
+        <span class="text-xs font-bold uppercase text-purple-400 tracking-wider">TEAM B</span>
+        <h2 id="team-b-name" class="font-horde text-2xl font-black text-white mt-1">Team Bravo</h2>
+        <div id="team-b-score" class="text-5xl font-black font-horde text-purple-400 mt-2">0</div>
+      </div>
+    </div>
+
+    <!-- News Ticker & Leader Status -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div class="vault-card rounded-2xl p-5 space-y-1">
+        <span class="text-xs font-bold text-red-400 uppercase tracking-widest block">Breaking News</span>
+        <p id="breaking-news" class="text-sm text-slate-200 font-medium">Waiting for broadcast updates...</p>
+      </div>
+
+      <div class="vault-card rounded-2xl p-5 space-y-1">
+        <span class="text-xs font-bold text-purple-400 uppercase tracking-widest block">Current Leader</span>
+        <div class="flex justify-between items-center">
+          <p id="current-leader" class="text-sm font-bold text-white">Team Alpha</p>
+          <span id="leader-score" class="text-xs font-mono font-bold text-purple-300 bg-purple-950/80 px-2.5 py-1 rounded border border-purple-800/50">0 Points</span>
+        </div>
+      </div>
+    </div>
 
   </main>
 
   <footer class="bg-[#040507] border-t border-slate-900 py-9 text-center text-xs text-slate-400 space-y-2">
-    <p class="font-horde font-bold text-slate-300 tracking-widest text-sm">Gredush</p>
-    <p>World of Warcraft® is a registered trademark of Blizzard Entertainment, Inc.</p>
-    <p>© <span id="year"></span> Gredush. Built with GitHub Pages.</p>
+    <p class="font-horde font-bold text-slate-300 tracking-widest text-sm">GREDUSH M+ EVENT BROADCAST</p>
+    <p>© <span id="year"></span> Gredush. Live sync powered by Google Sheets.</p>
   </footer>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Βάλε εδώ το Published CSV URL από το Google Sheet σου:
+    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnLyEV_JrIV3Ohaq6jFFNpZhHMLpqpBztTSpVT96e1A__LREOv5T_p-Px5AZZvqzcESzEIwkFJ2XT9/pub?output=csv';
+
+    async function fetchSheetData() {
+      if (!CSV_URL || CSV_URL === 'YOUR_PUBLISHED_GOOGLE_SHEET_CSV_URL_HERE') return;
+
+      try {
+        const response = await fetch(CSV_URL + '&t=' + new Date().getTime());
+        const data = await response.text();
+        parseAndApplyData(data);
+      } catch (err) {
+        console.error("Error fetching live dashboard data:", err);
+      }
+    }
+
+    function parseAndApplyData(csvText) {
+      const lines = csvText.split('\n');
+      const map = {};
+
+      lines.forEach(line => {
+        const parts = line.split(',');
+        if (parts.length >= 2) {
+          const key = parts[0].trim().replace(/^"|"$/g, '');
+          const val = parts[1].trim().replace(/^"|"$/g, '');
+          map[key] = val;
+        }
+      });
+
+      if (map['Show Status']) document.getElementById('show-status').textContent = map['Show Status'];
+      if (map['Round']) document.getElementById('round-stage').textContent = map['Round'];
+      if (map['Match Title']) document.getElementById('match-title').textContent = map['Match Title'];
+      if (map['Team A']) document.getElementById('team-a-name').textContent = map['Team A'];
+      if (map['Team B']) document.getElementById('team-b-name').textContent = map['Team B'];
+      if (map['Team A Score']) document.getElementById('team-a-score').textContent = map['Team A Score'];
+      if (map['Team B Score']) document.getElementById('team-b-score').textContent = map['Team B Score'];
+      if (map['Current Dungeon']) document.getElementById('current-dungeon').textContent = map['Current Dungeon'];
+      if (map['Key Level']) document.getElementById('key-level').textContent = '+' + map['Key Level'];
+      if (map['Timer']) document.getElementById('match-timer').textContent = map['Timer'];
+      if (map['Current Leader']) document.getElementById('current-leader').textContent = map['Current Leader'];
+      if (map['Leader Score']) document.getElementById('leader-score').textContent = map['Leader Score'];
+      if (map['Breaking News']) document.getElementById('breaking-news').textContent = map['Breaking News'];
+    }
+
+    // Auto-refresh κάθε 5 δευτερόλεπτα
+    fetchSheetData();
+    setInterval(fetchSheetData, 5000);
   </script>
 </body>
 </html>
