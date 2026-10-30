@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>M+ Live Broadcast Dashboard | Gredush</title>
-  <meta name="description" content="Live broadcast coverage and dashboard for Gredush Mythic+ events." />
+  <title>M+ Broadcast | Under Construction</title>
+  <meta name="description" content="Gredush M+ Event Dashboard is under construction." />
   <meta name="theme-color" content="#06070a" />
 
   <!-- Google tag (gtag.js) -->
@@ -41,10 +41,23 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
       box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
     }
-    .pulse-live { animation: livePulse 1.5s infinite; }
+    .btn-vault-primary {
+      background: linear-gradient(135deg, #991b1b 0%, #680d2b 50%, #581c87 100%);
+      background-size: 200% 200%;
+      transition: all 0.3s ease-in-out;
+      border: 1px solid rgba(248, 113, 113, 0.3);
+      box-shadow: 0 4px 20px -5px rgba(153, 27, 27, 0.5);
+    }
+    .btn-vault-primary:hover {
+      background-position: right center;
+      border-color: rgba(192, 132, 252, 0.6);
+      box-shadow: 0 6px 24px -2px rgba(168, 85, 247, 0.6);
+      transform: translateY(-2px);
+    }
+    .pulse-live { animation: livePulse 2s infinite; }
     @keyframes livePulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.05); }
     }
   </style>
 </head>
@@ -61,194 +74,54 @@
         <a href="mplus.html" class="text-purple-400 font-bold transition-colors">M+ Event</a>
         <a href="index.html#community" class="hover:text-purple-400 transition-colors">Community</a>
       </nav>
-      <a href="https://discord.gg/qScBpyq5gM" target="_blank" rel="noopener noreferrer" class="px-3 sm:px-4 py-2 text-xs font-bold uppercase tracking-widest text-white rounded-lg bg-red-900 hover:bg-red-800 transition-all flex items-center gap-2">
+      <a href="https://discord.gg/qScBpyq5gM" target="_blank" rel="noopener noreferrer" class="btn-vault-primary flex-shrink-0 px-3 sm:px-4 py-2 text-xs font-bold uppercase tracking-widest text-white rounded-lg flex items-center gap-2">
         <span>Join Discord</span>
       </a>
     </div>
   </header>
 
-  <main id="main" class="max-w-6xl mx-auto px-5 py-9 space-y-8 flex-grow w-full">
+  <!-- Main Content -->
+  <main id="main" class="max-w-4xl mx-auto px-5 py-20 flex-grow flex items-center justify-center w-full">
+    <div class="vault-card rounded-2xl p-8 sm:p-12 text-center border border-purple-900/40 space-y-6 shadow-2xl relative overflow-hidden">
+      
+      <div class="inline-flex items-center justify-center p-4 bg-purple-950/50 border border-purple-800/40 rounded-full text-purple-400 mb-2 pulse-live">
+        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 4a2 2 0 114 0v1a2 2 0 012 2v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2V4a2 2 0 114 0v1h2V4zM4 11h16v8a2 2 0 01-2 2H6a2 2 0 01-2-2v-8z" />
+        </svg>
+      </div>
 
-    <!-- Broadcast Header Banner -->
-    <div class="vault-card rounded-2xl p-6 border border-purple-900/40 flex flex-col md:flex-row justify-between items-center gap-4 shadow-2xl">
-      <div class="flex items-center gap-4">
-        <div class="p-3 bg-red-950/80 border border-red-800/50 text-red-400 rounded-xl">
-          <span class="w-4 h-4 rounded-full bg-red-600 pulse-live inline-block"></span>
-        </div>
-        <div>
-          <div class="flex items-center gap-3">
-            <span id="show-status" class="px-2.5 py-0.5 text-xs font-black uppercase tracking-wider rounded bg-red-600 text-white pulse-live">LIVE</span>
-            <span id="round-stage" class="text-xs font-bold uppercase tracking-widest text-purple-400">STAGE TBD</span>
-          </div>
-          <h1 id="match-title" class="font-horde text-2xl md:text-3xl font-black text-white glow-gold mt-1">M+ SHOWDOWN</h1>
-        </div>
+      <div class="space-y-2">
+        <span class="px-3 py-1 text-xs font-black uppercase tracking-widest rounded bg-purple-950/80 border border-purple-800/60 text-purple-300">
+          STATUS: UNDER CONSTRUCTION
+        </span>
+        <h1 class="font-horde text-3xl sm:text-5xl font-black text-white glow-gold pt-2">
+          M+ BROADCAST DASHBOARD
+        </h1>
+        <p class="text-slate-400 text-sm sm:text-base max-w-lg mx-auto pt-2">
+          To dashboard gia ta M+ Events tou Gredush einai filiko pros anadiamorfosi. Tha einai diathesimo me tin enarxi tou epomenou event!
+        </p>
       </div>
-      <div class="flex items-center gap-4">
-        <div class="vault-card px-6 py-3 rounded-xl border border-amber-500/30 text-center">
-          <span class="text-[11px] uppercase text-amber-400/90 block font-bold tracking-wider">Total Pot</span>
-          <span id="total-pot" class="text-xl font-bold text-amber-400 font-mono">0 g</span>
-        </div>
-        <div id="sync-status" class="text-[10px] font-mono text-slate-500 hidden sm:block">Syncing...</div>
+
+      <div class="pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row justify-center gap-4">
+        <a href="index.html" class="btn-vault-primary px-6 py-3 text-xs font-bold uppercase tracking-widest text-white rounded-lg">
+          Epistrofi sto Home
+        </a>
+        <a href="https://discord.gg/qScBpyq5gM" target="_blank" rel="noopener noreferrer" class="px-6 py-3 text-xs font-bold uppercase tracking-widest text-slate-300 hover:text-white bg-slate-900/80 hover:bg-slate-800 rounded-lg border border-slate-700/60 transition-all">
+          Enimerosi sto Discord
+        </a>
       </div>
+
     </div>
-
-    <!-- Live Matchup Board -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 items-center">
-      <!-- Team A -->
-      <div class="vault-card rounded-2xl p-6 text-center border-l-4 border-red-500 shadow-xl">
-        <span class="text-xs font-bold uppercase text-red-400 tracking-wider">TEAM A</span>
-        <h2 id="team-a-name" class="font-horde text-2xl font-black text-white mt-1">Team Alpha</h2>
-        <div id="team-a-score" class="text-5xl font-black font-horde text-red-500 mt-2">0</div>
-      </div>
-
-      <!-- Current Dungeon -->
-      <div class="vault-card rounded-2xl p-6 text-center space-y-3 bg-slate-950/80 shadow-xl">
-        <div class="text-xs uppercase tracking-widest text-slate-400 font-bold">Current Dungeon</div>
-        <div id="current-dungeon" class="text-xl font-black font-horde text-purple-300 glow-gold">Dungeon TBD</div>
-        <div class="inline-block px-3 py-1 rounded bg-purple-950/80 border border-purple-800/60 font-mono text-sm font-bold text-slate-200">
-          Key Level: <span id="key-level" class="text-purple-400">+12</span>
-        </div>
-      </div>
-
-      <!-- Team B -->
-      <div class="vault-card rounded-2xl p-6 text-center border-r-4 border-purple-500 shadow-xl">
-        <span class="text-xs font-bold uppercase text-purple-400 tracking-wider">TEAM B</span>
-        <h2 id="team-b-name" class="font-horde text-2xl font-black text-white mt-1">Team Bravo</h2>
-        <div id="team-b-score" class="text-5xl font-black font-horde text-purple-400 mt-2">0</div>
-      </div>
-    </div>
-
-    <!-- Power Rankings Table -->
-    <div class="vault-card rounded-2xl p-6 space-y-4 shadow-2xl">
-      <h2 class="font-horde text-xl font-bold text-white flex items-center gap-2">
-        <span class="w-2.5 h-2.5 rounded-full bg-purple-500 inline-block"></span> Team Power Rankings
-      </h2>
-      <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse">
-          <thead>
-            <tr class="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-400">
-              <th class="py-3 px-4">#</th>
-              <th class="py-3 px-4">Team</th>
-              <th class="py-3 px-4 text-center">Players</th>
-              <th class="py-3 px-4 text-right">Avg Rating</th>
-            </tr>
-          </thead>
-          <tbody id="rankings-tbody" class="text-sm divide-y divide-slate-800/60">
-            <tr><td colspan="4" class="py-6 text-center text-slate-500">Syncing rankings from TV Dashboard...</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
   </main>
 
-  <footer class="bg-[#040507] border-t border-slate-900 py-9 text-center text-xs text-slate-400 space-y-2">
+  <!-- Footer -->
+  <footer class="bg-[#040507] border-t border-slate-900 py-8 text-center text-xs text-slate-400 space-y-2">
     <p class="font-horde font-bold text-slate-300 tracking-widest text-sm">GREDUSH M+ EVENT BROADCAST</p>
-    <p>© <span id="year"></span> Gredush. Live mirror dashboard powered by TV Dashboard.</p>
+    <p>© <span id="year"></span> Gredush. All rights reserved.</p>
   </footer>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnLyEV_JrIV3Ohaq6jFFNpZhHMLpqpBztTSpVT96e1A__LREOv5T_p-Px5AZZvqzcESzEIwkFJ2XT9/pub?output=csv';
-
-    function parseCSV(text) {
-      const lines = text.split('\n');
-      return lines.map(line => {
-        const row = [];
-        let current = '';
-        let inQuotes = false;
-        for (let i = 0; i < line.length; i++) {
-          const char = line[i];
-          if (char === '"') {
-            inQuotes = !inQuotes;
-          } else if (char === ',' && !inQuotes) {
-            row.push(current.trim().replace(/^"|"$/g, ''));
-            current = '';
-          } else {
-            current += char;
-          }
-        }
-        row.push(current.trim().replace(/^"|"$/g, ''));
-        return row;
-      });
-    }
-
-    async function updateDashboard() {
-      try {
-        const response = await fetch(SHEET_CSV_URL + '&_t=' + Date.now(), { cache: 'no-store' });
-        const text = await response.text();
-        const rows = parseCSV(text);
-
-        const map = {};
-        const rankingsRows = [];
-        let parsingRankings = false;
-
-        rows.forEach((row, rowIndex) => {
-          if (row.length >= 2 && row[0]) {
-            map[row[0]] = row[1];
-          }
-
-          if (row[0] && row[0].toUpperCase().includes('TEAM POWER RANKING')) {
-            parsingRankings = true;
-            return;
-          }
-
-          if (parsingRankings) {
-            if (!row[0] || row[0] === '' || row[0].toUpperCase().includes('CURRENT EVENT LEADER')) {
-              parsingRankings = false;
-            } else if (row[0] !== '#') {
-              rankingsRows.push({
-                id: row[0],
-                team: row[1] || '',
-                players: row[2] || '0',
-                rating: row[3] || '0'
-              });
-            }
-          }
-
-          // Dungeon apo to keli G6 (grammi 6, index 5, stili G index 6)
-          if (rowIndex === 5 && row[6]) {
-            document.getElementById('current-dungeon').textContent = row[6];
-          }
-        });
-
-        if (map['Show Status']) document.getElementById('show-status').textContent = map['Show Status'];
-        if (map['Round']) document.getElementById('round-stage').textContent = map['Round'];
-        if (map['Match Title']) document.getElementById('match-title').textContent = map['Match Title'];
-        if (map['Team A']) document.getElementById('team-a-name').textContent = map['Team A'];
-        if (map['Team B']) document.getElementById('team-b-name').textContent = map['Team B'];
-        if (map['Team A Score']) document.getElementById('team-a-score').textContent = map['Team A Score'];
-        if (map['Team B Score']) document.getElementById('team-b-score').textContent = map['Team B Score'];
-        if (map['Key Level']) {
-          let kl = map['Key Level'];
-          document.getElementById('key-level').textContent = kl.startsWith('+') ? kl : '+' + kl;
-        }
-        if (map['TOTAL POT']) {
-          let pot = map['TOTAL POT'];
-          document.getElementById('total-pot').textContent = pot.includes('g') ? pot : pot + ' g';
-        }
-
-        if (rankingsRows.length > 0) {
-          const tbody = document.getElementById('rankings-tbody');
-          tbody.innerHTML = rankingsRows.map(r => `
-            <tr class="hover:bg-purple-950/20 transition-colors">
-              <td class="py-3 px-4 font-mono font-bold text-purple-400">${r.id}</td>
-              <td class="py-3 px-4 font-bold text-white">${r.team}</td>
-              <td class="py-3 px-4 text-center font-mono text-slate-300">${r.players}</td>
-              <td class="py-3 px-4 text-right font-mono font-bold text-purple-300">${r.rating}</td>
-            </tr>
-          `).join('');
-        }
-
-        document.getElementById('sync-status').textContent = 'Synced: ' + new Date().toLocaleTimeString();
-      } catch (err) {
-        console.error('Update error:', err);
-      }
-    }
-
-    updateDashboard();
-    setInterval(updateDashboard, 3000);
   </script>
 </body>
 </html>
