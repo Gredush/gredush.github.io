@@ -94,7 +94,7 @@
   <!-- Main Content -->
   <main id="main" class="max-w-7xl mx-auto px-5 py-10 flex-grow flex flex-col items-center justify-center w-full space-y-6">
     
-    <!-- Hub Navigation Buttons (Τέρμα πάνω) -->
+    <!-- Hub Navigation Buttons -->
     <div class="flex flex-wrap justify-center gap-3 w-full max-w-2xl">
       <a href="mplus.html" class="hub-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-slate-300 shadow-lg hover:text-white">
         M+ Event
@@ -110,7 +110,7 @@
       </a>
     </div>
 
-    <!-- Header Card: Betting Desk -->
+    <!-- Header Card -->
     <div class="vault-card rounded-2xl p-8 sm:p-10 text-center border border-amber-500/30 space-y-2 shadow-2xl w-full">
       <h1 class="font-horde text-3xl sm:text-5xl font-black text-amber-400 glow-gold">
         Betting Desk
@@ -175,25 +175,15 @@
 
     async function fetchBettingDesk() {
       try {
-        const response = await fetch(CSV_URL + '&_t=' + Date.now(), { cache: 'no-store' });
+        const response = await fetch(CSV_URL + '&_t=' + Date.now() + '&nocache=' + Math.random(), { cache: 'no-store' });
         const text = await response.text();
         const lines = text.split('\n');
         
         const rowsHTML = [];
 
-        // Κελιά B6:J205 (γραμμές 5 έως 204 στο array index)
-        // B = Bettor (index 1)
-        // C = Market (index 2)
-        // D = Selection (index 3)
-        // E = Stake (index 4)
-        // G = Live Odds (index 6)
-        // H = Potential Payout (index 7)
-        // I = Result (index 8)
-        // J = Paid? (index 9)
         for (let r = 5; r <= 204; r++) {
           if (lines.length > r) {
             const row = parseCSVLine(lines[r]);
-            
             const bettor = row[1] || '';
             const market = row[2] || '';
             const selection = row[3] || '';
@@ -203,7 +193,6 @@
             const result = row[8] || '';
             const paid = row[9] || '';
 
-            // Αν υπάρχει bettor ή market, εμφανίζουμε τη γραμμή
             if (bettor || market) {
               rowsHTML.push(`
                 <tr class="hover:bg-slate-900/40 transition-colors">
@@ -230,12 +219,11 @@
 
       } catch (err) {
         console.error('Error fetching betting desk data:', err);
-        document.getElementById('betting-desk-tbody').innerHTML = `<tr><td colspan="8" class="text-center py-8 text-red-400">Error loading betting desk data.</td></tr>`;
       }
     }
 
     fetchBettingDesk();
-    setInterval(fetchBettingDesk, 10000);
+    setInterval(fetchBettingDesk, 4000);
   </script>
 </body>
 </html>

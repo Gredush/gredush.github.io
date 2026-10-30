@@ -94,12 +94,12 @@
   <!-- Main Content -->
   <main id="main" class="max-w-6xl mx-auto px-5 py-10 flex-grow flex flex-col items-center justify-center w-full space-y-6">
     
-    <!-- Hub Navigation Buttons (Τέρμα πάνω, πάνω από τον τίτλο) -->
+    <!-- Hub Navigation Buttons -->
     <div class="flex flex-wrap justify-center gap-3 w-full max-w-2xl">
       <a href="mplus.html" class="hub-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-slate-300 shadow-lg hover:text-white">
         M+ Event
       </a>
-      <a href="dashboard.html" class="hub-btn active flex-1 min-w-[120px] py-3 px-4 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center shadow-lg text-white">
+      <a href="dashboard.html" class="hub-btn active flex-1 min-w-[120px] py-3 px-4 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-white shadow-lg">
         Dashboard
       </a>
       <a href="participants.html" class="hub-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-slate-300 shadow-lg hover:text-white">
@@ -110,7 +110,7 @@
       </a>
     </div>
 
-    <!-- Header Banner (Τίτλος & Status/Round) -->
+    <!-- Header Banner -->
     <div class="vault-card rounded-2xl p-8 sm:p-10 text-center border border-purple-900/40 space-y-4 shadow-2xl w-full">
       <h1 id="event-title" class="font-horde text-3xl sm:text-5xl font-black text-white glow-gold">
         Loading Title...
@@ -122,15 +122,13 @@
       </div>
     </div>
 
-    <!-- Live Matchup Board (Teams & Dungeon) -->
+    <!-- Live Matchup Board -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full items-center">
-      <!-- Ομάδα Α (A6:D8) -->
       <div class="vault-card rounded-2xl p-6 text-center border-l-4 border-red-500 shadow-xl space-y-2">
         <span class="text-xs font-bold uppercase text-red-400 tracking-wider">TEAM A</span>
         <h2 id="team-a" class="font-horde text-2xl font-black text-white">Team Alpha</h2>
       </div>
 
-      <!-- Current Dungeon (G6:J6) -->
       <div class="vault-card rounded-2xl p-6 text-center space-y-2 bg-slate-950/80 shadow-xl border border-purple-900/30">
         <div class="text-xs uppercase tracking-widest text-slate-400 font-bold">Current Dungeon</div>
         <div id="current-dungeon" class="text-xl sm:text-2xl font-black font-horde text-purple-300 glow-gold">
@@ -138,14 +136,13 @@
         </div>
       </div>
 
-      <!-- Ομάδα Β (M6:P8) -->
       <div class="vault-card rounded-2xl p-6 text-center border-r-4 border-purple-500 shadow-xl space-y-2">
         <span class="text-xs font-bold uppercase text-purple-400 tracking-wider">TEAM B</span>
         <h2 id="team-b" class="font-horde text-2xl font-black text-white">Team Bravo</h2>
       </div>
     </div>
 
-    <!-- Total Bet Pot (A11:D13) -->
+    <!-- Total Bet Pot -->
     <div class="vault-card rounded-2xl p-6 text-center border border-amber-500/30 shadow-xl w-full max-w-md mx-auto space-y-2">
       <span class="text-xs font-bold uppercase tracking-widest text-amber-400">Total Bet Pot</span>
       <div id="total-pot" class="font-horde text-3xl font-black text-amber-300 glow-gold">
@@ -153,10 +150,10 @@
       </div>
     </div>
 
-    <!-- Two Cards Section (Αριστερά: Team Power Ranking, Δεξιά: Betting Board) -->
+    <!-- Two Cards Section -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full items-start">
       
-      <!-- Αριστερό Card: Team Power Ranking -->
+      <!-- Team Power Ranking -->
       <div class="vault-card rounded-2xl p-6 space-y-4 shadow-xl border border-purple-900/40">
         <div class="border-b border-slate-800 pb-3">
           <h3 class="font-horde text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2">
@@ -174,7 +171,7 @@
         </div>
       </div>
 
-      <!-- Δεξί Card: Betting Board -->
+      <!-- Betting Board -->
       <div class="vault-card rounded-2xl p-6 space-y-4 shadow-xl border border-amber-500/30">
         <div class="border-b border-slate-800 pb-3">
           <h3 class="font-horde text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2">
@@ -227,87 +224,62 @@
       return result.map(s => s.replace(/^"|"$/g, ''));
     }
 
+    let isFirstFetch = true;
+
     async function fetchData() {
       try {
-        const response = await fetch(CSV_URL + '&_t=' + Date.now(), { cache: 'no-store' });
+        const response = await fetch(CSV_URL + '&_t=' + Date.now() + '&nocache=' + Math.random(), { cache: 'no-store' });
         const text = await response.text();
         const lines = text.split('\n');
         
-        // Γραμμή 1: Τίτλος (A1)
+        let newTitle = '';
         if (lines.length > 0) {
           const row1 = parseCSVLine(lines[0]);
-          if (row1.length > 0 && row1[0] !== '') {
-            document.getElementById('event-title').textContent = row1[0];
-          }
+          if (row1.length > 0 && row1[0] !== '') newTitle = row1[0];
         }
 
-        // Γραμμή 3: Status / Round / Match Title (A3:P3)
+        let newInfo = '';
         if (lines.length > 2) {
           const row3 = parseCSVLine(lines[2]);
-          const combinedInfo = row3.filter(val => val !== '').join(' - ');
-          if (combinedInfo) {
-            document.getElementById('sheet-info').textContent = combinedInfo;
-          }
+          newInfo = row3.filter(val => val !== '').join(' - ');
         }
 
-        // Γραμμή 6 (index 5): Ομάδα Α (στήλη A-D), Dungeon (στήλη G), Ομάδα Β (στήλη M-P)
+        let teamAVal = 'Team Alpha';
+        let dungeonVal = 'Dungeon TBD';
+        let teamBVal = 'Team Bravo';
         if (lines.length > 5) {
           const row6 = parseCSVLine(lines[5]);
-          
           for (let i = 0; i <= 3; i++) {
-            if (row6[i] && row6[i] !== '') {
-              document.getElementById('team-a').textContent = row6[i];
-              break;
-            }
+            if (row6[i] && row6[i] !== '') { teamAVal = row6[i]; break; }
           }
-
-          if (row6[6] && row6[6] !== '') {
-            document.getElementById('current-dungeon').textContent = row6[6];
-          }
-
+          if (row6[6] && row6[6] !== '') dungeonVal = row6[6];
           for (let i = 12; i <= 15; i++) {
-            if (row6[i] && row6[i] !== '') {
-              document.getElementById('team-b').textContent = row6[i];
-              break;
-            }
+            if (row6[i] && row6[i] !== '') { teamBVal = row6[i]; break; }
           }
         }
 
-        // Γραμμές 11 έως 13 (indices 10-12): Total Bet Pot (A11:D13)
+        let totalPotVal = '0';
         for (let r = 10; r <= 12; r++) {
           if (lines.length > r) {
             const potRow = parseCSVLine(lines[r]);
             for (let i = 0; i <= 3; i++) {
-              if (potRow[i] && potRow[i] !== '') {
-                document.getElementById('total-pot').textContent = potRow[i];
-                break;
-              }
+              if (potRow[i] && potRow[i] !== '') { totalPotVal = potRow[i]; break; }
             }
           }
         }
 
-        // Γραμμές 17 έως 22 (indices 16-21): Team Power Rankings
         const rankingsHTML = [];
         for (let r = 16; r <= 21; r++) {
           if (lines.length > r) {
             const row = parseCSVLine(lines[r]);
-            
             let teamName = '';
             for (let i = 1; i <= 3; i++) {
-              if (row[i] && row[i] !== '') {
-                teamName = row[i];
-                break;
-              }
+              if (row[i] && row[i] !== '') { teamName = row[i]; break; }
             }
-
             let teamRating = '';
             for (let i = 5; i <= 6; i++) {
-              if (row[i] && row[i] !== '') {
-                teamRating = row[i];
-                break;
-              }
+              if (row[i] && row[i] !== '') { teamRating = row[i]; break; }
             }
-
             if (teamName) {
               rankingsHTML.push(`
                 <div class="flex justify-between items-center py-2 px-3 rounded-lg bg-slate-900/60 border border-slate-800/80 hover:border-purple-800/50 transition-colors">
@@ -319,38 +291,20 @@
           }
         }
 
-        if (rankingsHTML.length > 0) {
-          document.getElementById('rankings-list').innerHTML = rankingsHTML.join('');
-        } else {
-          document.getElementById('rankings-list').innerHTML = '<div class="text-slate-500 text-sm text-center py-4">No rankings found</div>';
-        }
-
-        // Γραμμές 17 έως 22 (indices 16-21): Betting Board (Market J17:K22, Odds N17:O22, Pool P17:P22)
         const bettingHTML = [];
         for (let r = 16; r <= 21; r++) {
           if (lines.length > r) {
             const row = parseCSVLine(lines[r]);
-            
             let market = '';
             for (let i = 9; i <= 10; i++) {
-              if (row[i] && row[i] !== '') {
-                market = row[i];
-                break;
-              }
+              if (row[i] && row[i] !== '') { market = row[i]; break; }
             }
-
             let odds = '';
             for (let i = 13; i <= 14; i++) {
-              if (row[i] && row[i] !== '') {
-                odds = row[i];
-                break;
-              }
+              if (row[i] && row[i] !== '') { odds = row[i]; break; }
             }
-
             let pool = '';
-            if (row[15] && row[15] !== '') {
-              pool = row[15];
-            }
+            if (row[15] && row[15] !== '') pool = row[15];
 
             if (market) {
               bettingHTML.push(`
@@ -364,11 +318,22 @@
           }
         }
 
+        // Ενημέρωση DOM ομαλά χωρίς flickering
+        if (newTitle) document.getElementById('event-title').textContent = newTitle;
+        if (newInfo) document.getElementById('sheet-info').textContent = newInfo;
+        document.getElementById('team-a').textContent = teamAVal;
+        document.getElementById('current-dungeon').textContent = dungeonVal;
+        document.getElementById('team-b').textContent = teamBVal;
+        document.getElementById('total-pot').textContent = totalPotVal;
+
+        if (rankingsHTML.length > 0) {
+          document.getElementById('rankings-list').innerHTML = rankingsHTML.join('');
+        }
         if (bettingHTML.length > 0) {
           document.getElementById('betting-list').innerHTML = bettingHTML.join('');
-        } else {
-          document.getElementById('betting-list').innerHTML = '<div class="text-slate-500 text-sm text-center py-4">No betting markets found</div>';
         }
+
+        isFirstFetch = false;
 
       } catch (err) {
         console.error('Error fetching sheet data:', err);

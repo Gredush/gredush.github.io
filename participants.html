@@ -94,7 +94,7 @@
   <!-- Main Content -->
   <main id="main" class="max-w-6xl mx-auto px-5 py-10 flex-grow flex flex-col items-center justify-center w-full space-y-6">
     
-    <!-- Hub Navigation Buttons (Τέρμα πάνω) -->
+    <!-- Hub Navigation Buttons -->
     <div class="flex flex-wrap justify-center gap-3 w-full max-w-2xl">
       <a href="mplus.html" class="hub-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-slate-300 shadow-lg hover:text-white">
         M+ Event
@@ -102,7 +102,7 @@
       <a href="dashboard.html" class="hub-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-slate-300 shadow-lg hover:text-white">
         Dashboard
       </a>
-      <a href="participants.html" class="hub-btn active flex-1 min-w-[120px] py-3 px-4 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center shadow-lg text-white">
+      <a href="participants.html" class="hub-btn active flex-1 min-w-[120px] py-3 px-4 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-white shadow-lg">
         Participants
       </a>
       <a href="betting-desk.html" class="hub-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-slate-300 shadow-lg hover:text-white">
@@ -110,7 +110,7 @@
       </a>
     </div>
 
-    <!-- Header Card: Participants -->
+    <!-- Header Card -->
     <div class="vault-card rounded-2xl p-8 sm:p-10 text-center border border-purple-900/40 space-y-2 shadow-2xl w-full">
       <h1 class="font-horde text-3xl sm:text-5xl font-black text-white glow-gold">
         Participants
@@ -173,23 +173,15 @@
 
     async function fetchParticipants() {
       try {
-        const response = await fetch(CSV_URL + '&_t=' + Date.now(), { cache: 'no-store' });
+        const response = await fetch(CSV_URL + '&_t=' + Date.now() + '&nocache=' + Math.random(), { cache: 'no-store' });
         const text = await response.text();
         const lines = text.split('\n');
         
         const rowsHTML = [];
 
-        // Κελιά A5:A104 (index 4 έως 103)
-        // A = Raider.io Link (index 0)
-        // B = Character (index 1)
-        // D = Server (index 3)
-        // E = Rating (index 4)
-        // F = Team (index 5)
-        // G = Role (index 6)
         for (let r = 4; r <= 103; r++) {
           if (lines.length > r) {
             const row = parseCSVLine(lines[r]);
-            
             const raiderIo = row[0] || '';
             const character = row[1] || '';
             const server = row[3] || '';
@@ -197,7 +189,6 @@
             const team = row[5] || '';
             const role = row[6] || '';
 
-            // Αν υπάρχει χαρακτήρας ή team, προσθέτουμε τη γραμμή
             if (character || team) {
               const raiderLinkHTML = raiderIo ? `<a href="${raiderIo}" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 underline font-semibold">Profile</a>` : '-';
 
@@ -224,12 +215,11 @@
 
       } catch (err) {
         console.error('Error fetching participants data:', err);
-        document.getElementById('participants-tbody').innerHTML = `<tr><td colspan="6" class="text-center py-8 text-red-400">Error loading participants data.</td></tr>`;
       }
     }
 
     fetchParticipants();
-    setInterval(fetchParticipants, 10000);
+    setInterval(fetchParticipants, 4000);
   </script>
 </body>
 </html>

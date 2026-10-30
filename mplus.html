@@ -94,7 +94,7 @@
   <!-- Main Content -->
   <main id="main" class="max-w-4xl mx-auto px-5 py-16 flex-grow flex flex-col items-center justify-center w-full space-y-8">
     
-    <!-- Hub Navigation Buttons (Τερμα πάνω, πάνω από τον τίτλο) -->
+    <!-- Hub Navigation Buttons -->
     <div class="flex flex-wrap justify-center gap-3 w-full max-w-2xl">
       <a href="mplus.html" class="hub-btn active flex-1 min-w-[120px] py-3 px-4 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center shadow-lg text-white">
         M+ Event
@@ -110,7 +110,7 @@
       </a>
     </div>
 
-    <!-- Header Banner (Τίτλος & Status/Round) -->
+    <!-- Header Banner -->
     <div class="vault-card rounded-2xl p-8 sm:p-12 text-center border border-purple-900/40 space-y-4 shadow-2xl w-full">
       <h1 id="event-title" class="font-horde text-3xl sm:text-5xl font-black text-white glow-gold">
         Loading Title...
@@ -156,7 +156,7 @@
 
     async function fetchData() {
       try {
-        const response = await fetch(CSV_URL + '&_t=' + Date.now(), { cache: 'no-store' });
+        const response = await fetch(CSV_URL + '&_t=' + Date.now() + '&nocache=' + Math.random(), { cache: 'no-store' });
         const text = await response.text();
         const lines = text.split('\n');
         
@@ -180,7 +180,7 @@
     }
 
     fetchData();
-    setInterval(fetchData, 3000);
+    setInterval(fetchData, 4000);
   </script>
 </body>
 </html>
