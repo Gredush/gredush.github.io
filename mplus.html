@@ -118,10 +118,10 @@
       </div>
     </div>
 
-    <!-- Power Rankings & Status Table -->
+    <!-- Power Rankings Table -->
     <div class="vault-card rounded-2xl p-6 space-y-4 shadow-2xl">
       <h2 class="font-horde text-xl font-bold text-white flex items-center gap-2">
-        <span class="w-2.5 h-2.5 rounded-full bg-purple-500 inline-block"></span> Team Power Rankings & Status
+        <span class="w-2.5 h-2.5 rounded-full bg-purple-500 inline-block"></span> Team Power Rankings
       </h2>
       <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse">
@@ -131,11 +131,10 @@
               <th class="py-3 px-4">Team</th>
               <th class="py-3 px-4 text-center">Players</th>
               <th class="py-3 px-4 text-right">Avg Rating</th>
-              <th class="py-3 px-4 text-right">Status</th>
             </tr>
           </thead>
           <tbody id="rankings-tbody" class="text-sm divide-y divide-slate-800/60">
-            <tr><td colspan="5" class="py-6 text-center text-slate-500">Syncing rankings from TV Dashboard...</td></tr>
+            <tr><td colspan="4" class="py-6 text-center text-slate-500">Syncing rankings from TV Dashboard...</td></tr>
           </tbody>
         </table>
       </div>
@@ -145,7 +144,7 @@
 
   <footer class="bg-[#040507] border-t border-slate-900 py-9 text-center text-xs text-slate-400 space-y-2">
     <p class="font-horde font-bold text-slate-300 tracking-widest text-sm">GREDUSH M+ EVENT BROADCAST</p>
-    <p>© <span id="year"></span> Gredush. Live dashboard powered by TV Dashboard.</p>
+    <p>© <span id="year"></span> Gredush. Live mirror dashboard powered by TV Dashboard.</p>
   </footer>
 
   <script>
@@ -186,12 +185,12 @@
         let parsingRankings = false;
 
         rows.forEach((row, rowIndex) => {
-          // Key-value pairs apo tis protes stiles
+          // Key-Value pairs apo tis protes stiles
           if (row.length >= 2 && row[0]) {
             map[row[0]] = row[1];
           }
 
-          // Entopismos power rankings table mesa sto CSV
+          // Entopismos Power Rankings table (apo tin epikefalida)
           if (row[0] && row[0].toUpperCase().includes('TEAM POWER RANKING')) {
             parsingRankings = true;
             return;
@@ -205,19 +204,18 @@
                 id: row[0],
                 team: row[1] || '',
                 players: row[2] || '0',
-                rating: row[4] || row[3] || '0',
-                status: row[5] || 'Active'
+                rating: row[4] || row[3] || '0'
               });
             }
           }
 
-          // Anagnosi Dungeon apo ti grammi 6 (index 5) stili G (index 6)
+          // Dungeon name apo keli G6 (grammi 6, index 5, stili G index 6)
           if (rowIndex === 5 && row[6]) {
             document.getElementById('current-dungeon').textContent = row[6];
           }
         });
 
-        // Enimerosi stoixeiwn UI
+        // Enimerosi Live Controls
         if (map['Show Status']) document.getElementById('show-status').textContent = map['Show Status'];
         if (map['Round']) document.getElementById('round-stage').textContent = map['Round'];
         if (map['Match Title']) document.getElementById('match-title').textContent = map['Match Title'];
@@ -234,7 +232,7 @@
           document.getElementById('total-pot').textContent = pot.includes('g') ? pot : pot + ' g';
         }
 
-        // Render Power Rankings Table cleanly
+        // Render Power Rankings Table
         if (rankingsRows.length > 0) {
           const tbody = document.getElementById('rankings-tbody');
           tbody.innerHTML = rankingsRows.map(r => `
@@ -243,9 +241,6 @@
               <td class="py-3 px-4 font-bold text-white">${r.team}</td>
               <td class="py-3 px-4 text-center font-mono text-slate-300">${r.players}</td>
               <td class="py-3 px-4 text-right font-mono font-bold text-purple-300">${r.rating}</td>
-              <td class="py-3 px-4 text-right">
-                <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-900 border border-slate-800 text-slate-300">${r.status}</span>
-              </td>
             </tr>
           `).join('');
         }
