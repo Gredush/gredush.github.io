@@ -145,7 +145,7 @@
       </div>
     </div>
 
-    <!-- Power Rankings Table (Xwris status, me swstes stiles) -->
+    <!-- Power Rankings Table -->
     <div class="vault-card rounded-2xl p-6 space-y-4">
       <h2 class="font-horde text-xl font-bold text-white flex items-center gap-2">
         <svg class="w-5 h-5 ic text-purple-400"><use href="#i-radio"/></svg> Team Power Rankings
@@ -156,7 +156,7 @@
             <tr class="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-400">
               <th class="py-2.5 px-3">#</th>
               <th class="py-2.5 px-3">Team</th>
-              <th class="py-2.5 px-3">Players</th>
+              <th class="py-2.5 px-3 text-center">Players</th>
               <th class="py-2.5 px-3 text-right">Avg Rating</th>
             </tr>
           </thead>
@@ -195,9 +195,30 @@
 
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnLyEV_JrIV3Ohaq6jFFNpZhHMLpqpBztTSpVT96e1A__LREOv5T_p-Px5AZZvqzcESzEIwkFJ2XT9/pub?gid=671222144&single=true&output=csv';
 
+    // Helper parser gia CSV grammes me ipostiriksi gia eisagwgika & kommata
+    function parseCSVLine(line) {
+      const result = [];
+      let current = '';
+      let inQuotes = false;
+      for (let i = 0; i < line.length; i++) {
+        const char = line[i];
+        if (char === '"') {
+          inQuotes = !inQuotes;
+        } else if (char === ',' && !inQuotes) {
+          result.push(current.trim());
+          current = '';
+        } else {
+          current += char;
+        }
+      }
+      result.push(current.trim());
+      return result.map(s => s.replace(/^"|"$/g, ''));
+    }
+
     async function fetchSheetData() {
       try {
-        const response = await fetch(CSV_URL + '&t=' + new Date().getTime());
+        // Cache busting gia na parakamptei to browser cache
+        const response = await fetch(CSV_URL + '&cachebust=' + Date.now());
         const data = await response.text();
         parseAndApplyData(data);
       } catch (err) {
@@ -211,25 +232,34 @@
       let parsingRankings = false;
       const rankingsRows = [];
 
-      lines.forEach(line => {
-        const parts = line.split(',').map(p => p.trim().replace(/^"|"$/g, ''));
+      lines.forEach(rawLine => {
+        const parts = parseCSVLine(rawLine);
         
+        // Entopismos tis entarksis ton Power Rankings
         if (parts[0] && parts[0].toUpperCase().includes('TEAM POWER RANKING')) {
           parsingRankings = true;
           return;
         }
-        if (parsingRankings && (parts[0] === '' && (!parts[1] || parts[1] === ''))) {
-          parsingRankings = false;
-        }
 
-        if (parsingRankings && parts[0] && parts[0] !== '#') {
-          // Stile 0: ID/Number, Stile 1: Team, Stile 2: Players, Stile 3: Avg Rating (analoga pos einai i seira sto sheet sou)
-          rankingsRows.push({
-            id: parts[0] || '',
-            team: parts[1] || '',
-            players: parts[2] || '',
-            rating: parts[3] || ''
-          });
+        if (parsingRankings) {
+          // Telos tou pinaka ean vrethei keni grammi i allo header
+          if (!parts[0] || parts[0] === '' || parts[0].toUpperCase().includes('CURRENT EVENT LEADER')) {
+            parsingRankings = false;
+          } else if (parts[0] !== '#') {
+            // Seira sto Sheet: Stili 0 (#), Stili 1 (Team), Stili 2 (Players), Stili 3/4 (Avg Rating)
+            const id = parts[0];
+            const team = parts[1] || '';
+            const players = parts[2] || '0';
+            // Ean to avg rating exei diaspastei apo koma (p.x. "3", "894.2") ta enonoume
+            let rating = parts[3] || '0';
+            if (parts[4] && !isNaN(parts[4])) {
+              rating = parts[3] + '.' + parts[4];
+            }
+
+            if (id && !isNaN(id)) {
+              rankingsRows.push({ id, team, players, rating });
+            }
+          }
         }
 
         if (parts.length >= 2 && parts[0]) {
@@ -237,6 +267,7 @@
         }
       });
 
+      // Ananeosi basikon pedion
       if (map['Show Status']) document.getElementById('show-status').textContent = map['Show Status'];
       if (map['Round']) document.getElementById('round-stage').textContent = map['Round'];
       if (map['Match Title']) document.getElementById('match-title').textContent = map['Match Title'];
@@ -251,24 +282,30 @@
       if (map['Leader Score']) document.getElementById('leader-score').textContent = map['Leader Score'];
       if (map['Breaking News']) document.getElementById('breaking-news').textContent = map['Breaking News'];
       
-      if (map['TOTAL POT']) document.getElementById('total-pot').textContent = map['TOTAL POT'];
+      // Ananeosi Total Pot (px. 300,000 g)
+      if (map['TOTAL POT']) {
+        let potVal = map['TOTAL POT'];
+        if (map['NET POOL'] && isNaN(potVal)) potVal = map['TOTAL POT']; 
+        document.getElementById('total-pot').textContent = potVal.includes('g') ? potVal : potVal + ' g';
+      }
 
-      // Enimerosi tou pinaka rankings xoris status kai me swstes stiles (Players kai Avg Rating stis theseis tous)
+      // Ananeosi pinaka Power Rankings
       if (rankingsRows.length > 0) {
         const tbody = document.getElementById('rankings-tbody');
         tbody.innerHTML = rankingsRows.map(r => `
           <tr class="hover:bg-slate-900/40 transition-colors">
             <td class="py-2.5 px-3 font-mono font-bold text-purple-400">${r.id}</td>
             <td class="py-2.5 px-3 font-bold text-white">${r.team}</td>
-            <td class="py-2.5 px-3 text-slate-300">${r.players}</td>
-            <td class="py-2.5 px-3 text-right font-mono text-slate-200">${r.rating}</td>
+            <td class="py-2.5 px-3 text-center text-slate-300 font-mono">${r.players}</td>
+            <td class="py-2.5 px-3 text-right font-mono font-bold text-purple-300">${r.rating}</td>
           </tr>
         `).join('');
       }
     }
 
     fetchSheetData();
-    setInterval(fetchSheetData, 5000);
+    // Auto refresh kathe 3 defterolepta
+    setInterval(fetchSheetData, 3000);
   </script>
 </body>
 </html>
