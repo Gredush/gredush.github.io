@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>M+ Event | Gredush</title>
+  <meta name="description" content="Gredush Mythic+ community events, rules, and details." />
+  <meta name="theme-color" content="#06070a" />
+
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CZLTE6SXJ5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-CZLTE6SXJ5');
+</script>
+  
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="M+ Event | Gredush" />
+  <meta property="og:description" content="Mythic+ community events hosted by Gredush." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏹</text></svg>" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    html { font-size: 110%; scroll-behavior: smooth; }
+    body {
+      font-family: 'Rajdhani', 'Inter', sans-serif;
+      background-color: #06070a;
+      color: #e2e8f0;
+      background-image:
+        radial-gradient(circle at 50% 0%, rgba(153, 27, 27, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 60%, rgba(88, 28, 135, 0.1) 0%, transparent 40%);
+      background-attachment: fixed;
+    }
+    .font-horde { font-family: 'Cinzel', serif; }
+    .glow-gold { text-shadow: 0 0 16px rgba(239, 68, 68, 0.4), 0 0 30px rgba(168, 85, 247, 0.2); }
+    .btn-vault-primary {
+      background: linear-gradient(135deg, #991b1b 0%, #680d2b 50%, #581c87 100%);
+      background-size: 200% 200%;
+      transition: all 0.3s ease-in-out;
+      border: 1px solid rgba(248, 113, 113, 0.3);
+      box-shadow: 0 4px 20px -5px rgba(153, 27, 27, 0.5);
+    }
+    .btn-vault-primary:hover {
+      background-position: right center;
+      border-color: rgba(192, 132, 252, 0.6);
+      box-shadow: 0 6px 24px -2px rgba(168, 85, 247, 0.6);
+      transform: translateY(-2px);
+    }
+    .vault-card {
+      background: rgba(13, 16, 23, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      transition: border-color .3s, box-shadow .3s;
+    }
+    .vault-card:hover { border-color: rgba(168, 85, 247, 0.3); box-shadow: 0 10px 30px -10px rgba(147, 51, 234, 0.2); }
+    .ic { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    a:focus-visible, button:focus-visible { outline: 2px solid #c084fc; outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col justify-between selection:bg-red-900 selection:text-purple-200">
+
+  <!-- SVG sprite -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-discord" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.093.252-.19.373-.287a.075.075 0 0 1 .078-.01c3.927 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .079.009c.12.098.245.195.372.288a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></symbol>
+    <symbol id="i-radio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8a6 6 0 0 1 0 8.4M7.8 16.2a6 6 0 0 1 0-8.4M19.1 4.9a10 10 0 0 1 0 14.2M4.9 19.1a10 10 0 0 1 0-14.2"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  </svg>
+
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-[60] focus:top-2 focus:left-2 focus:bg-purple-700 focus:text-white focus:px-3 focus:py-2 focus:rounded">Skip to content</a>
+
+  <!-- NAVIGATION BAR (Me to M+ Event energopoimeno) -->
+  <header class="sticky top-0 z-50 backdrop-blur-xl bg-[#06070a]/80 border-b border-red-950/40">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
+      <nav aria-label="Main" class="flex items-center gap-4 sm:gap-8 text-[11px] sm:text-sm font-semibold tracking-wide sm:tracking-wider uppercase text-slate-300">
+        <a href="index.html#livestreams" class="hover:text-red-400 transition-colors">Streams</a>
+        <a href="wow.html" class="hover:text-purple-400 transition-colors">World Of Warcraft</a>
+        <a href="index.html#youtube" class="hover:text-red-400 transition-colors">Videos</a>
+        <a href="mplus.html" class="text-purple-400 font-bold transition-colors">M+ Event</a>
+        <a href="index.html#community" class="hover:text-purple-400 transition-colors">Community</a>
+      </nav>
+      <a href="https://discord.gg/qScBpyq5gM" target="_blank" rel="noopener noreferrer" aria-label="Join Discord" class="btn-vault-primary flex-shrink-0 px-3 sm:px-4 py-2 text-xs font-bold uppercase tracking-widest text-white rounded-lg flex items-center gap-2">
+        <svg class="w-4 h-4 fill-current" aria-hidden="true"><use href="#i-discord"/></svg>
+        <span class="hidden sm:inline">Join Discord</span>
+      </a>
+    </div>
+  </header>
+
+  <main id="main" class="max-w-6xl mx-auto px-5 py-9 space-y-12 flex-grow w-full">
+
+    <!-- Page Header -->
+    <div class="vault-card rounded-2xl p-7 text-center md:text-left flex flex-col md:flex-row items-center gap-6 shadow-xl">
+      <div class="p-4 bg-purple-950/80 border border-purple-800/40 text-purple-400 rounded-xl">
+        <svg class="w-10 h-10 ic" aria-hidden="true"><use href="#i-radio"/></svg>
+      </div>
+      <div class="space-y-2">
+        <h1 class="font-horde text-3xl md:text-4xl font-black text-white glow-gold">Mythic+ Community Event</h1>
+        <p class="text-slate-300 text-sm md:text-base">
+          Special community M+ runs, challenges, and events hosted by Gredush.
+        </p>
+      </div>
+    </div>
+
+    <!-- Content Placeholder -->
+    <section class="vault-card rounded-2xl p-10 text-center space-y-6">
+      <div class="max-w-xl mx-auto space-y-3">
+        <h2 class="font-horde text-2xl font-bold text-white">Coming Soon</h2>
+        <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+          Οι πληροφορίες και το πρόγραμμα για το επερχόμενο M+ Event ετοιμάζονται. Μείνετε συντονισμένοι ή γίνετε μέλος στο Discord για να μαθαίνετε πρώτοι τα νέα!
+        </p>
+      </div>
+      <div>
+        <a href="https://discord.gg/qScBpyq5gM" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2.5 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-lg transition-all shadow-md shadow-indigo-950/50">
+          <svg class="w-5 h-5 fill-current" aria-hidden="true"><use href="#i-discord"/></svg>
+          Join Discord for Updates <svg class="w-4 h-4 ic" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-[#040507] border-t border-slate-900 py-9 text-center text-xs text-slate-400 space-y-2">
+    <p class="font-horde font-bold text-slate-300 tracking-widest text-sm">Gredush</p>
+    <p>World of Warcraft® is a registered trademark of Blizzard Entertainment, Inc.</p>
+    <p>© <span id="year"></span> Gredush. Built with GitHub Pages.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
