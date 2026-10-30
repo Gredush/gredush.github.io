@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>M+ Live Broadcast Dashboard | Gredush</title>
-  <meta name="description" content="Live broadcast coverage and mirror for Gredush Mythic+ TV Dashboard." />
+  <meta name="description" content="Live broadcast coverage and dashboard for Gredush Mythic+ events." />
   <meta name="theme-color" content="#06070a" />
 
   <!-- Google tag (gtag.js) -->
@@ -34,19 +34,24 @@
       background-attachment: fixed;
     }
     .font-horde { font-family: 'Cinzel', serif; }
+    .glow-gold { text-shadow: 0 0 16px rgba(239, 68, 68, 0.4), 0 0 30px rgba(168, 85, 247, 0.2); }
     .vault-card {
       background: rgba(13, 16, 23, 0.85);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.08);
       box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
     }
-    .sheet-table td, .sheet-table th {
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      padding: 0.6rem 0.8rem;
-      white-space: nowrap;
+    .broadcast-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
     }
-    .sheet-table tr:nth-child(even) {
-      background-color: rgba(255, 255, 255, 0.02);
+    .broadcast-table th, .broadcast-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .broadcast-table tr:hover td {
+      background-color: rgba(168, 85, 247, 0.04);
     }
     .pulse-live { animation: livePulse 1.5s infinite; }
     @keyframes livePulse {
@@ -60,7 +65,7 @@
 
   <!-- Navigation Bar -->
   <header class="sticky top-0 z-50 backdrop-blur-xl bg-[#06070a]/80 border-b border-red-950/40">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
       <nav aria-label="Main" class="flex items-center gap-4 sm:gap-8 text-[11px] sm:text-sm font-semibold tracking-wide sm:tracking-wider uppercase text-slate-300">
         <a href="index.html#livestreams" class="hover:text-red-400 transition-colors">Streams</a>
         <a href="wow.html" class="hover:text-purple-400 transition-colors">World Of Warcraft</a>
@@ -74,23 +79,32 @@
     </div>
   </header>
 
-  <main id="main" class="max-w-7xl mx-auto px-4 py-8 space-y-6 flex-grow w-full">
+  <main id="main" class="max-w-6xl mx-auto px-5 py-9 space-y-8 flex-grow w-full">
 
-    <div class="flex justify-between items-center">
-      <h1 class="font-horde text-2xl sm:text-3xl font-black text-white tracking-wider flex items-center gap-3">
-        <span class="w-3 h-3 rounded-full bg-red-600 pulse-live inline-block"></span>
-        TV DASHBOARD MIRROR
-      </h1>
-      <span id="sync-status" class="text-xs font-mono text-slate-400">Syncing...</span>
+    <!-- Header Banner -->
+    <div class="vault-card rounded-2xl p-6 border border-purple-900/40 flex flex-col md:flex-row justify-between items-center gap-4 shadow-2xl">
+      <div class="flex items-center gap-4">
+        <div class="p-3 bg-red-950/80 border border-red-800/50 text-red-400 rounded-xl">
+          <span class="w-4 h-4 rounded-full bg-red-600 pulse-live inline-block"></span>
+        </div>
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="px-2.5 py-0.5 text-xs font-black uppercase tracking-wider rounded bg-red-600 text-white pulse-live">LIVE</span>
+            <span class="text-xs font-bold uppercase tracking-widest text-purple-400">M+ BROADCAST DASHBOARD</span>
+          </div>
+          <h1 class="font-horde text-2xl md:text-3xl font-black text-white glow-gold mt-1">GREDUSH TV DASHBOARD</h1>
+        </div>
+      </div>
+      <div id="sync-status" class="text-xs font-mono text-slate-400">Syncing with Google Sheets...</div>
     </div>
 
-    <!-- Live Mirror Table -->
-    <div class="vault-card rounded-2xl p-4 sm:p-6 overflow-hidden">
+    <!-- Dynamic Sheet Mirror Container -->
+    <div class="vault-card rounded-2xl p-6 space-y-4">
       <div class="overflow-x-auto">
-        <table class="w-full text-left sheet-table text-xs sm:text-sm" id="dashboard-table">
-          <tbody id="sheet-body">
+        <table class="broadcast-table text-left" id="sheet-mirror-table">
+          <tbody id="sheet-mirror-body">
             <tr>
-              <td class="text-center py-8 text-slate-500 font-mono">Loading TV Dashboard data...</td>
+              <td class="text-center py-12 text-slate-500 font-mono">Loading TV Dashboard data...</td>
             </tr>
           </tbody>
         </table>
@@ -99,9 +113,9 @@
 
   </main>
 
-  <footer class="bg-[#040507] border-t border-slate-900 py-6 text-center text-xs text-slate-400 space-y-1">
-    <p class="font-horde font-bold text-slate-300 tracking-widest">GREDUSH M+ EVENT BROADCAST</p>
-    <p>© <span id="year"></span> Gredush. Direct Sheet Mirror.</p>
+  <footer class="bg-[#040507] border-t border-slate-900 py-9 text-center text-xs text-slate-400 space-y-2">
+    <p class="font-horde font-bold text-slate-300 tracking-widest text-sm">GREDUSH M+ EVENT BROADCAST</p>
+    <p>© <span id="year"></span> Gredush. Live mirror powered by TV Dashboard.</p>
   </footer>
 
   <script>
@@ -131,31 +145,31 @@
       });
     }
 
-    async function updateMirror() {
+    async function updateDashboardMirror() {
       try {
         const response = await fetch(SHEET_CSV_URL + '&_t=' + Date.now(), { cache: 'no-store' });
         const text = await response.text();
         const rows = parseCSV(text);
 
-        const tbody = document.getElementById('sheet-body');
+        const tbody = document.getElementById('sheet-mirror-body');
         tbody.innerHTML = '';
 
-        rows.forEach((row) => {
-          // Parakampte entelos kenes grammes gia katharo result
+        rows.forEach((row, rowIndex) => {
           if (row.every(cell => cell === '')) return;
 
           const tr = document.createElement('tr');
-          row.forEach(cellValue => {
+          
+          row.forEach((cellValue, colIndex) => {
             const td = document.createElement('td');
             td.textContent = cellValue;
-            
-            // Highlight me xroma an einai headers / títloi
-            if (cellValue.toUpperCase().includes('TEAM') || cellValue.toUpperCase().includes('TOTAL') || cellValue.toUpperCase().includes('ROUND')) {
-              td.className = 'font-bold text-purple-300 bg-purple-950/30';
+
+            // Stilarisma analoga me ti seira kai ti thesi oste na moiazei me epangelmatiko dashboard
+            if (rowIndex === 0 || cellValue.toUpperCase().includes('TEAM POWER RANKING') || cellValue === '#') {
+              td.className = 'font-horde font-bold text-purple-300 text-xs uppercase tracking-wider bg-purple-950/20';
             } else if (!isNaN(cellValue) && cellValue !== '') {
-              td.className = 'font-mono text-slate-200';
+              td.className = 'font-mono text-slate-200 text-sm';
             } else {
-              td.className = 'text-slate-300';
+              td.className = 'text-slate-300 text-sm font-medium';
             }
 
             tr.appendChild(td);
@@ -164,16 +178,15 @@
         });
 
         const now = new Date();
-        document.getElementById('sync-status').textContent = 'Last synced: ' + now.toLocaleTimeString();
+        document.getElementById('sync-status').textContent = 'Live Sync: ' + now.toLocaleTimeString();
       } catch (err) {
-        console.error('Mirror sync error:', err);
-        document.getElementById('sync-status').textContent = 'Sync error';
+        console.error('Mirror error:', err);
+        document.getElementById('sync-status').textContent = 'Sync connection error';
       }
     }
 
-    // Archiki ektelesi kai refresh kathe 3 defterolepta
-    updateMirror();
-    setInterval(updateMirror, 3000);
+    updateDashboardMirror();
+    setInterval(updateDashboardMirror, 3000);
   </script>
 </body>
 </html>
