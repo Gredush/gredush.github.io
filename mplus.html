@@ -195,7 +195,6 @@
 
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnLyEV_JrIV3Ohaq6jFFNpZhHMLpqpBztTSpVT96e1A__LREOv5T_p-Px5AZZvqzcESzEIwkFJ2XT9/pub?gid=671222144&single=true&output=csv';
 
-    // Helper parser gia CSV grammes me ipostiriksi gia eisagwgika & kommata
     function parseCSVLine(line) {
       const result = [];
       let current = '';
@@ -217,7 +216,6 @@
 
     async function fetchSheetData() {
       try {
-        // Cache busting gia na parakamptei to browser cache
         const response = await fetch(CSV_URL + '&cachebust=' + Date.now());
         const data = await response.text();
         parseAndApplyData(data);
@@ -235,25 +233,22 @@
       lines.forEach(rawLine => {
         const parts = parseCSVLine(rawLine);
         
-        // Entopismos tis entarksis ton Power Rankings
         if (parts[0] && parts[0].toUpperCase().includes('TEAM POWER RANKING')) {
           parsingRankings = true;
           return;
         }
 
         if (parsingRankings) {
-          // Telos tou pinaka ean vrethei keni grammi i allo header
           if (!parts[0] || parts[0] === '' || parts[0].toUpperCase().includes('CURRENT EVENT LEADER')) {
             parsingRankings = false;
           } else if (parts[0] !== '#') {
-            // Seira sto Sheet: Stili 0 (#), Stili 1 (Team), Stili 2 (Players), Stili 3/4 (Avg Rating)
             const id = parts[0];
             const team = parts[1] || '';
-            const players = parts[2] || '0';
-            // Ean to avg rating exei diaspastei apo koma (p.x. "3", "894.2") ta enonoume
-            let rating = parts[3] || '0';
-            if (parts[4] && !isNaN(parts[4])) {
-              rating = parts[3] + '.' + parts[4];
+            // Akrivis antistoixia stilon analoga me tis grammes E (Players) kai F/G (Rating)
+            const players = parts[4] || parts[2] || '0'; 
+            let rating = parts[5] || parts[3] || '0';
+            if (parts[6] && !isNaN(parts[6])) {
+              rating = parts[5] + '.' + parts[6];
             }
 
             if (id && !isNaN(id)) {
@@ -267,7 +262,6 @@
         }
       });
 
-      // Ananeosi basikon pedion
       if (map['Show Status']) document.getElementById('show-status').textContent = map['Show Status'];
       if (map['Round']) document.getElementById('round-stage').textContent = map['Round'];
       if (map['Match Title']) document.getElementById('match-title').textContent = map['Match Title'];
@@ -282,14 +276,11 @@
       if (map['Leader Score']) document.getElementById('leader-score').textContent = map['Leader Score'];
       if (map['Breaking News']) document.getElementById('breaking-news').textContent = map['Breaking News'];
       
-      // Ananeosi Total Pot (px. 300,000 g)
       if (map['TOTAL POT']) {
         let potVal = map['TOTAL POT'];
-        if (map['NET POOL'] && isNaN(potVal)) potVal = map['TOTAL POT']; 
         document.getElementById('total-pot').textContent = potVal.includes('g') ? potVal : potVal + ' g';
       }
 
-      // Ananeosi pinaka Power Rankings
       if (rankingsRows.length > 0) {
         const tbody = document.getElementById('rankings-tbody');
         tbody.innerHTML = rankingsRows.map(r => `
@@ -304,7 +295,6 @@
     }
 
     fetchSheetData();
-    // Auto refresh kathe 3 defterolepta
     setInterval(fetchSheetData, 3000);
   </script>
 </body>
