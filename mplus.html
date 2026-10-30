@@ -41,18 +41,6 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
       box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
     }
-    .broadcast-table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
-    }
-    .broadcast-table th, .broadcast-table td {
-      padding: 12px 16px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    .broadcast-table tr:hover td {
-      background-color: rgba(168, 85, 247, 0.04);
-    }
     .pulse-live { animation: livePulse 1.5s infinite; }
     @keyframes livePulse {
       0%, 100% { opacity: 1; }
@@ -81,7 +69,7 @@
 
   <main id="main" class="max-w-6xl mx-auto px-5 py-9 space-y-8 flex-grow w-full">
 
-    <!-- Header Banner -->
+    <!-- Broadcast Header Banner -->
     <div class="vault-card rounded-2xl p-6 border border-purple-900/40 flex flex-col md:flex-row justify-between items-center gap-4 shadow-2xl">
       <div class="flex items-center gap-4">
         <div class="p-3 bg-red-950/80 border border-red-800/50 text-red-400 rounded-xl">
@@ -89,23 +77,65 @@
         </div>
         <div>
           <div class="flex items-center gap-3">
-            <span class="px-2.5 py-0.5 text-xs font-black uppercase tracking-wider rounded bg-red-600 text-white pulse-live">LIVE</span>
-            <span class="text-xs font-bold uppercase tracking-widest text-purple-400">M+ BROADCAST DASHBOARD</span>
+            <span id="show-status" class="px-2.5 py-0.5 text-xs font-black uppercase tracking-wider rounded bg-red-600 text-white pulse-live">LIVE</span>
+            <span id="round-stage" class="text-xs font-bold uppercase tracking-widest text-purple-400">STAGE TBD</span>
           </div>
-          <h1 class="font-horde text-2xl md:text-3xl font-black text-white glow-gold mt-1">GREDUSH TV DASHBOARD</h1>
+          <h1 id="match-title" class="font-horde text-2xl md:text-3xl font-black text-white glow-gold mt-1">M+ SHOWDOWN</h1>
         </div>
       </div>
-      <div id="sync-status" class="text-xs font-mono text-slate-400">Syncing with Google Sheets...</div>
+      <div class="flex items-center gap-4">
+        <div class="vault-card px-6 py-3 rounded-xl border border-amber-500/30 text-center">
+          <span class="text-[11px] uppercase text-amber-400/90 block font-bold tracking-wider">Total Pot</span>
+          <span id="total-pot" class="text-xl font-bold text-amber-400 font-mono">0 g</span>
+        </div>
+        <div id="sync-status" class="text-[10px] font-mono text-slate-500 hidden sm:block">Syncing...</div>
+      </div>
     </div>
 
-    <!-- Dynamic Sheet Mirror Container -->
-    <div class="vault-card rounded-2xl p-6 space-y-4">
+    <!-- Live Matchup Board -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 items-center">
+      <!-- Team A -->
+      <div class="vault-card rounded-2xl p-6 text-center border-l-4 border-red-500 shadow-xl">
+        <span class="text-xs font-bold uppercase text-red-400 tracking-wider">TEAM A</span>
+        <h2 id="team-a-name" class="font-horde text-2xl font-black text-white mt-1">Team Alpha</h2>
+        <div id="team-a-score" class="text-5xl font-black font-horde text-red-500 mt-2">0</div>
+      </div>
+
+      <!-- Current Dungeon -->
+      <div class="vault-card rounded-2xl p-6 text-center space-y-3 bg-slate-950/80 shadow-xl">
+        <div class="text-xs uppercase tracking-widest text-slate-400 font-bold">Current Dungeon</div>
+        <div id="current-dungeon" class="text-xl font-black font-horde text-purple-300 glow-gold">Dungeon TBD</div>
+        <div class="inline-block px-3 py-1 rounded bg-purple-950/80 border border-purple-800/60 font-mono text-sm font-bold text-slate-200">
+          Key Level: <span id="key-level" class="text-purple-400">+12</span>
+        </div>
+      </div>
+
+      <!-- Team B -->
+      <div class="vault-card rounded-2xl p-6 text-center border-r-4 border-purple-500 shadow-xl">
+        <span class="text-xs font-bold uppercase text-purple-400 tracking-wider">TEAM B</span>
+        <h2 id="team-b-name" class="font-horde text-2xl font-black text-white mt-1">Team Bravo</h2>
+        <div id="team-b-score" class="text-5xl font-black font-horde text-purple-400 mt-2">0</div>
+      </div>
+    </div>
+
+    <!-- Power Rankings & Status Table -->
+    <div class="vault-card rounded-2xl p-6 space-y-4 shadow-2xl">
+      <h2 class="font-horde text-xl font-bold text-white flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-purple-500 inline-block"></span> Team Power Rankings & Status
+      </h2>
       <div class="overflow-x-auto">
-        <table class="broadcast-table text-left" id="sheet-mirror-table">
-          <tbody id="sheet-mirror-body">
-            <tr>
-              <td class="text-center py-12 text-slate-500 font-mono">Loading TV Dashboard data...</td>
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-400">
+              <th class="py-3 px-4">#</th>
+              <th class="py-3 px-4">Team</th>
+              <th class="py-3 px-4 text-center">Players</th>
+              <th class="py-3 px-4 text-right">Avg Rating</th>
+              <th class="py-3 px-4 text-right">Status</th>
             </tr>
+          </thead>
+          <tbody id="rankings-tbody" class="text-sm divide-y divide-slate-800/60">
+            <tr><td colspan="5" class="py-6 text-center text-slate-500">Syncing rankings from TV Dashboard...</td></tr>
           </tbody>
         </table>
       </div>
@@ -115,7 +145,7 @@
 
   <footer class="bg-[#040507] border-t border-slate-900 py-9 text-center text-xs text-slate-400 space-y-2">
     <p class="font-horde font-bold text-slate-300 tracking-widest text-sm">GREDUSH M+ EVENT BROADCAST</p>
-    <p>© <span id="year"></span> Gredush. Live mirror powered by TV Dashboard.</p>
+    <p>© <span id="year"></span> Gredush. Live dashboard powered by TV Dashboard.</p>
   </footer>
 
   <script>
@@ -145,48 +175,90 @@
       });
     }
 
-    async function updateDashboardMirror() {
+    async function updateDashboard() {
       try {
         const response = await fetch(SHEET_CSV_URL + '&_t=' + Date.now(), { cache: 'no-store' });
         const text = await response.text();
         const rows = parseCSV(text);
 
-        const tbody = document.getElementById('sheet-mirror-body');
-        tbody.innerHTML = '';
+        const map = {};
+        const rankingsRows = [];
+        let parsingRankings = false;
 
         rows.forEach((row, rowIndex) => {
-          if (row.every(cell => cell === '')) return;
+          // Key-value pairs apo tis protes stiles
+          if (row.length >= 2 && row[0]) {
+            map[row[0]] = row[1];
+          }
 
-          const tr = document.createElement('tr');
-          
-          row.forEach((cellValue, colIndex) => {
-            const td = document.createElement('td');
-            td.textContent = cellValue;
+          // Entopismos power rankings table mesa sto CSV
+          if (row[0] && row[0].toUpperCase().includes('TEAM POWER RANKING')) {
+            parsingRankings = true;
+            return;
+          }
 
-            // Stilarisma analoga me ti seira kai ti thesi oste na moiazei me epangelmatiko dashboard
-            if (rowIndex === 0 || cellValue.toUpperCase().includes('TEAM POWER RANKING') || cellValue === '#') {
-              td.className = 'font-horde font-bold text-purple-300 text-xs uppercase tracking-wider bg-purple-950/20';
-            } else if (!isNaN(cellValue) && cellValue !== '') {
-              td.className = 'font-mono text-slate-200 text-sm';
-            } else {
-              td.className = 'text-slate-300 text-sm font-medium';
+          if (parsingRankings) {
+            if (!row[0] || row[0] === '' || row[0].toUpperCase().includes('CURRENT EVENT LEADER')) {
+              parsingRankings = false;
+            } else if (row[0] !== '#') {
+              rankingsRows.push({
+                id: row[0],
+                team: row[1] || '',
+                players: row[2] || '0',
+                rating: row[4] || row[3] || '0',
+                status: row[5] || 'Active'
+              });
             }
+          }
 
-            tr.appendChild(td);
-          });
-          tbody.appendChild(tr);
+          // Anagnosi Dungeon apo ti grammi 6 (index 5) stili G (index 6)
+          if (rowIndex === 5 && row[6]) {
+            document.getElementById('current-dungeon').textContent = row[6];
+          }
         });
 
+        // Enimerosi stoixeiwn UI
+        if (map['Show Status']) document.getElementById('show-status').textContent = map['Show Status'];
+        if (map['Round']) document.getElementById('round-stage').textContent = map['Round'];
+        if (map['Match Title']) document.getElementById('match-title').textContent = map['Match Title'];
+        if (map['Team A']) document.getElementById('team-a-name').textContent = map['Team A'];
+        if (map['Team B']) document.getElementById('team-b-name').textContent = map['Team B'];
+        if (map['Team A Score']) document.getElementById('team-a-score').textContent = map['Team A Score'];
+        if (map['Team B Score']) document.getElementById('team-b-score').textContent = map['Team B Score'];
+        if (map['Key Level']) {
+          let kl = map['Key Level'];
+          document.getElementById('key-level').textContent = kl.startsWith('+') ? kl : '+' + kl;
+        }
+        if (map['TOTAL POT']) {
+          let pot = map['TOTAL POT'];
+          document.getElementById('total-pot').textContent = pot.includes('g') ? pot : pot + ' g';
+        }
+
+        // Render Power Rankings Table cleanly
+        if (rankingsRows.length > 0) {
+          const tbody = document.getElementById('rankings-tbody');
+          tbody.innerHTML = rankingsRows.map(r => `
+            <tr class="hover:bg-purple-950/20 transition-colors">
+              <td class="py-3 px-4 font-mono font-bold text-purple-400">${r.id}</td>
+              <td class="py-3 px-4 font-bold text-white">${r.team}</td>
+              <td class="py-3 px-4 text-center font-mono text-slate-300">${r.players}</td>
+              <td class="py-3 px-4 text-right font-mono font-bold text-purple-300">${r.rating}</td>
+              <td class="py-3 px-4 text-right">
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-900 border border-slate-800 text-slate-300">${r.status}</span>
+              </td>
+            </tr>
+          `).join('');
+        }
+
         const now = new Date();
-        document.getElementById('sync-status').textContent = 'Live Sync: ' + now.toLocaleTimeString();
+        document.getElementById('sync-status').textContent = 'Synced: ' + now.toLocaleTimeString();
       } catch (err) {
-        console.error('Mirror error:', err);
-        document.getElementById('sync-status').textContent = 'Sync connection error';
+        console.error('Update error:', err);
       }
     }
 
-    updateDashboardMirror();
-    setInterval(updateDashboardMirror, 3000);
+    updateDashboard();
+    setInterval(updateDashboard, 3000);
   </script>
 </body>
 </html>
