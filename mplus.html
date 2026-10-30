@@ -185,12 +185,10 @@
         let parsingRankings = false;
 
         rows.forEach((row, rowIndex) => {
-          // Key-Value pairs apo tis protes stiles
           if (row.length >= 2 && row[0]) {
             map[row[0]] = row[1];
           }
 
-          // Entopismos Power Rankings table (apo tin epikefalida)
           if (row[0] && row[0].toUpperCase().includes('TEAM POWER RANKING')) {
             parsingRankings = true;
             return;
@@ -204,18 +202,17 @@
                 id: row[0],
                 team: row[1] || '',
                 players: row[2] || '0',
-                rating: row[4] || row[3] || '0'
+                rating: row[3] || '0'
               });
             }
           }
 
-          // Dungeon name apo keli G6 (grammi 6, index 5, stili G index 6)
+          // Dungeon apo to keli G6 (grammi 6, index 5, stili G index 6)
           if (rowIndex === 5 && row[6]) {
             document.getElementById('current-dungeon').textContent = row[6];
           }
         });
 
-        // Enimerosi Live Controls
         if (map['Show Status']) document.getElementById('show-status').textContent = map['Show Status'];
         if (map['Round']) document.getElementById('round-stage').textContent = map['Round'];
         if (map['Match Title']) document.getElementById('match-title').textContent = map['Match Title'];
@@ -232,7 +229,6 @@
           document.getElementById('total-pot').textContent = pot.includes('g') ? pot : pot + ' g';
         }
 
-        // Render Power Rankings Table
         if (rankingsRows.length > 0) {
           const tbody = document.getElementById('rankings-tbody');
           tbody.innerHTML = rankingsRows.map(r => `
@@ -245,8 +241,7 @@
           `).join('');
         }
 
-        const now = new Date();
-        document.getElementById('sync-status').textContent = 'Synced: ' + now.toLocaleTimeString();
+        document.getElementById('sync-status').textContent = 'Synced: ' + new Date().toLocaleTimeString();
       } catch (err) {
         console.error('Update error:', err);
       }
