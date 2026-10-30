@@ -56,9 +56,7 @@
     }
     .vault-card:hover { border-color: rgba(168, 85, 247, 0.3); box-shadow: 0 10px 30px -10px rgba(147, 51, 234, 0.2); }
     .ic { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    .pulse-live {
-      animation: livePulse 1.5s infinite;
-    }
+    .pulse-live { animation: livePulse 1.5s infinite; }
     @keyframes livePulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.4; }
@@ -103,14 +101,20 @@
         <div>
           <div class="flex items-center gap-3">
             <span id="show-status" class="px-2.5 py-0.5 text-xs font-black uppercase tracking-wider rounded bg-red-600 text-white pulse-live">LIVE</span>
-            <span id="round-stage" class="text-xs font-bold uppercase tracking-widest text-purple-400">STAGE TBD</span>
+            <span id="round-stage" class="text-xs font-bold uppercase tracking-widest text-purple-400">ROUND 1</span>
           </div>
-          <h1 id="match-title" class="font-horde text-2xl md:text-3xl font-black text-white glow-gold mt-1">M+ SHOWDOWN</h1>
+          <h1 id="match-title" class="font-horde text-2xl md:text-3xl font-black text-white glow-gold mt-1">OPENING MATCH</h1>
         </div>
       </div>
-      <div class="text-right flex flex-col items-center md:items-end">
-        <span class="text-xs uppercase text-slate-400 font-bold">Auto Refresh</span>
-        <span class="text-xs text-purple-400 font-mono">Syncing with Google Sheet...</span>
+      <div class="flex gap-4 text-center">
+        <div class="vault-card px-4 py-2 rounded-xl">
+          <span class="text-[10px] uppercase text-slate-400 block font-bold">Total Pot</span>
+          <span id="total-pot" class="text-sm font-bold text-amber-400 font-mono">300,000 g</span>
+        </div>
+        <div class="vault-card px-4 py-2 rounded-xl">
+          <span class="text-[10px] uppercase text-slate-400 block font-bold">Net Pool</span>
+          <span id="net-pool" class="text-sm font-bold text-purple-300 font-mono">297,000 g</span>
+        </div>
       </div>
     </div>
 
@@ -144,6 +148,29 @@
       </div>
     </div>
 
+    <!-- Power Rankings & Status Table -->
+    <div class="vault-card rounded-2xl p-6 space-y-4">
+      <h2 class="font-horde text-xl font-bold text-white flex items-center gap-2">
+        <svg class="w-5 h-5 ic text-purple-400"><use href="#i-radio"/></svg> Team Power Rankings & Status
+      </h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-400">
+              <th class="py-2.5 px-3">#</th>
+              <th class="py-2.5 px-3">Team</th>
+              <th class="py-2.5 px-3 text-center">Players</th>
+              <th class="py-2.5 px-3 text-right">Avg Rating</th>
+              <th class="py-2.5 px-3 text-right">Status</th>
+            </tr>
+          </thead>
+          <tbody id="rankings-tbody" class="text-sm divide-y divide-slate-800/60">
+            <tr><td colspan="5" class="py-4 text-center text-slate-500">Syncing rankings from Sheet...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
     <!-- News Ticker & Leader Status -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
       <div class="vault-card rounded-2xl p-5 space-y-1">
@@ -152,7 +179,7 @@
       </div>
 
       <div class="vault-card rounded-2xl p-5 space-y-1">
-        <span class="text-xs font-bold text-purple-400 uppercase tracking-widest block">Current Leader</span>
+        <span class="text-xs font-bold text-purple-400 uppercase tracking-widest block">Current Event Leader</span>
         <div class="flex justify-between items-center">
           <p id="current-leader" class="text-sm font-bold text-white">Team Alpha</p>
           <span id="leader-score" class="text-xs font-mono font-bold text-purple-300 bg-purple-950/80 px-2.5 py-1 rounded border border-purple-800/50">0 Points</span>
@@ -171,7 +198,7 @@
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // Βάλε εδώ το Published CSV URL από το Google Sheet σου:
-    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnLyEV_JrIV3Ohaq6jFFNpZhHMLpqpBztTSpVT96e1A__LREOv5T_p-Px5AZZvqzcESzEIwkFJ2XT9/pub?output=csv';
+    const CSV_URL = 'YOUR_PUBLISHED_GOOGLE_SHEET_CSV_URL_HERE';
 
     async function fetchSheetData() {
       if (!CSV_URL || CSV_URL === 'YOUR_PUBLISHED_GOOGLE_SHEET_CSV_URL_HERE') return;
@@ -189,15 +216,36 @@
       const lines = csvText.split('\n');
       const map = {};
 
+      let parsingRankings = false;
+      const rankingsRows = [];
+
       lines.forEach(line => {
-        const parts = line.split(',');
+        const parts = line.split(',').map(p => p.trim().replace(/^"|"$/g, ''));
+        
+        if (parts[0] === 'TEAM POWER RANKING,LIVE BETTING BOARD') {
+          parsingRankings = true;
+          return;
+        }
+        if (parsingRankings && parts[0] === '') {
+          parsingRankings = false;
+        }
+
+        if (parsingRankings && parts[0] && parts[0] !== '#') {
+          rankingsRows.push({
+            id: parts[0],
+            team: parts[1],
+            players: parts[2],
+            rating: parts[4],
+            status: parts[5]
+          });
+        }
+
         if (parts.length >= 2) {
-          const key = parts[0].trim().replace(/^"|"$/g, '');
-          const val = parts[1].trim().replace(/^"|"$/g, '');
-          map[key] = val;
+          map[parts[0]] = parts[1];
         }
       });
 
+      // Εφαρμογή τιμών στα πεδία του Dashboard
       if (map['Show Status']) document.getElementById('show-status').textContent = map['Show Status'];
       if (map['Round']) document.getElementById('round-stage').textContent = map['Round'];
       if (map['Match Title']) document.getElementById('match-title').textContent = map['Match Title'];
@@ -211,6 +259,24 @@
       if (map['Current Leader']) document.getElementById('current-leader').textContent = map['Current Leader'];
       if (map['Leader Score']) document.getElementById('leader-score').textContent = map['Leader Score'];
       if (map['Breaking News']) document.getElementById('breaking-news').textContent = map['Breaking News'];
+      if (map['TOTAL POT']) document.getElementById('total-pot').textContent = map['TOTAL POT'];
+      if (map['NET POOL']) document.getElementById('net-pool').textContent = map['NET POOL'];
+
+      // Δυναμική ενημέρωση του πίνακα Rankings
+      if (rankingsRows.length > 0) {
+        const tbody = document.getElementById('rankings-tbody');
+        tbody.innerHTML = rankingsRows.map(r => `
+          <tr class="hover:bg-slate-900/40 transition-colors">
+            <td class="py-2.5 px-3 font-mono font-bold text-purple-400">${r.id}</td>
+            <td class="py-2.5 px-3 font-bold text-white">${r.team}</td>
+            <td class="py-2.5 px-3 text-center text-slate-300">${r.players}</td>
+            <td class="py-2.5 px-3 text-right font-mono text-slate-200">${r.rating}</td>
+            <td class="py-2.5 px-3 text-right">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-900 border border-slate-700 text-slate-300">${r.status}</span>
+            </td>
+          </tr>
+        `).join('');
+      }
     }
 
     // Auto-refresh κάθε 5 δευτερόλεπτα
