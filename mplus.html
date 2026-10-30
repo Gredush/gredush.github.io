@@ -193,7 +193,8 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnLyEV_JrIV3Ohaq6jFFNpZhHMLpqpBztTSpVT96e1A__LREOv5T_p-Px5AZZvqzcESzEIwkFJ2XT9/pub?gid=671222144&single=true&output=csv';
+    // Direct endpoint me bypass cache gia akrivey real-time ananeosi
+    const BASE_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnLyEV_JrIV3Ohaq6jFFNpZhHMLpqpBztTSpVT96e1A__LREOv5T_p-Px5AZZvqzcESzEIwkFJ2XT9/pub?gid=671222144&single=true&output=csv';
 
     function parseCSVLine(line) {
       const result = [];
@@ -216,7 +217,8 @@
 
     async function fetchSheetData() {
       try {
-        const response = await fetch(CSV_URL + '&cachebust=' + Date.now());
+        const fetchUrl = BASE_CSV_URL + '&_nc=' + new Date().getTime();
+        const response = await fetch(fetchUrl, { cache: 'no-store' });
         const data = await response.text();
         parseAndApplyData(data);
       } catch (err) {
@@ -227,53 +229,42 @@
     function parseAndApplyData(csvText) {
       const lines = csvText.split('\n');
       const map = {};
-      let parsingRankings = false;
       const rankingsRows = [];
 
-      lines.forEach(rawLine => {
+      lines.forEach((rawLine, index) => {
         const parts = parseCSVLine(rawLine);
         
-        if (parts[0] && parts[0].toUpperCase().includes('TEAM POWER RANKING')) {
-          parsingRankings = true;
-          return;
-        }
-
-        if (parsingRankings) {
-          if (!parts[0] || parts[0] === '' || parts[0].toUpperCase().includes('CURRENT EVENT LEADER')) {
-            parsingRankings = false;
-          } else if (parts[0] !== '#' && !isNaN(parts[0])) {
-            const id = parts[0];
-            const team = parts[1] || '';
-            
-            // Psaxnoume oles tis ypoloipes stiles gia na vroume poia einai akeraios (Players)
-            // kai poia exei ypodiastoli/teleia h einai megalo noumero (Avg Rating)
-            let players = '0';
-            let rating = '0.0';
-
-            const remainingParts = parts.slice(2); // Pairnoume ola ta epomena pedia meta to # kai to Team
-            
-            remainingParts.forEach(val => {
-              if (val !== '') {
-                // An einai mikros akeraios (px. 0 ews 5 paiktes), einai to players
-                if (!val.includes('.') && !val.includes(',') && !isNaN(val) && Number(val) < 20 && players === '0') {
-                  players = val;
-                } 
-                // Allios ean exei teleia/ypodiastoli h einai megalo noumero, einai to rating
-                else if ((val.includes('.') || val.includes(',') || Number(val) >= 20) && !isNaN(val.replace(',', '.'))) {
-                  rating = val;
-                }
-              }
-            });
-
-            rankingsRows.push({ id, team, players, rating });
-          }
-        }
-
-        if (parts.length >= 2 && parts[0]) {
+        // Apothikefsi tou Key-Value map apo tis protes stiles
+        if (parts.length >= 2 && parts[0] && parts[0] !== '#') {
           map[parts[0]] = parts[1];
+        }
+
+        // Akrivis anagnosi twn kelliwn E17:E22 (Players) kai F17:G22 (Avg Rating)
+        // Stos pinaka lines (0-indexed): oi grammes 17 ews 22 antistoixoun stis seires ton omadon
+        const rowId = parts[0];
+        if (rowId && !isNaN(rowId) && Number(rowId) >= 1 && Number(rowId) <= 10) {
+          const team = parts[1] || 'Team ' + rowId;
+          
+          // Entopismos tis stilis Players (E) kai Avg Rating (F/G) me strict position fallback
+          let players = '0';
+          let rating = '0.0';
+
+          for (let col = 2; col < parts.length; col++) {
+            const val = parts[col];
+            if (val && val !== '') {
+              if (val.includes('.') || val.includes(',') || Number(val) > 10) {
+                rating = val;
+              } else if (!isNaN(val) && Number(val) <= 10 && players === '0') {
+                players = val;
+              }
+            }
+          }
+
+          rankingsRows.push({ id: rowId, team, players, rating });
         }
       });
 
+      // Ananeosi Live Controls
       if (map['Show Status']) document.getElementById('show-status').textContent = map['Show Status'];
       if (map['Round']) document.getElementById('round-stage').textContent = map['Round'];
       if (map['Match Title']) document.getElementById('match-title').textContent = map['Match Title'];
@@ -293,6 +284,7 @@
         document.getElementById('total-pot').textContent = potVal.includes('g') ? potVal : potVal + ' g';
       }
 
+      // Render Power Rankings Table
       if (rankingsRows.length > 0) {
         const tbody = document.getElementById('rankings-tbody');
         tbody.innerHTML = rankingsRows.map(r => `
@@ -307,7 +299,7 @@
     }
 
     fetchSheetData();
-    setInterval(fetchSheetData, 3000);
+    setInterval(fetchSheetData, 2000);
   </script>
 </body>
 </html>
