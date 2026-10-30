@@ -54,11 +54,6 @@
       box-shadow: 0 6px 24px -2px rgba(168, 85, 247, 0.6);
       transform: translateY(-2px);
     }
-    .pulse-live { animation: livePulse 1.5s infinite; }
-    @keyframes livePulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
   </style>
 </head>
 
@@ -83,26 +78,19 @@
   <!-- Main Content -->
   <main id="main" class="max-w-6xl mx-auto px-5 py-12 flex-grow flex flex-col items-center justify-center w-full space-y-6">
     
-    <!-- Header Banner με Τίτλο και Status/Round/Match Title -->
-    <div class="vault-card rounded-2xl p-8 sm:p-10 text-center border border-purple-900/40 space-y-6 shadow-2xl w-full">
+    <!-- Header Banner -->
+    <div class="vault-card rounded-2xl p-8 sm:p-10 text-center border border-purple-900/40 space-y-4 shadow-2xl w-full">
       
       <!-- Κεντρικός Τίτλος (A1:P2) -->
       <h1 id="event-title" class="font-horde text-3xl sm:text-5xl font-black text-white glow-gold">
         Loading Title...
       </h1>
 
-      <!-- Status, Round, Match Title (A3:P3) -->
-      <div class="flex flex-wrap items-center justify-center gap-4 pt-4 border-t border-slate-800/80">
-        <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-red-950/80 border border-red-800/60 text-red-400 text-xs font-bold uppercase">
-          <span class="w-2.5 h-2.5 rounded-full bg-red-600 pulse-live inline-block"></span>
-          <span id="sheet-status">LIVE</span>
-        </div>
-        <div id="sheet-round" class="px-3 py-1.5 rounded-lg bg-purple-950/80 border border-purple-800/60 text-purple-300 text-xs font-bold uppercase tracking-wider">
-          ROUND TBD
-        </div>
-        <div id="sheet-match" class="px-4 py-1.5 rounded-lg bg-slate-900/90 border border-slate-700/60 text-slate-200 text-sm font-semibold">
-          Match Title TBD
-        </div>
+      <!-- Status / Round / Match Title από A3:P3 -->
+      <div class="pt-2">
+        <span id="sheet-info" class="text-purple-300 text-sm sm:text-base font-semibold tracking-wider uppercase">
+          Loading Info...
+        </span>
       </div>
 
     </div>
@@ -154,16 +142,11 @@
         }
 
         if (lines.length > 2) {
-          // Γραμμή 3: Status, Round, Match Title (A3, B3, C3 κ.λπ. ανάλογα πώς τα έχεις βάλει)
+          // Γραμμή 3: Παίρνουμε ό,τι υπάρχει στη γραμμή και το ενώνουμε αν έχει τιμές (A3:P3)
           const row3 = parseCSVLine(lines[2]);
-          if (row3.length > 0 && row3[0] !== '') {
-            document.getElementById('sheet-status').textContent = row3[0];
-          }
-          if (row3.length > 1 && row3[1] !== '') {
-            document.getElementById('sheet-round').textContent = row3[1];
-          }
-          if (row3.length > 2 && row3[2] !== '') {
-            document.getElementById('sheet-match').textContent = row3[2];
+          const combinedInfo = row3.filter(val => val !== '').join(' - ');
+          if (combinedInfo) {
+            document.getElementById('sheet-info').textContent = combinedInfo;
           }
         }
       } catch (err) {
