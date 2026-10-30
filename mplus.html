@@ -241,29 +241,13 @@
         if (parsingRankings) {
           if (!parts[0] || parts[0] === '' || parts[0].toUpperCase().includes('CURRENT EVENT LEADER')) {
             parsingRankings = false;
-          } else if (parts[0] !== '#') {
+          } else if (parts[0] !== '#' && !isNaN(parts[0])) {
             const id = parts[0];
             const team = parts[1] || '';
-            
-            // Statheres stiles analoga me tin apolyty thesi tou fyllou sou:
-            // Stili Players (E -> index 4 i 2 analoga to layout) & Avg Rating (F/G -> index 5,6)
-            // Diarhythmizoume etsi wste an an to parts[2] den einai noumero na psaxnei stin stili E (index 4)
-            let players = parts[4];
-            if (!players || isNaN(players)) {
-              players = parts[2] || '0';
-            }
+            const players = parts[2] || '0';
+            const rating = parts[4] || '0.0';
 
-            // Avg rating syndiasmos stilon F kai G (index 5 kai 6)
-            let rating = parts[5] || '0';
-            if (parts[6] && !isNaN(parts[6])) {
-              rating = parts[5] + '.' + parts[6];
-            } else if (!isNaN(parts[3]) && parts[3] !== '0' && parts[3] !== players) {
-              rating = parts[3];
-            }
-
-            if (id && !isNaN(id)) {
-              rankingsRows.push({ id, team, players, rating });
-            }
+            rankingsRows.push({ id, team, players, rating });
           }
         }
 
