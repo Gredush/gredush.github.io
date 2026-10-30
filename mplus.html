@@ -101,19 +101,19 @@
         <div>
           <div class="flex items-center gap-3">
             <span id="show-status" class="px-2.5 py-0.5 text-xs font-black uppercase tracking-wider rounded bg-red-600 text-white pulse-live">LIVE</span>
-            <span id="round-stage" class="text-xs font-bold uppercase tracking-widest text-purple-400">ROUND 1</span>
+            <span id="round-stage" class="text-xs font-bold uppercase tracking-widest text-purple-400">STAGE TBD</span>
           </div>
-          <h1 id="match-title" class="font-horde text-2xl md:text-3xl font-black text-white glow-gold mt-1">OPENING MATCH</h1>
+          <h1 id="match-title" class="font-horde text-2xl md:text-3xl font-black text-white glow-gold mt-1">M+ SHOWDOWN</h1>
         </div>
       </div>
       <div class="flex gap-4 text-center">
         <div class="vault-card px-4 py-2 rounded-xl">
           <span class="text-[10px] uppercase text-slate-400 block font-bold">Total Pot</span>
-          <span id="total-pot" class="text-sm font-bold text-amber-400 font-mono">300,000 g</span>
+          <span id="total-pot" class="text-sm font-bold text-amber-400 font-mono">—</span>
         </div>
         <div class="vault-card px-4 py-2 rounded-xl">
           <span class="text-[10px] uppercase text-slate-400 block font-bold">Net Pool</span>
-          <span id="net-pool" class="text-sm font-bold text-purple-300 font-mono">297,000 g</span>
+          <span id="net-pool" class="text-sm font-bold text-purple-300 font-mono">—</span>
         </div>
       </div>
     </div>
@@ -165,7 +165,7 @@
             </tr>
           </thead>
           <tbody id="rankings-tbody" class="text-sm divide-y divide-slate-800/60">
-            <tr><td colspan="5" class="py-4 text-center text-slate-500">Syncing rankings from Sheet...</td></tr>
+            <tr><td colspan="5" class="py-4 text-center text-slate-500">Syncing rankings from TV Dashboard...</td></tr>
           </tbody>
         </table>
       </div>
@@ -191,38 +191,36 @@
 
   <footer class="bg-[#040507] border-t border-slate-900 py-9 text-center text-xs text-slate-400 space-y-2">
     <p class="font-horde font-bold text-slate-300 tracking-widest text-sm">GREDUSH M+ EVENT BROADCAST</p>
-    <p>© <span id="year"></span> Gredush. Live sync powered by Google Sheets.</p>
+    <p>© <span id="year"></span> Gredush. Live sync powered by TV Dashboard.</p>
   </footer>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Βάλε εδώ το Published CSV URL από το Google Sheet σου:
-    const CSV_URL = 'YOUR_PUBLISHED_GOOGLE_SHEET_CSV_URL_HERE';
+    // Published CSV URL gia to fyllo TV Dashboard
+    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnLyEV_JrIV3Ohaq6jFFNpZhHMLpqpBztTSpVT96e1A__LREOv5T_p-Px5AZZvqzcESzEIwkFJ2XT9/pub?gid=671222144&single=true&output=csv';
 
     async function fetchSheetData() {
-      if (!CSV_URL || CSV_URL === 'YOUR_PUBLISHED_GOOGLE_SHEET_CSV_URL_HERE') return;
-
       try {
         const response = await fetch(CSV_URL + '&t=' + new Date().getTime());
         const data = await response.text();
         parseAndApplyData(data);
       } catch (err) {
-        console.error("Error fetching live dashboard data:", err);
+        console.error("Error fetching TV Dashboard data:", err);
       }
     }
 
     function parseAndApplyData(csvText) {
       const lines = csvText.split('\n');
       const map = {};
-
       let parsingRankings = false;
       const rankingsRows = [];
 
       lines.forEach(line => {
         const parts = line.split(',').map(p => p.trim().replace(/^"|"$/g, ''));
         
-        if (parts[0] === 'TEAM POWER RANKING,LIVE BETTING BOARD') {
+        // Entopismos tis perioxis twn Power Rankings msa sto TV Dashboard sheet
+        if (parts[0] && parts[0].includes('TEAM POWER RANKING')) {
           parsingRankings = true;
           return;
         }
@@ -245,7 +243,7 @@
         }
       });
 
-      // Εφαρμογή τιμών στα πεδία του Dashboard
+      // Ananewsi twn stoixeiwn sti selida
       if (map['Show Status']) document.getElementById('show-status').textContent = map['Show Status'];
       if (map['Round']) document.getElementById('round-stage').textContent = map['Round'];
       if (map['Match Title']) document.getElementById('match-title').textContent = map['Match Title'];
@@ -254,7 +252,7 @@
       if (map['Team A Score']) document.getElementById('team-a-score').textContent = map['Team A Score'];
       if (map['Team B Score']) document.getElementById('team-b-score').textContent = map['Team B Score'];
       if (map['Current Dungeon']) document.getElementById('current-dungeon').textContent = map['Current Dungeon'];
-      if (map['Key Level']) document.getElementById('key-level').textContent = '+' + map['Key Level'];
+      if (map['Key Level']) document.getElementById('key-level').textContent = map['Key Level'].startsWith('+') ? map['Key Level'] : '+' + map['Key Level'];
       if (map['Timer']) document.getElementById('match-timer').textContent = map['Timer'];
       if (map['Current Leader']) document.getElementById('current-leader').textContent = map['Current Leader'];
       if (map['Leader Score']) document.getElementById('leader-score').textContent = map['Leader Score'];
@@ -262,7 +260,7 @@
       if (map['TOTAL POT']) document.getElementById('total-pot').textContent = map['TOTAL POT'];
       if (map['NET POOL']) document.getElementById('net-pool').textContent = map['NET POOL'];
 
-      // Δυναμική ενημέρωση του πίνακα Rankings
+      // Enimerosi tou pinaka rankings an iparxoyn data
       if (rankingsRows.length > 0) {
         const tbody = document.getElementById('rankings-tbody');
         tbody.innerHTML = rankingsRows.map(r => `
@@ -279,7 +277,7 @@
       }
     }
 
-    // Auto-refresh κάθε 5 δευτερόλεπτα
+    // Auto-refresh kathe 5 defterolepta
     fetchSheetData();
     setInterval(fetchSheetData, 5000);
   </script>
