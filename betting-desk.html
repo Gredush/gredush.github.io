@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Betting Desk | Gredush</title>
+  <meta name="description" content="Live betting desk and active bets tracker for Gredush Mythic+ events." />
+  <meta name="theme-color" content="#06070a" />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CZLTE6SXJ5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CZLTE6SXJ5');
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    html { font-size: 110%; scroll-behavior: smooth; }
+    body {
+      font-family: 'Rajdhani', 'Inter', sans-serif;
+      background-color: #06070a;
+      color: #e2e8f0;
+      background-image:
+        radial-gradient(circle at 50% 0%, rgba(153, 27, 27, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 60%, rgba(88, 28, 135, 0.1) 0%, transparent 40%);
+      background-attachment: fixed;
+    }
+    .font-horde { font-family: 'Cinzel', serif; }
+    .glow-gold { text-shadow: 0 0 16px rgba(239, 68, 68, 0.4), 0 0 30px rgba(168, 85, 247, 0.2); }
+    .vault-card {
+      background: rgba(13, 16, 23, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+    .btn-vault-primary {
+      background: linear-gradient(135deg, #991b1b 0%, #680d2b 50%, #581c87 100%);
+      background-size: 200% 200%;
+      transition: all 0.3s ease-in-out;
+      border: 1px solid rgba(248, 113, 113, 0.3);
+      box-shadow: 0 4px 20px -5px rgba(153, 27, 27, 0.5);
+    }
+    .btn-vault-primary:hover {
+      background-position: right center;
+      border-color: rgba(192, 132, 252, 0.6);
+      box-shadow: 0 6px 24px -2px rgba(168, 85, 247, 0.6);
+      transform: translateY(-2px);
+    }
+    .hub-btn {
+      background: rgba(13, 16, 23, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.2s ease-in-out;
+    }
+    .hub-btn:hover {
+      background: rgba(88, 28, 135, 0.3);
+      border-color: rgba(192, 132, 252, 0.5);
+      transform: translateY(-2px);
+    }
+    .hub-btn.active {
+      background: linear-gradient(135deg, #991b1b 0%, #581c87 100%);
+      border-color: rgba(248, 113, 113, 0.5);
+      color: #fff;
+      box-shadow: 0 4px 20px -5px rgba(168, 85, 247, 0.5);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col justify-between selection:bg-red-900 selection:text-purple-200">
+
+  <!-- Navigation Bar -->
+  <header class="sticky top-0 z-50 backdrop-blur-xl bg-[#06070a]/80 border-b border-red-950/40">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
+      <nav aria-label="Main" class="flex items-center gap-4 sm:gap-8 text-[11px] sm:text-sm font-semibold tracking-wide sm:tracking-wider uppercase text-slate-300">
+        <a href="index.html#livestreams" class="hover:text-red-400 transition-colors">Streams</a>
+        <a href="wow.html" class="hover:text-purple-400 transition-colors">World Of Warcraft</a>
+        <a href="index.html#youtube" class="hover:text-red-400 transition-colors">Videos</a>
+        <a href="mplus.html" class="text-purple-400 font-bold transition-colors">M+ Event</a>
+        <a href="index.html#community" class="hover:text-purple-400 transition-colors">Community</a>
+      </nav>
+      <a href="https://discord.gg/qScBpyq5gM" target="_blank" rel="noopener noreferrer" class="btn-vault-primary flex-shrink-0 px-3 sm:px-4 py-2 text-xs font-bold uppercase tracking-widest text-white rounded-lg flex items-center gap-2">
+        <span>Join Discord</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="main" class="max-w-7xl mx-auto px-5 py-10 flex-grow flex flex-col items-center justify-center w-full space-y-6">
+    
+    <!-- Hub Navigation Buttons (Τέρμα πάνω) -->
+    <div class="flex flex-wrap justify-center gap-3 w-full max-w-2xl">
+      <a href="mplus.html" class="hub-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-slate-300 shadow-lg hover:text-white">
+        M+ Event
+      </a>
+      <a href="dashboard.html" class="hub-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-slate-300 shadow-lg hover:text-white">
+        Dashboard
+      </a>
+      <a href="participants.html" class="hub-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-slate-300 shadow-lg hover:text-white">
+        Participants
+      </a>
+      <a href="betting-desk.html" class="hub-btn active flex-1 min-w-[120px] py-3 px-4 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-white shadow-lg">
+        Betting Desk
+      </a>
+    </div>
+
+    <!-- Header Card: Betting Desk -->
+    <div class="vault-card rounded-2xl p-8 sm:p-10 text-center border border-amber-500/30 space-y-2 shadow-2xl w-full">
+      <h1 class="font-horde text-3xl sm:text-5xl font-black text-amber-400 glow-gold">
+        Betting Desk
+      </h1>
+      <p class="text-slate-400 text-sm uppercase tracking-wider font-semibold">Live Event Bets & Wagers Tracker</p>
+    </div>
+
+    <!-- Betting Desk Table Card -->
+    <div class="vault-card rounded-2xl p-6 shadow-xl border border-amber-500/20 w-full overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="border-b border-slate-800 text-xs font-bold uppercase tracking-widest text-slate-400">
+            <th class="py-3 px-3">Bettor</th>
+            <th class="py-3 px-3">Market</th>
+            <th class="py-3 px-3">Selection</th>
+            <th class="py-3 px-3 text-right">Stake (Gold)</th>
+            <th class="py-3 px-3 text-center">Live Odds</th>
+            <th class="py-3 px-3 text-right">Potential Payout</th>
+            <th class="py-3 px-3 text-center">Result</th>
+            <th class="py-3 px-3 text-center">Paid?</th>
+          </tr>
+        </thead>
+        <tbody id="betting-desk-tbody" class="divide-y divide-slate-800/60 text-sm">
+          <tr>
+            <td colspan="8" class="text-center py-8 text-slate-500">Loading Betting Desk...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-[#040507] border-t border-slate-900 py-8 text-center text-xs text-slate-400 space-y-2">
+    <p class="font-horde font-bold text-slate-300 tracking-widest text-sm">GREDUSH M+ EVENT BROADCAST</p>
+    <p>© <span id="year"></span> Gredush. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnLyEV_JrIV3Ohaq6jFFNpZhHMLpqpBztTSpVT96e1A__LREOv5T_p-Px5AZZvqzcESzEIwkFJ2XT9/pub?gid=1049068395&single=true&output=csv';
+
+    function parseCSVLine(line) {
+      const result = [];
+      let current = '';
+      let inQuotes = false;
+      for (let i = 0; i < line.length; i++) {
+        const char = line[i];
+        if (char === '"') {
+          inQuotes = !inQuotes;
+        } else if (char === ',' && !inQuotes) {
+          result.push(current.trim());
+          current = '';
+        } else {
+          current += char;
+        }
+      }
+      result.push(current.trim());
+      return result.map(s => s.replace(/^"|"$/g, ''));
+    }
+
+    async function fetchBettingDesk() {
+      try {
+        const response = await fetch(CSV_URL + '&_t=' + Date.now(), { cache: 'no-store' });
+        const text = await response.text();
+        const lines = text.split('\n');
+        
+        const rowsHTML = [];
+
+        // Κελιά B6:J205 (γραμμές 5 έως 204 στο array index)
+        // B = Bettor (index 1)
+        // C = Market (index 2)
+        // D = Selection (index 3)
+        // E = Stake (index 4)
+        // G = Live Odds (index 6)
+        // H = Potential Payout (index 7)
+        // I = Result (index 8)
+        // J = Paid? (index 9)
+        for (let r = 5; r <= 204; r++) {
+          if (lines.length > r) {
+            const row = parseCSVLine(lines[r]);
+            
+            const bettor = row[1] || '';
+            const market = row[2] || '';
+            const selection = row[3] || '';
+            const stake = row[4] || '';
+            const odds = row[6] || '';
+            const payout = row[7] || '';
+            const result = row[8] || '';
+            const paid = row[9] || '';
+
+            // Αν υπάρχει bettor ή market, εμφανίζουμε τη γραμμή
+            if (bettor || market) {
+              rowsHTML.push(`
+                <tr class="hover:bg-slate-900/40 transition-colors">
+                  <td class="py-3 px-3 font-bold text-white">${bettor || '-'}</td>
+                  <td class="py-3 px-3 text-slate-300">${market || '-'}</td>
+                  <td class="py-3 px-3 text-purple-300 font-semibold">${selection || '-'}</td>
+                  <td class="py-3 px-3 text-right font-mono font-bold text-amber-400">${stake || '-'}</td>
+                  <td class="py-3 px-3 text-center font-mono text-slate-300">${odds || '-'}</td>
+                  <td class="py-3 px-3 text-right font-mono font-bold text-amber-300">${payout || '-'}</td>
+                  <td class="py-3 px-3 text-center font-bold text-slate-200">${result || '-'}</td>
+                  <td class="py-3 px-3 text-center font-bold text-slate-300">${paid || '-'}</td>
+                </tr>
+              `);
+            }
+          }
+        }
+
+        const tbody = document.getElementById('betting-desk-tbody');
+        if (rowsHTML.length > 0) {
+          tbody.innerHTML = rowsHTML.join('');
+        } else {
+          tbody.innerHTML = `<tr><td colspan="8" class="text-center py-8 text-slate-500">No bets found in range B6:J205</td></tr>`;
+        }
+
+      } catch (err) {
+        console.error('Error fetching betting desk data:', err);
+        document.getElementById('betting-desk-tbody').innerHTML = `<tr><td colspan="8" class="text-center py-8 text-red-400">Error loading betting desk data.</td></tr>`;
+      }
+    }
+
+    fetchBettingDesk();
+    setInterval(fetchBettingDesk, 10000);
+  </script>
+</body>
+</html>

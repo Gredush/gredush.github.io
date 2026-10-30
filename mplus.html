@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>M+ Live Broadcast Dashboard | Gredush</title>
-  <meta name="description" content="Live broadcast coverage for Gredush Mythic+ events." />
+  <title>M+ Live Broadcast Hub | Gredush</title>
+  <meta name="description" content="Live broadcast coverage and hub for Gredush Mythic+ events." />
   <meta name="theme-color" content="#06070a" />
 
   <!-- Google tag (gtag.js) -->
@@ -54,6 +54,22 @@
       box-shadow: 0 6px 24px -2px rgba(168, 85, 247, 0.6);
       transform: translateY(-2px);
     }
+    .hub-btn {
+      background: rgba(13, 16, 23, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.2s ease-in-out;
+    }
+    .hub-btn:hover {
+      background: rgba(88, 28, 135, 0.3);
+      border-color: rgba(192, 132, 252, 0.5);
+      transform: translateY(-2px);
+    }
+    .hub-btn.active {
+      background: linear-gradient(135deg, #991b1b 0%, #581c87 100%);
+      border-color: rgba(248, 113, 113, 0.5);
+      color: #fff;
+      box-shadow: 0 4px 20px -5px rgba(168, 85, 247, 0.5);
+    }
   </style>
 </head>
 
@@ -76,23 +92,34 @@
   </header>
 
   <!-- Main Content -->
-  <main id="main" class="max-w-6xl mx-auto px-5 py-12 flex-grow flex flex-col items-center justify-center w-full space-y-6">
+  <main id="main" class="max-w-4xl mx-auto px-5 py-16 flex-grow flex flex-col items-center justify-center w-full space-y-8">
     
-    <!-- Header Banner -->
-    <div class="vault-card rounded-2xl p-8 sm:p-10 text-center border border-purple-900/40 space-y-4 shadow-2xl w-full">
-      
-      <!-- Κεντρικός Τίτλος (A1:P2) -->
+    <!-- Hub Navigation Buttons (Τερμα πάνω, πάνω από τον τίτλο) -->
+    <div class="flex flex-wrap justify-center gap-3 w-full max-w-2xl">
+      <a href="mplus.html" class="hub-btn active flex-1 min-w-[120px] py-3 px-4 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center shadow-lg text-white">
+        M+ Event
+      </a>
+      <a href="dashboard.html" class="hub-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-slate-300 shadow-lg hover:text-white">
+        Dashboard
+      </a>
+      <a href="participants.html" class="hub-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-slate-300 shadow-lg hover:text-white">
+        Participants
+      </a>
+      <a href="betting-desk.html" class="hub-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-slate-300 shadow-lg hover:text-white">
+        Betting Desk
+      </a>
+    </div>
+
+    <!-- Header Banner (Τίτλος & Status/Round) -->
+    <div class="vault-card rounded-2xl p-8 sm:p-12 text-center border border-purple-900/40 space-y-4 shadow-2xl w-full">
       <h1 id="event-title" class="font-horde text-3xl sm:text-5xl font-black text-white glow-gold">
         Loading Title...
       </h1>
-
-      <!-- Status / Round / Match Title από A3:P3 -->
       <div class="pt-2">
         <span id="sheet-info" class="text-purple-300 text-sm sm:text-base font-semibold tracking-wider uppercase">
           Loading Info...
         </span>
       </div>
-
     </div>
 
   </main>
@@ -134,7 +161,6 @@
         const lines = text.split('\n');
         
         if (lines.length > 0) {
-          // Γραμμή 1: Τίτλος (A1)
           const row1 = parseCSVLine(lines[0]);
           if (row1.length > 0 && row1[0] !== '') {
             document.getElementById('event-title').textContent = row1[0];
@@ -142,7 +168,6 @@
         }
 
         if (lines.length > 2) {
-          // Γραμμή 3: Παίρνουμε ό,τι υπάρχει στη γραμμή και το ενώνουμε αν έχει τιμές (A3:P3)
           const row3 = parseCSVLine(lines[2]);
           const combinedInfo = row3.filter(val => val !== '').join(' - ');
           if (combinedInfo) {

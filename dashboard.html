@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>M+ Event Dashboard | Gredush</title>
+  <meta name="description" content="Live event dashboard and rankings for Gredush Mythic+ events." />
+  <meta name="theme-color" content="#06070a" />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CZLTE6SXJ5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CZLTE6SXJ5');
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    html { font-size: 110%; scroll-behavior: smooth; }
+    body {
+      font-family: 'Rajdhani', 'Inter', sans-serif;
+      background-color: #06070a;
+      color: #e2e8f0;
+      background-image:
+        radial-gradient(circle at 50% 0%, rgba(153, 27, 27, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 60%, rgba(88, 28, 135, 0.1) 0%, transparent 40%);
+      background-attachment: fixed;
+    }
+    .font-horde { font-family: 'Cinzel', serif; }
+    .glow-gold { text-shadow: 0 0 16px rgba(239, 68, 68, 0.4), 0 0 30px rgba(168, 85, 247, 0.2); }
+    .vault-card {
+      background: rgba(13, 16, 23, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+    .btn-vault-primary {
+      background: linear-gradient(135deg, #991b1b 0%, #680d2b 50%, #581c87 100%);
+      background-size: 200% 200%;
+      transition: all 0.3s ease-in-out;
+      border: 1px solid rgba(248, 113, 113, 0.3);
+      box-shadow: 0 4px 20px -5px rgba(153, 27, 27, 0.5);
+    }
+    .btn-vault-primary:hover {
+      background-position: right center;
+      border-color: rgba(192, 132, 252, 0.6);
+      box-shadow: 0 6px 24px -2px rgba(168, 85, 247, 0.6);
+      transform: translateY(-2px);
+    }
+    .hub-btn {
+      background: rgba(13, 16, 23, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.2s ease-in-out;
+    }
+    .hub-btn:hover {
+      background: rgba(88, 28, 135, 0.3);
+      border-color: rgba(192, 132, 252, 0.5);
+      transform: translateY(-2px);
+    }
+    .hub-btn.active {
+      background: linear-gradient(135deg, #991b1b 0%, #581c87 100%);
+      border-color: rgba(248, 113, 113, 0.5);
+      color: #fff;
+      box-shadow: 0 4px 20px -5px rgba(168, 85, 247, 0.5);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col justify-between selection:bg-red-900 selection:text-purple-200">
+
+  <!-- Navigation Bar -->
+  <header class="sticky top-0 z-50 backdrop-blur-xl bg-[#06070a]/80 border-b border-red-950/40">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
+      <nav aria-label="Main" class="flex items-center gap-4 sm:gap-8 text-[11px] sm:text-sm font-semibold tracking-wide sm:tracking-wider uppercase text-slate-300">
+        <a href="index.html#livestreams" class="hover:text-red-400 transition-colors">Streams</a>
+        <a href="wow.html" class="hover:text-purple-400 transition-colors">World Of Warcraft</a>
+        <a href="index.html#youtube" class="hover:text-red-400 transition-colors">Videos</a>
+        <a href="mplus.html" class="text-purple-400 font-bold transition-colors">M+ Event</a>
+        <a href="index.html#community" class="hover:text-purple-400 transition-colors">Community</a>
+      </nav>
+      <a href="https://discord.gg/qScBpyq5gM" target="_blank" rel="noopener noreferrer" class="btn-vault-primary flex-shrink-0 px-3 sm:px-4 py-2 text-xs font-bold uppercase tracking-widest text-white rounded-lg flex items-center gap-2">
+        <span>Join Discord</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="main" class="max-w-6xl mx-auto px-5 py-10 flex-grow flex flex-col items-center justify-center w-full space-y-6">
+    
+    <!-- Hub Navigation Buttons (Τέρμα πάνω, πάνω από τον τίτλο) -->
+    <div class="flex flex-wrap justify-center gap-3 w-full max-w-2xl">
+      <a href="mplus.html" class="hub-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-slate-300 shadow-lg hover:text-white">
+        M+ Event
+      </a>
+      <a href="dashboard.html" class="hub-btn active flex-1 min-w-[120px] py-3 px-4 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center shadow-lg text-white">
+        Dashboard
+      </a>
+      <a href="participants.html" class="hub-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-slate-300 shadow-lg hover:text-white">
+        Participants
+      </a>
+      <a href="betting-desk.html" class="hub-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-slate-300 shadow-lg hover:text-white">
+        Betting Desk
+      </a>
+    </div>
+
+    <!-- Header Banner (Τίτλος & Status/Round) -->
+    <div class="vault-card rounded-2xl p-8 sm:p-10 text-center border border-purple-900/40 space-y-4 shadow-2xl w-full">
+      <h1 id="event-title" class="font-horde text-3xl sm:text-5xl font-black text-white glow-gold">
+        Loading Title...
+      </h1>
+      <div class="pt-2">
+        <span id="sheet-info" class="text-purple-300 text-sm sm:text-base font-semibold tracking-wider uppercase">
+          Loading Info...
+        </span>
+      </div>
+    </div>
+
+    <!-- Live Matchup Board (Teams & Dungeon) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full items-center">
+      <!-- Ομάδα Α (A6:D8) -->
+      <div class="vault-card rounded-2xl p-6 text-center border-l-4 border-red-500 shadow-xl space-y-2">
+        <span class="text-xs font-bold uppercase text-red-400 tracking-wider">TEAM A</span>
+        <h2 id="team-a" class="font-horde text-2xl font-black text-white">Team Alpha</h2>
+      </div>
+
+      <!-- Current Dungeon (G6:J6) -->
+      <div class="vault-card rounded-2xl p-6 text-center space-y-2 bg-slate-950/80 shadow-xl border border-purple-900/30">
+        <div class="text-xs uppercase tracking-widest text-slate-400 font-bold">Current Dungeon</div>
+        <div id="current-dungeon" class="text-xl sm:text-2xl font-black font-horde text-purple-300 glow-gold">
+          Dungeon TBD
+        </div>
+      </div>
+
+      <!-- Ομάδα Β (M6:P8) -->
+      <div class="vault-card rounded-2xl p-6 text-center border-r-4 border-purple-500 shadow-xl space-y-2">
+        <span class="text-xs font-bold uppercase text-purple-400 tracking-wider">TEAM B</span>
+        <h2 id="team-b" class="font-horde text-2xl font-black text-white">Team Bravo</h2>
+      </div>
+    </div>
+
+    <!-- Total Bet Pot (A11:D13) -->
+    <div class="vault-card rounded-2xl p-6 text-center border border-amber-500/30 shadow-xl w-full max-w-md mx-auto space-y-2">
+      <span class="text-xs font-bold uppercase tracking-widest text-amber-400">Total Bet Pot</span>
+      <div id="total-pot" class="font-horde text-3xl font-black text-amber-300 glow-gold">
+        0
+      </div>
+    </div>
+
+    <!-- Two Cards Section (Αριστερά: Team Power Ranking, Δεξιά: Betting Board) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full items-start">
+      
+      <!-- Αριστερό Card: Team Power Ranking -->
+      <div class="vault-card rounded-2xl p-6 space-y-4 shadow-xl border border-purple-900/40">
+        <div class="border-b border-slate-800 pb-3">
+          <h3 class="font-horde text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-purple-500 inline-block"></span> Team Power Ranking
+          </h3>
+        </div>
+
+        <div class="flex justify-between items-center px-3 text-xs font-bold uppercase tracking-widest text-slate-400">
+          <span>Team Name</span>
+          <span>AVG Rating</span>
+        </div>
+
+        <div id="rankings-list" class="space-y-2">
+          <div class="text-slate-500 text-sm text-center py-4">Loading Rankings...</div>
+        </div>
+      </div>
+
+      <!-- Δεξί Card: Betting Board -->
+      <div class="vault-card rounded-2xl p-6 space-y-4 shadow-xl border border-amber-500/30">
+        <div class="border-b border-slate-800 pb-3">
+          <h3 class="font-horde text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span> Betting Board
+          </h3>
+        </div>
+
+        <div class="grid grid-cols-12 gap-2 px-3 text-xs font-bold uppercase tracking-widest text-slate-400">
+          <span class="col-span-6">Market</span>
+          <span class="col-span-3 text-center">Odds</span>
+          <span class="col-span-3 text-right">Pool</span>
+        </div>
+
+        <div id="betting-list" class="space-y-2">
+          <div class="text-slate-500 text-sm text-center py-4">Loading Betting Board...</div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-[#040507] border-t border-slate-900 py-8 text-center text-xs text-slate-400 space-y-2">
+    <p class="font-horde font-bold text-slate-300 tracking-widest text-sm">GREDUSH M+ EVENT BROADCAST</p>
+    <p>© <span id="year"></span> Gredush. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnLyEV_JrIV3Ohaq6jFFNpZhHMLpqpBztTSpVT96e1A__LREOv5T_p-Px5AZZvqzcESzEIwkFJ2XT9/pub?gid=671222144&single=true&output=csv';
+
+    function parseCSVLine(line) {
+      const result = [];
+      let current = '';
+      let inQuotes = false;
+      for (let i = 0; i < line.length; i++) {
+        const char = line[i];
+        if (char === '"') {
+          inQuotes = !inQuotes;
+        } else if (char === ',' && !inQuotes) {
+          result.push(current.trim());
+          current = '';
+        } else {
+          current += char;
+        }
+      }
+      result.push(current.trim());
+      return result.map(s => s.replace(/^"|"$/g, ''));
+    }
+
+    async function fetchData() {
+      try {
+        const response = await fetch(CSV_URL + '&_t=' + Date.now(), { cache: 'no-store' });
+        const text = await response.text();
+        const lines = text.split('\n');
+        
+        // Γραμμή 1: Τίτλος (A1)
+        if (lines.length > 0) {
+          const row1 = parseCSVLine(lines[0]);
+          if (row1.length > 0 && row1[0] !== '') {
+            document.getElementById('event-title').textContent = row1[0];
+          }
+        }
+
+        // Γραμμή 3: Status / Round / Match Title (A3:P3)
+        if (lines.length > 2) {
+          const row3 = parseCSVLine(lines[2]);
+          const combinedInfo = row3.filter(val => val !== '').join(' - ');
+          if (combinedInfo) {
+            document.getElementById('sheet-info').textContent = combinedInfo;
+          }
+        }
+
+        // Γραμμή 6 (index 5): Ομάδα Α (στήλη A-D), Dungeon (στήλη G), Ομάδα Β (στήλη M-P)
+        if (lines.length > 5) {
+          const row6 = parseCSVLine(lines[5]);
+          
+          for (let i = 0; i <= 3; i++) {
+            if (row6[i] && row6[i] !== '') {
+              document.getElementById('team-a').textContent = row6[i];
+              break;
+            }
+          }
+
+          if (row6[6] && row6[6] !== '') {
+            document.getElementById('current-dungeon').textContent = row6[6];
+          }
+
+          for (let i = 12; i <= 15; i++) {
+            if (row6[i] && row6[i] !== '') {
+              document.getElementById('team-b').textContent = row6[i];
+              break;
+            }
+          }
+        }
+
+        // Γραμμές 11 έως 13 (indices 10-12): Total Bet Pot (A11:D13)
+        for (let r = 10; r <= 12; r++) {
+          if (lines.length > r) {
+            const potRow = parseCSVLine(lines[r]);
+            for (let i = 0; i <= 3; i++) {
+              if (potRow[i] && potRow[i] !== '') {
+                document.getElementById('total-pot').textContent = potRow[i];
+                break;
+              }
+            }
+          }
+        }
+
+        // Γραμμές 17 έως 22 (indices 16-21): Team Power Rankings
+        const rankingsHTML = [];
+        for (let r = 16; r <= 21; r++) {
+          if (lines.length > r) {
+            const row = parseCSVLine(lines[r]);
+            
+            let teamName = '';
+            for (let i = 1; i <= 3; i++) {
+              if (row[i] && row[i] !== '') {
+                teamName = row[i];
+                break;
+              }
+            }
+
+            let teamRating = '';
+            for (let i = 5; i <= 6; i++) {
+              if (row[i] && row[i] !== '') {
+                teamRating = row[i];
+                break;
+              }
+            }
+
+            if (teamName) {
+              rankingsHTML.push(`
+                <div class="flex justify-between items-center py-2 px-3 rounded-lg bg-slate-900/60 border border-slate-800/80 hover:border-purple-800/50 transition-colors">
+                  <span class="font-bold text-white text-sm">${teamName}</span>
+                  <span class="font-mono font-bold text-purple-400 text-sm">${teamRating || '-'}</span>
+                </div>
+              `);
+            }
+          }
+        }
+
+        if (rankingsHTML.length > 0) {
+          document.getElementById('rankings-list').innerHTML = rankingsHTML.join('');
+        } else {
+          document.getElementById('rankings-list').innerHTML = '<div class="text-slate-500 text-sm text-center py-4">No rankings found</div>';
+        }
+
+        // Γραμμές 17 έως 22 (indices 16-21): Betting Board (Market J17:K22, Odds N17:O22, Pool P17:P22)
+        const bettingHTML = [];
+        for (let r = 16; r <= 21; r++) {
+          if (lines.length > r) {
+            const row = parseCSVLine(lines[r]);
+            
+            let market = '';
+            for (let i = 9; i <= 10; i++) {
+              if (row[i] && row[i] !== '') {
+                market = row[i];
+                break;
+              }
+            }
+
+            let odds = '';
+            for (let i = 13; i <= 14; i++) {
+              if (row[i] && row[i] !== '') {
+                odds = row[i];
+                break;
+              }
+            }
+
+            let pool = '';
+            if (row[15] && row[15] !== '') {
+              pool = row[15];
+            }
+
+            if (market) {
+              bettingHTML.push(`
+                <div class="grid grid-cols-12 gap-2 items-center py-2 px-3 rounded-lg bg-slate-900/60 border border-slate-800/80 hover:border-amber-500/50 transition-colors">
+                  <span class="col-span-6 font-bold text-white text-sm truncate">${market}</span>
+                  <span class="col-span-3 text-center font-mono font-bold text-amber-400 text-sm">${odds || '-'}</span>
+                  <span class="col-span-3 text-right font-mono font-bold text-slate-300 text-sm">${pool || '-'}</span>
+                </div>
+              `);
+            }
+          }
+        }
+
+        if (bettingHTML.length > 0) {
+          document.getElementById('betting-list').innerHTML = bettingHTML.join('');
+        } else {
+          document.getElementById('betting-list').innerHTML = '<div class="text-slate-500 text-sm text-center py-4">No betting markets found</div>';
+        }
+
+      } catch (err) {
+        console.error('Error fetching sheet data:', err);
+      }
+    }
+
+    fetchData();
+    setInterval(fetchData, 3000);
+  </script>
+</body>
+</html>
