@@ -106,7 +106,7 @@
           <h1 id="match-title" class="font-horde text-2xl md:text-3xl font-black text-white glow-gold mt-1">M+ SHOWDOWN</h1>
         </div>
       </div>
-      <!-- Total Pot (Net Pool afairethike entelws) -->
+      <!-- Total Pot -->
       <div class="text-center">
         <div class="vault-card px-6 py-3 rounded-xl border border-amber-500/30">
           <span class="text-[11px] uppercase text-amber-400/90 block font-bold tracking-wider">Total Pot</span>
@@ -145,10 +145,10 @@
       </div>
     </div>
 
-    <!-- Power Rankings & Status Table -->
+    <!-- Power Rankings Table (Xwris status, me swstes stiles) -->
     <div class="vault-card rounded-2xl p-6 space-y-4">
       <h2 class="font-horde text-xl font-bold text-white flex items-center gap-2">
-        <svg class="w-5 h-5 ic text-purple-400"><use href="#i-radio"/></svg> Team Power Rankings & Status
+        <svg class="w-5 h-5 ic text-purple-400"><use href="#i-radio"/></svg> Team Power Rankings
       </h2>
       <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse">
@@ -156,13 +156,12 @@
             <tr class="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-400">
               <th class="py-2.5 px-3">#</th>
               <th class="py-2.5 px-3">Team</th>
-              <th class="py-2.5 px-3 text-center">Players</th>
+              <th class="py-2.5 px-3">Players</th>
               <th class="py-2.5 px-3 text-right">Avg Rating</th>
-              <th class="py-2.5 px-3 text-right">Status</th>
             </tr>
           </thead>
           <tbody id="rankings-tbody" class="text-sm divide-y divide-slate-800/60">
-            <tr><td colspan="5" class="py-4 text-center text-slate-500">Syncing rankings from TV Dashboard...</td></tr>
+            <tr><td colspan="4" class="py-4 text-center text-slate-500">Syncing rankings from TV Dashboard...</td></tr>
           </tbody>
         </table>
       </div>
@@ -215,25 +214,25 @@
       lines.forEach(line => {
         const parts = line.split(',').map(p => p.trim().replace(/^"|"$/g, ''));
         
-        if (parts[0] && parts[0].includes('TEAM POWER RANKING')) {
+        if (parts[0] && parts[0].toUpperCase().includes('TEAM POWER RANKING')) {
           parsingRankings = true;
           return;
         }
-        if (parsingRankings && parts[0] === '') {
+        if (parsingRankings && (parts[0] === '' && (!parts[1] || parts[1] === ''))) {
           parsingRankings = false;
         }
 
         if (parsingRankings && parts[0] && parts[0] !== '#') {
+          // Stile 0: ID/Number, Stile 1: Team, Stile 2: Players, Stile 3: Avg Rating (analoga pos einai i seira sto sheet sou)
           rankingsRows.push({
-            id: parts[0],
-            team: parts[1],
-            players: parts[2],
-            rating: parts[4],
-            status: parts[5]
+            id: parts[0] || '',
+            team: parts[1] || '',
+            players: parts[2] || '',
+            rating: parts[3] || ''
           });
         }
 
-        if (parts.length >= 2) {
+        if (parts.length >= 2 && parts[0]) {
           map[parts[0]] = parts[1];
         }
       });
@@ -252,20 +251,17 @@
       if (map['Leader Score']) document.getElementById('leader-score').textContent = map['Leader Score'];
       if (map['Breaking News']) document.getElementById('breaking-news').textContent = map['Breaking News'];
       
-      // Ananeosi gia to Total Pot akrivws apo to cell key sou
       if (map['TOTAL POT']) document.getElementById('total-pot').textContent = map['TOTAL POT'];
 
+      // Enimerosi tou pinaka rankings xoris status kai me swstes stiles (Players kai Avg Rating stis theseis tous)
       if (rankingsRows.length > 0) {
         const tbody = document.getElementById('rankings-tbody');
         tbody.innerHTML = rankingsRows.map(r => `
           <tr class="hover:bg-slate-900/40 transition-colors">
             <td class="py-2.5 px-3 font-mono font-bold text-purple-400">${r.id}</td>
             <td class="py-2.5 px-3 font-bold text-white">${r.team}</td>
-            <td class="py-2.5 px-3 text-center text-slate-300">${r.players}</td>
+            <td class="py-2.5 px-3 text-slate-300">${r.players}</td>
             <td class="py-2.5 px-3 text-right font-mono text-slate-200">${r.rating}</td>
-            <td class="py-2.5 px-3 text-right">
-              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-900 border border-slate-700 text-slate-300">${r.status}</span>
-            </td>
           </tr>
         `).join('');
       }
