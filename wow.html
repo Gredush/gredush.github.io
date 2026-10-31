@@ -82,7 +82,7 @@
 
   <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-[60] focus:top-2 focus:left-2 focus:bg-purple-700 focus:text-white focus:px-3 focus:py-2 focus:rounded">Skip to content</a>
 
-  <!-- NAVIGATION BAR (Me to World Of Warcraft energopoimeno) -->
+  <!-- NAVIGATION BAR -->
   <header class="sticky top-0 z-50 backdrop-blur-xl bg-[#06070a]/80 border-b border-red-950/40">
     <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
       <nav aria-label="Main" class="flex items-center gap-4 sm:gap-8 text-[11px] sm:text-sm font-semibold tracking-wide sm:tracking-wider uppercase text-slate-300">
@@ -101,18 +101,47 @@
 
   <main id="main" class="max-w-6xl mx-auto px-5 py-9 space-y-12 flex-grow w-full">
 
-    <!-- Page Header -->
+    <!-- Page Header with User PNG Icon -->
     <div class="vault-card rounded-2xl p-7 text-center md:text-left flex flex-col md:flex-row items-center gap-6 shadow-xl">
-      <div class="p-4 bg-red-950/80 border border-red-800/40 text-red-400 rounded-xl">
-        <svg class="w-10 h-10 ic" aria-hidden="true"><use href="#i-swords"/></svg>
-      </div>
+      <img src="./wow-icon.png" width="48" height="48" alt="World of Warcraft Icon" class="w-12 h-12 object-contain flex-shrink-0">
       <div class="space-y-2">
         <h1 class="font-horde text-3xl md:text-4xl font-black text-white glow-gold">World of Warcraft Profiles</h1>
         <p class="text-slate-300 text-sm md:text-base">
-          Live statistics, Mythic+ ratings, raid progress, and combat logs for Gredush (Ragnaros EU).
+          Veteran hunter background, Mythic+ achievements, high-end raid progression, and live combat logs for Gredush (Ragnaros EU).
         </p>
       </div>
     </div>
+
+    <!-- Character Intro & Background Card -->
+    <section class="vault-card rounded-2xl p-6 sm:p-8 space-y-6 border border-purple-900/30">
+      <div class="border-b border-slate-800/80 pb-4">
+        <h2 class="font-horde text-xl sm:text-2xl font-bold text-white uppercase tracking-wider">Character & Veteran Background</h2>
+        <p class="text-xs sm:text-sm text-slate-400 mt-1">From classic roots to modern high-key dominance on Ragnaros-EU.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+        <div class="bg-slate-950/60 border border-slate-800/60 rounded-xl p-4 space-y-2">
+          <div class="text-red-400 font-horde font-bold text-xs uppercase tracking-widest">Legacy & Class</div>
+          <p class="text-slate-300">
+            Active since <strong class="text-white">2005–2006</strong>. The Hunter remains the primary class from day one, mastering every spec to play whatever performs best and remains most enjoyable in each tier.
+          </p>
+        </div>
+
+        <div class="bg-slate-950/60 border border-slate-800/60 rounded-xl p-4 space-y-2">
+          <div class="text-purple-400 font-horde font-bold text-xs uppercase tracking-widest">Raiding XP & Leadership</div>
+          <p class="text-slate-300">
+            Experienced across nearly every raid tier with <strong class="text-white">6 Cutting Edge</strong> achievements. Held roles from trial/member to Officer, Class Leader, Raid Leader, and Guild Master.
+          </p>
+        </div>
+
+        <div class="bg-slate-950/60 border border-slate-800/60 rounded-xl p-4 space-y-2">
+          <div class="text-amber-400 font-horde font-bold text-xs uppercase tracking-widest">Mythic+ Excellence</div>
+          <p class="text-slate-300">
+            Began serious M+ pushes in <em>Shadowlands</em> and returned strongly in <em>The War Within</em>, consistently placing in the <strong class="text-white">Top 1%</strong> of players and securing the Midnight Season 1 title mount.
+          </p>
+        </div>
+      </div>
+    </section>
 
     <!-- WoW profiles section -->
     <section id="profiles" class="space-y-4">
