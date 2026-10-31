@@ -86,6 +86,7 @@
   <header class="sticky top-0 z-50 backdrop-blur-xl bg-[#06070a]/80 border-b border-red-950/40">
     <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
       <nav aria-label="Main" class="flex items-center gap-4 sm:gap-8 text-[11px] sm:text-sm font-semibold tracking-wide sm:tracking-wider uppercase text-slate-300">
+        <a href="index.html" class="hover:text-red-400 transition-colors">Home</a>
         <a href="index.html#livestreams" class="hover:text-red-400 transition-colors">Streams</a>
         <a href="wow.html" class="text-purple-400 font-bold transition-colors">World Of Warcraft</a>
         <a href="index.html#youtube" class="hover:text-red-400 transition-colors">Videos</a>
@@ -101,9 +102,9 @@
 
   <main id="main" class="max-w-6xl mx-auto px-5 py-9 space-y-12 flex-grow w-full">
 
-    <!-- Page Header with User PNG Icon -->
+    <!-- Page Header with Larger Transparent PNG Icon -->
     <div class="vault-card rounded-2xl p-7 text-center md:text-left flex flex-col md:flex-row items-center gap-6 shadow-xl">
-      <img src="./wow-icon.png" width="48" height="48" alt="World of Warcraft Icon" class="w-12 h-12 object-contain flex-shrink-0">
+      <img src="./wow-icon.png" width="64" height="64" alt="World of Warcraft Icon" class="w-16 h-16 object-contain flex-shrink-0">
       <div class="space-y-2">
         <h1 class="font-horde text-3xl md:text-4xl font-black text-white glow-gold">World of Warcraft Profiles</h1>
         <p class="text-slate-300 text-sm md:text-base">
@@ -114,9 +115,16 @@
 
     <!-- Character Intro & Background Card -->
     <section class="vault-card rounded-2xl p-6 sm:p-8 space-y-6 border border-purple-900/30">
-      <div class="border-b border-slate-800/80 pb-4">
-        <h2 class="font-horde text-xl sm:text-2xl font-bold text-white uppercase tracking-wider">Character & Veteran Background</h2>
-        <p class="text-xs sm:text-sm text-slate-400 mt-1">From classic roots to modern high-key dominance on Ragnaros-EU.</p>
+      <div class="flex flex-col md:flex-row items-center gap-6 border-b border-slate-800/80 pb-6">
+        <div class="relative group flex-shrink-0">
+          <div class="w-24 h-24 md:w-28 md:h-28 rounded-xl border-2 border-red-500/30 p-1 bg-slate-950 overflow-hidden shadow-xl group-hover:border-purple-500/50 transition-colors duration-500">
+            <img src="./gigachad_gredush2.jpg" width="112" height="112" alt="Gredush avatar" class="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-500 brightness-95">
+          </div>
+        </div>
+        <div class="space-y-1.5 text-center md:text-left">
+          <h2 class="font-horde text-xl sm:text-2xl font-bold text-white uppercase tracking-wider">Character & Veteran Background</h2>
+          <p class="text-xs sm:text-sm text-slate-400">From classic roots to modern high-key dominance on Ragnaros-EU.</p>
+        </div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
