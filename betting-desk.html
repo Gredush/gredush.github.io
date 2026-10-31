@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Betting Desk | Gredush</title>
-  <meta name="description" content="Live betting desk and market pools for Gredush Mythic+ events." />
+  <meta name="description" content="Professional live betting desk and market pools for Gredush Mythic+ events." />
   <meta name="theme-color" content="#06070a" />
 
   <!-- Google tag (gtag.js) -->
@@ -36,10 +36,10 @@
     .font-horde { font-family: 'Cinzel', serif; }
     .glow-gold { text-shadow: 0 0 16px rgba(239, 68, 68, 0.4), 0 0 30px rgba(168, 85, 247, 0.2); }
     .vault-card {
-      background: rgba(13, 16, 23, 0.85);
+      background: rgba(13, 16, 23, 0.70);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
     }
     .btn-vault-primary {
       background: linear-gradient(135deg, #991b1b 0%, #680d2b 50%, #581c87 100%);
@@ -70,15 +70,26 @@
       color: #fff;
       box-shadow: 0 4px 20px -5px rgba(168, 85, 247, 0.5);
     }
+    .odds-badge {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      transition: all 0.2s;
+    }
+    .odds-badge:hover {
+      border-color: rgba(239, 68, 68, 0.6);
+      background: rgba(88, 28, 135, 0.2);
+    }
   </style>
 </head>
 
 <body class="min-h-screen flex flex-col justify-between selection:bg-red-900 selection:text-purple-200">
+  
   <!-- Cinematic Background Banner Fade Out -->
   <div class="fixed top-0 left-0 w-full h-[50vh] sm:h-[60vh] z-0 pointer-events-none overflow-hidden opacity-35">
     <img src="mplus_banner.png" alt="Mythic Key Rush Background" class="w-full h-full object-cover object-center" />
     <div class="absolute inset-0 bg-gradient-to-b from-[#06070a]/40 via-[#06070a]/80 to-[#06070a]"></div>
   </div>
+
   <!-- Navigation Bar -->
   <header class="sticky top-0 z-50 backdrop-blur-xl bg-[#06070a]/80 border-b border-red-950/40">
     <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
@@ -95,6 +106,7 @@
       </a>
     </div>
   </header>
+
   <!-- Main Content -->
   <main id="main" class="max-w-6xl mx-auto px-5 py-10 flex-grow flex flex-col items-center justify-center w-full space-y-8">
     
@@ -117,12 +129,44 @@
       </a>
     </div>
 
-    <!-- Header Card -->
-    <div class="vault-card rounded-2xl p-8 sm:p-10 text-center border border-purple-900/40 space-y-2 shadow-2xl w-full">
+    <!-- Live Betting Agency Marquee Ticker -->
+    <div class="vault-card rounded-xl border border-red-900/40 w-full overflow-hidden flex items-center shadow-lg py-2">
+      <div class="bg-red-950/80 text-red-400 font-mono text-xs font-bold px-3 py-1 uppercase tracking-widest flex items-center gap-2 flex-shrink-0 border-r border-red-900/50">
+        <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span> OPAP LIVE TICKER
+      </div>
+      <div class="overflow-hidden whitespace-nowrap relative w-full flex">
+        <div class="inline-block animate-[marquee_25s_linear_infinite] text-xs font-mono text-slate-300 tracking-wider px-4 flex items-center gap-8" id="marquee-content">
+          <span>🔴 LIVE BETTING DESK OPEN • Place your wagers on Mythic+ Event Markets • Good luck to all participants!</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header Card & Live Status Ticker -->
+    <div class="vault-card rounded-2xl p-8 sm:p-10 text-center border border-purple-900/40 space-y-3 shadow-2xl w-full relative overflow-hidden">
+      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-600 via-purple-600 to-amber-500"></div>
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/60 border border-red-800/60 text-red-400 text-xs font-mono font-bold uppercase tracking-widest animate-pulse">
+        <span class="w-2 h-2 rounded-full bg-red-500"></span> Live Betting Exchange Active
+      </div>
       <h1 class="font-horde text-3xl sm:text-5xl font-black text-white glow-gold">
-        Betting Desk
+        Pro Betting Desk
       </h1>
-      <p class="text-slate-400 text-sm uppercase tracking-wider font-semibold">Active Markets & Community Wagers</p>
+      <p class="text-slate-400 text-sm uppercase tracking-wider font-semibold">Real-time Odds, Market Pools & Community Wagers</p>
+      
+      <!-- Quick Metrics Bar -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-4 max-w-2xl mx-auto">
+        <div class="bg-slate-950/60 border border-slate-800/60 rounded-xl p-3 text-center">
+          <div class="text-[11px] uppercase tracking-wider text-slate-400 font-mono">Total Volume</div>
+          <div id="metric-total-volume" class="text-amber-400 font-mono font-black text-lg">0 Gold</div>
+        </div>
+        <div class="bg-slate-950/60 border border-slate-800/60 rounded-xl p-3 text-center">
+          <div class="text-[11px] uppercase tracking-wider text-slate-400 font-mono">Active Markets</div>
+          <div id="metric-active-markets" class="text-purple-300 font-mono font-black text-lg">0</div>
+        </div>
+        <div class="col-span-2 sm:col-span-1 bg-slate-950/60 border border-slate-800/60 rounded-xl p-3 text-center">
+          <div class="text-[11px] uppercase tracking-wider text-slate-400 font-mono">Total Wagers</div>
+          <div id="metric-total-wagers" class="text-emerald-400 font-mono font-black text-lg">0</div>
+        </div>
+      </div>
     </div>
 
     <!-- Top Grid: Available Bets (Left), Market Pots (Middle) & Top 3 Bettors (Right) -->
@@ -130,62 +174,78 @@
       
       <!-- Available Bets Card -->
       <div class="vault-card rounded-2xl p-6 shadow-xl border border-purple-900/30 flex flex-col justify-between">
-        <h3 class="font-horde text-lg font-bold text-white uppercase tracking-wider mb-4 border-b border-slate-800 pb-2 flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-red-500 inline-block"></span>
-          Available Bets
+        <h3 class="font-horde text-base font-bold text-white uppercase tracking-wider mb-4 border-b border-slate-800/80 pb-2 flex items-center justify-between">
+          <span class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-red-500 inline-block"></span>
+            Available Bets
+          </span>
+          <span class="text-[10px] font-mono text-red-400 font-bold uppercase">LIVE</span>
         </h3>
-        <div id="available-bets-container" class="space-y-3 flex-grow">
+        <div id="available-bets-container" class="space-y-2 flex-grow max-h-[320px] overflow-y-auto pr-1">
           <div class="text-slate-500 text-sm py-4 text-center">Loading Bets...</div>
         </div>
       </div>
 
       <!-- Market Pots Card -->
       <div class="vault-card rounded-2xl p-6 shadow-xl border border-purple-900/30 flex flex-col justify-between">
-        <h3 class="font-horde text-lg font-bold text-white uppercase tracking-wider mb-4 border-b border-slate-800 pb-2 flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span>
-          Market Pot Pools
+        <h3 class="font-horde text-base font-bold text-white uppercase tracking-wider mb-4 border-b border-slate-800/80 pb-2 flex items-center justify-between">
+          <span class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span>
+            Market Pot Pools
+          </span>
+          <span class="text-[10px] font-mono text-amber-400 font-bold uppercase">POOLS</span>
         </h3>
-        <div id="market-pots-container" class="space-y-3 flex-grow">
+        <div id="market-pots-container" class="space-y-2 flex-grow max-h-[320px] overflow-y-auto pr-1">
           <div class="text-slate-500 text-sm py-4 text-center">Loading Market Pools...</div>
         </div>
       </div>
 
       <!-- Top 3 Bettors Card -->
       <div class="vault-card rounded-2xl p-6 shadow-xl border border-purple-900/30 flex flex-col justify-between">
-        <h3 class="font-horde text-lg font-bold text-white uppercase tracking-wider mb-4 border-b border-slate-800 pb-2 flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-purple-500 inline-block"></span>
-          Top 3 Bettors
+        <h3 class="font-horde text-base font-bold text-white uppercase tracking-wider mb-4 border-b border-slate-800/80 pb-2 flex items-center justify-between">
+          <span class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-purple-500 inline-block"></span>
+            Top 3 Bettors
+          </span>
+          <span class="text-[10px] font-mono text-purple-400 font-bold uppercase">TOP</span>
         </h3>
-        <div id="top-bettors-container" class="space-y-3 flex-grow">
+        <div id="top-bettors-container" class="space-y-2 flex-grow">
           <div class="text-slate-500 text-sm py-4 text-center">Loading Top Bettors...</div>
         </div>
       </div>
 
     </div>
 
-    <!-- Betting Table Card -->
-    <div class="vault-card rounded-2xl p-6 shadow-xl border border-purple-900/30 w-full overflow-x-auto">
-      <h3 class="font-horde text-lg font-bold text-white uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">
-        Wagers History & Live Bets
-      </h3>
-      <table class="w-full text-left border-collapse">
-        <thead>
-          <tr class="border-b border-slate-800 text-xs font-bold uppercase tracking-widest text-slate-400">
-            <th class="py-3 px-4">Bettor</th>
-            <th class="py-3 px-4">Market</th>
-            <th class="py-3 px-4">Selection</th>
-            <th class="py-3 px-4 text-right">Stake (Gold)</th>
-            <th class="py-3 px-4 text-center">Live Odds</th>
-            <th class="py-3 px-4 text-right">Potential Payout</th>
-            <th class="py-3 px-4 text-center">Result</th>
-          </tr>
-        </thead>
-        <tbody id="bets-tbody" class="divide-y divide-slate-800/60 text-sm">
-          <tr>
-            <td colspan="7" class="text-center py-8 text-slate-500">Loading Bets...</td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- Betting Table Card (Sportsbook Ledger) -->
+    <div class="vault-card rounded-2xl p-6 sm:p-8 shadow-xl border border-purple-900/30 w-full overflow-hidden">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-800/80 pb-4 mb-4 gap-2">
+        <h3 class="font-horde text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
+          Wagers History & Live Book
+        </h3>
+        <span class="text-xs font-mono text-slate-400 bg-slate-950/60 px-3 py-1 rounded-lg border border-slate-800">Auto-refreshing every 4s</span>
+      </div>
+      
+      <div class="overflow-x-auto w-full">
+        <table class="w-full text-left border-collapse min-w-[750px]">
+          <thead>
+            <tr class="border-b border-slate-800 text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-950/40">
+              <th class="py-3 px-4">Bettor</th>
+              <th class="py-3 px-4">Market</th>
+              <th class="py-3 px-4">Selection</th>
+              <th class="py-3 px-4 text-right">Stake (Gold)</th>
+              <th class="py-3 px-4 text-center">Odds</th>
+              <th class="py-3 px-4 text-right">Est. Payout</th>
+              <th class="py-3 px-4 text-center">Status</th>
+            </tr>
+          </thead>
+          <tbody id="bets-tbody" class="divide-y divide-slate-800/50 text-sm">
+            <tr>
+              <td colspan="7" class="text-center py-10 text-slate-500 font-mono">Loading live sportsbook ledger...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
   </main>
@@ -195,6 +255,13 @@
     <p class="font-horde font-bold text-slate-300 tracking-widest text-sm">GREDUSH M+ EVENT BROADCAST</p>
     <p>© <span id="year"></span> Gredush. All rights reserved.</p>
   </footer>
+
+  <style>
+    @keyframes marquee {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+  </style>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
@@ -228,9 +295,9 @@
         const lines = text.split('\n');
 
         const availableBetsContainer = document.getElementById('available-bets-container');
+        const marqueeContent = document.getElementById('marquee-content');
         const marketsList = [];
 
-        // Ανάγνωση C6 έως C20 (Index 5 έως 19, στήλη C -> index 2)
         for (let r = 5; r <= 19; r++) {
           if (lines.length > r) {
             const row = parseCSVLine(lines[r]);
@@ -242,13 +309,19 @@
           }
         }
 
+        document.getElementById('metric-active-markets').textContent = marketsList.length;
+
         if (marketsList.length > 0) {
+          // Render clean list without boxes
           availableBetsContainer.innerHTML = marketsList.map(m => `
-            <div class="flex justify-between items-center bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
-              <span class="text-slate-300 font-semibold text-sm">${m}</span>
-              <span class="text-[10px] font-mono uppercase bg-red-950/60 text-red-400 border border-red-800/50 px-2 py-0.5 rounded font-bold">ACTIVE</span>
+            <div class="flex items-center justify-between py-2 px-1 border-b border-slate-800/40 hover:bg-slate-900/30 transition-colors">
+              <span class="text-slate-200 font-medium text-xs sm:text-sm truncate pr-2">${m}</span>
+              <span class="text-[10px] font-mono text-red-400 font-bold uppercase tracking-wider flex-shrink-0">● OPEN</span>
             </div>
           `).join('');
+
+          // Update Marquee ticker with available markets
+          marqueeContent.innerHTML = `<span>🔴 ACTIVE MARKETS: ${marketsList.join(' • ')} • PLACE YOUR BETS NOW! 🟢</span>`;
         } else {
           availableBetsContainer.innerHTML = `<div class="text-slate-500 text-sm py-4 text-center">No available bets found.</div>`;
         }
@@ -266,8 +339,8 @@
         const betsList = [];
         const marketPots = {};
         const bettostakes = {};
+        let grandTotalVolume = 0;
 
-        // Ανάγνωση από γραμμή 6 έως 205 (Index 5 έως 204)
         for (let r = 5; r <= 204; r++) {
           if (lines.length > r && lines[r].trim() !== '') {
             const row = parseCSVLine(lines[r]);
@@ -282,15 +355,14 @@
 
             if (bettor || market) {
               const stakeNum = parseFloat(stakeStr.replace(/[^0-9.-]+/g,"")) || 0;
+              grandTotalVolume += stakeNum;
 
               betsList.push({ bettor, market, selection, stakeStr, stakeNum, liveOdds, payout, result });
 
-              // Συγκέντρωση Pot ανά Market
               if (market) {
                 marketPots[market] = (marketPots[market] || 0) + stakeNum;
               }
 
-              // Συγκέντρωση Stake ανά Bettor
               if (bettor) {
                 bettostakes[bettor] = (bettostakes[bettor] || 0) + stakeNum;
               }
@@ -298,32 +370,40 @@
           }
         }
 
-        // 1. Render Markets Pot
+        // Update metrics bar
+        document.getElementById('metric-total-volume').textContent = grandTotalVolume.toLocaleString() + ' Gold';
+        document.getElementById('metric-total-wagers').textContent = betsList.length;
+
+        // 1. Render Markets Pot (Clean list)
         const marketContainer = document.getElementById('market-pots-container');
         const marketKeys = Object.keys(marketPots);
         if (marketKeys.length > 0) {
           marketContainer.innerHTML = marketKeys.map(m => `
-            <div class="flex justify-between items-center bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
-              <span class="text-slate-300 font-semibold">${m}</span>
-              <span class="font-mono font-bold text-amber-400">${marketPots[m].toLocaleString()} Gold</span>
+            <div class="flex items-center justify-between py-2 px-1 border-b border-slate-800/40 hover:bg-slate-900/30 transition-colors">
+              <span class="text-slate-300 font-medium text-xs sm:text-sm truncate pr-2">${m}</span>
+              <span class="font-mono font-bold text-amber-400 text-xs sm:text-sm flex-shrink-0">${marketPots[m].toLocaleString()} G</span>
             </div>
           `).join('');
         } else {
           marketContainer.innerHTML = `<div class="text-slate-500 text-sm py-4 text-center">No active markets found.</div>`;
         }
 
-        // 2. Render Top 3 Bettors
+        // 2. Render Top 3 Bettors (Clean list)
         const topBettorsContainer = document.getElementById('top-bettors-container');
         const sortedBettors = Object.entries(bettostakes).sort((a, b) => b[1] - a[1]).slice(0, 3);
         if (sortedBettors.length > 0) {
-          const medals = ['text-amber-400', 'text-slate-300', 'text-amber-600'];
+          const badges = [
+            'bg-amber-500/20 text-amber-400 border-amber-500/40', 
+            'bg-slate-400/20 text-slate-300 border-slate-400/40', 
+            'bg-amber-700/20 text-amber-600 border-amber-700/40'
+          ];
           topBettorsContainer.innerHTML = sortedBettors.map(([name, total], idx) => `
-            <div class="flex justify-between items-center bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
-              <div class="flex items-center gap-3">
-                <span class="font-horde font-bold text-base ${medals[idx] || 'text-slate-400'}">#${idx + 1}</span>
-                <span class="text-white font-bold">${name}</span>
+            <div class="flex items-center justify-between py-2 px-1 border-b border-slate-800/40">
+              <div class="flex items-center gap-2.5">
+                <span class="w-6 h-6 rounded-lg flex items-center justify-center font-horde font-bold text-xs border ${badges[idx] || 'bg-slate-800 text-slate-400'}">#${idx + 1}</span>
+                <span class="text-white font-bold text-sm">${name}</span>
               </div>
-              <span class="font-mono font-bold text-purple-300">${total.toLocaleString()} Gold</span>
+              <span class="font-mono font-bold text-purple-300 text-xs sm:text-sm">${total.toLocaleString()} G</span>
             </div>
           `).join('');
         } else {
@@ -334,28 +414,33 @@
         const tbody = document.getElementById('bets-tbody');
         if (betsList.length > 0) {
           tbody.innerHTML = betsList.map(b => {
-            let resultBadge = `<span class="text-slate-400">Pending</span>`;
+            let resultBadge = `<span class="text-slate-400 font-mono text-xs">Pending</span>`;
             const resLower = b.result.toLowerCase();
             if (resLower.includes('win') || resLower.includes('won')) {
-              resultBadge = `<span class="text-emerald-400 font-bold bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20">Won</span>`;
+              resultBadge = `<span class="text-emerald-400 font-bold bg-emerald-500/10 px-2.5 py-0.5 rounded text-xs border border-emerald-500/20">WON</span>`;
             } else if (resLower.includes('loss') || resLower.includes('lost')) {
-              resultBadge = `<span class="text-red-400 font-bold bg-red-500/10 px-2.5 py-1 rounded-lg border border-red-500/20">Lost</span>`;
+              resultBadge = `<span class="text-red-400 font-bold bg-red-500/10 px-2.5 py-0.5 rounded text-xs border border-red-500/20">LOST</span>`;
             }
 
             return `
-              <tr class="hover:bg-slate-900/40 transition-colors">
-                <td class="py-3 px-4 font-bold text-white">${b.bettor || '-'}</td>
-                <td class="py-3 px-4 text-purple-300 font-semibold">${b.market || '-'}</td>
-                <td class="py-3 px-4 text-slate-300">${b.selection || '-'}</td>
+              <tr class="hover:bg-slate-900/50 transition-colors">
+                <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
+                  ${b.bettor || '-'}
+                </td>
+                <td class="py-3 px-4 text-purple-300 font-medium text-xs sm:text-sm">${b.market || '-'}</td>
+                <td class="py-3 px-4 text-slate-200 font-semibold text-xs sm:text-sm">${b.selection || '-'}</td>
                 <td class="py-3 px-4 text-right font-mono text-amber-400 font-bold">${b.stakeStr || '0'}</td>
-                <td class="py-3 px-4 text-center font-mono text-slate-200">${b.liveOdds || '-'}</td>
+                <td class="py-3 px-4 text-center">
+                  <span class="odds-badge inline-block px-2 py-0.5 rounded font-mono text-xs text-purple-200 font-bold">${b.liveOdds || '-'}</span>
+                </td>
                 <td class="py-3 px-4 text-right font-mono text-emerald-300 font-bold">${b.payout || '-'}</td>
                 <td class="py-3 px-4 text-center">${resultBadge}</td>
               </tr>
             `;
           }).join('');
         } else {
-          tbody.innerHTML = `<tr><td colspan="7" class="text-center py-8 text-slate-500">No bets found in range B6:I205.</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="7" class="text-center py-8 text-slate-500 font-mono">No bets found in range B6:I205.</td></tr>`;
         }
 
       } catch (err) {
