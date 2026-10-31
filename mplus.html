@@ -74,6 +74,11 @@
 </head>
 
 <body class="min-h-screen flex flex-col justify-between selection:bg-red-900 selection:text-purple-200">
+  <!-- Cinematic Background Banner Fade Out -->
+  <div class="fixed top-0 left-0 w-full h-[50vh] sm:h-[60vh] z-0 pointer-events-none overflow-hidden opacity-35">
+    <img src="mplus_banner.png" alt="Mythic Key Rush Background" class="w-full h-full object-cover object-center" />
+    <div class="absolute inset-0 bg-gradient-to-b from-[#06070a]/40 via-[#06070a]/80 to-[#06070a]"></div>
+  </div>
 
   <!-- Navigation Bar -->
   <header class="sticky top-0 z-50 backdrop-blur-xl bg-[#06070a]/80 border-b border-red-950/40">
@@ -91,13 +96,6 @@
       </a>
     </div>
   </header>
-  <!-- Event Banner (Diakritika Pano-Pano) -->
-    <div class="w-full max-w-4xl mx-auto px-4 pt-4">
-      <div class="relative rounded-2xl overflow-hidden border border-purple-900/40 shadow-2xl">
-        <img src="mplus_banner.png" alt="Mythic Key Rush Banner" class="w-full h-36 sm:h-48 object-cover object-center brightness-90 hover:brightness-100 transition-all duration-300" />
-        <div class="absolute inset-0 bg-gradient-to-t from-[#06070a] via-transparent to-transparent opacity-80 pointer-events-none"></div>
-      </div>
-    </div>
   <!-- Main Content -->
   <main id="main" class="max-w-4xl mx-auto px-5 py-12 flex-grow flex flex-col items-center justify-center w-full space-y-8">
     
