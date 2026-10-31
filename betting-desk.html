@@ -109,7 +109,7 @@
       <a href="participants.html" class="hub-btn flex-1 min-w-[110px] py-3 px-3 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-slate-300 shadow-lg hover:text-white">
         Participants
       </a>
-      <a href="betting-desk.html" class="hub-btn flex-1 min-w-[110px] py-3 px-3 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-slate-300 shadow-lg hover:text-white">
+      <a href="betting-desk.html" class="hub-btn active flex-1 min-w-[110px] py-3 px-3 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-white shadow-lg">
         Betting Desk
       </a>
       <a href="team-draw.html" class="hub-btn flex-1 min-w-[110px] py-3 px-3 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-slate-300 shadow-lg hover:text-white">
@@ -125,9 +125,20 @@
       <p class="text-slate-400 text-sm uppercase tracking-wider font-semibold">Active Markets & Community Wagers</p>
     </div>
 
-    <!-- Top Grid: Market Pots (Left) & Top 3 Bettors (Right) -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+    <!-- Top Grid: Available Bets (Left), Market Pots (Middle) & Top 3 Bettors (Right) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
       
+      <!-- Available Bets Card -->
+      <div class="vault-card rounded-2xl p-6 shadow-xl border border-purple-900/30 flex flex-col justify-between">
+        <h3 class="font-horde text-lg font-bold text-white uppercase tracking-wider mb-4 border-b border-slate-800 pb-2 flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-red-500 inline-block"></span>
+          Available Bets
+        </h3>
+        <div id="available-bets-container" class="space-y-3 flex-grow">
+          <div class="text-slate-500 text-sm py-4 text-center">Loading Bets...</div>
+        </div>
+      </div>
+
       <!-- Market Pots Card -->
       <div class="vault-card rounded-2xl p-6 shadow-xl border border-purple-900/30 flex flex-col justify-between">
         <h3 class="font-horde text-lg font-bold text-white uppercase tracking-wider mb-4 border-b border-slate-800 pb-2 flex items-center gap-2">
@@ -189,6 +200,7 @@
     document.getElementById('year').textContent = new Date().getFullYear();
 
     const BETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQuSfhHzJ10BHHSi0IcNhqxtQQA5giE-YsOzbru5w_-MUwUQn0TKmzzYxTl6RngR6o_ihgdTawNA0gQ/pub?gid=637615043&single=true&output=csv';
+    const MARKETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQuSfhHzJ10BHHSi0IcNhqxtQQA5giE-YsOzbru5w_-MUwUQn0TKmzzYxTl6RngR6o_ihgdTawNA0gQ/pub?gid=1695925906&single=true&output=csv';
 
     function parseCSVLine(line) {
       const result = [];
@@ -207,6 +219,42 @@
       }
       result.push(current.trim());
       return result.map(s => s.replace(/^"|"$/g, ''));
+    }
+
+    async function fetchAvailableMarkets() {
+      try {
+        const response = await fetch(MARKETS_CSV_URL + '&_t=' + Date.now() + '&nocache=' + Math.random(), { cache: 'no-store' });
+        const text = await response.text();
+        const lines = text.split('\n');
+
+        const availableBetsContainer = document.getElementById('available-bets-container');
+        const marketsList = [];
+
+        // Ανάγνωση C6 έως C20 (Index 5 έως 19, στήλη C -> index 2)
+        for (let r = 5; r <= 19; r++) {
+          if (lines.length > r) {
+            const row = parseCSVLine(lines[r]);
+            const marketName = row[2] ? row[2].trim() : '';
+
+            if (marketName && marketName !== '') {
+              marketsList.push(marketName);
+            }
+          }
+        }
+
+        if (marketsList.length > 0) {
+          availableBetsContainer.innerHTML = marketsList.map(m => `
+            <div class="flex justify-between items-center bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+              <span class="text-slate-300 font-semibold text-sm">${m}</span>
+              <span class="text-[10px] font-mono uppercase bg-red-950/60 text-red-400 border border-red-800/50 px-2 py-0.5 rounded font-bold">ACTIVE</span>
+            </div>
+          `).join('');
+        } else {
+          availableBetsContainer.innerHTML = `<div class="text-slate-500 text-sm py-4 text-center">No available bets found.</div>`;
+        }
+      } catch (err) {
+        console.error('Error fetching available markets:', err);
+      }
     }
 
     async function fetchBetsData() {
@@ -315,8 +363,12 @@
       }
     }
 
+    fetchAvailableMarkets();
     fetchBetsData();
-    setInterval(fetchBetsData, 4000);
+    setInterval(() => {
+      fetchAvailableMarkets();
+      fetchBetsData();
+    }, 4000);
   </script>
 </body>
 </html>
