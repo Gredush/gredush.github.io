@@ -58,9 +58,14 @@
       background: rgba(13, 16, 23, 0.75);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.07);
-      transition: border-color .3s, box-shadow .3s;
+      transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
     }
-    .vault-card:hover { border-color: rgba(168, 85, 247, 0.3); box-shadow: 0 10px 30px -10px rgba(147, 51, 234, 0.2); }
+    /* Epiko Epic/Legendary Glow effect sto hover */
+    .vault-card:hover { 
+      border-color: rgba(163, 53, 238, 0.6); 
+      box-shadow: 0 10px 35px -10px rgba(163, 53, 238, 0.35), 0 0 15px rgba(255, 128, 0, 0.15); 
+      transform: translateY(-2px);
+    }
     .ic { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     a:focus-visible, button:focus-visible { outline: 2px solid #c084fc; outline-offset: 2px; }
     @media (prefers-reduced-motion: reduce) {
@@ -102,7 +107,7 @@
 
   <main id="main" class="max-w-6xl mx-auto px-5 py-9 space-y-12 flex-grow w-full">
 
-    <!-- Page Header with Larger Transparent PNG Icon -->
+    <!-- Page Header with Custom WoW Icon -->
     <div class="vault-card rounded-2xl p-7 text-center md:text-left flex flex-col md:flex-row items-center gap-6 shadow-xl">
       <img src="./wow-icon.png" width="64" height="64" alt="World of Warcraft Icon" class="w-16 h-16 object-contain flex-shrink-0">
       <div class="space-y-2">
