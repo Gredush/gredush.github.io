@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="el" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Team Draw | Gredush M+ Event</title>
+  <meta name="description" content="Cinematic Live Team Draw for Gredush Mythic+ Event." />
+  <meta name="theme-color" content="#06070a" />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CZLTE6SXJ5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CZLTE6SXJ5');
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    html { font-size: 110%; scroll-behavior: smooth; }
+    body {
+      font-family: 'Rajdhani', 'Inter', sans-serif;
+      background-color: #06070a;
+      color: #e2e8f0;
+      background-image:
+        radial-gradient(circle at 50% 0%, rgba(153, 27, 27, 0.2) 0%, transparent 60%),
+        radial-gradient(circle at 80% 60%, rgba(88, 28, 135, 0.15) 0%, transparent 50%);
+      background-attachment: fixed;
+    }
+    .font-horde { font-family: 'Cinzel', serif; }
+    .glow-gold { text-shadow: 0 0 20px rgba(239, 68, 68, 0.6), 0 0 35px rgba(168, 85, 247, 0.4); }
+    .glow-team { box-shadow: 0 0 25px rgba(168, 85, 247, 0.25), inset 0 0 15px rgba(168, 85, 247, 0.15); }
+    .vault-card {
+      background: rgba(13, 16, 23, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+    .btn-vault-primary {
+      background: linear-gradient(135deg, #991b1b 0%, #680d2b 50%, #581c87 100%);
+      background-size: 200% 200%;
+      transition: all 0.3s ease-in-out;
+      border: 1px solid rgba(248, 113, 113, 0.3);
+      box-shadow: 0 4px 20px -5px rgba(153, 27, 27, 0.5);
+    }
+    .btn-vault-primary:hover {
+      background-position: right center;
+      border-color: rgba(192, 132, 252, 0.6);
+      box-shadow: 0 6px 24px -2px rgba(168, 85, 247, 0.6);
+      transform: translateY(-2px);
+    }
+    .hub-btn {
+      background: rgba(13, 16, 23, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.2s ease-in-out;
+    }
+    .hub-btn:hover {
+      background: rgba(88, 28, 135, 0.3);
+      border-color: rgba(192, 132, 252, 0.5);
+      transform: translateY(-2px);
+    }
+    .hub-btn.active {
+      background: linear-gradient(135deg, #991b1b 0%, #581c87 100%);
+      border-color: rgba(248, 113, 113, 0.5);
+      color: #fff;
+      box-shadow: 0 4px 20px -5px rgba(168, 85, 247, 0.5);
+    }
+    .slot-spin {
+      animation: pulseGlow 0.15s infinite alternate;
+    }
+    @keyframes pulseGlow {
+      from { opacity: 0.5; filter: blur(2px); }
+      to { opacity: 1; filter: blur(0px); }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col justify-between selection:bg-red-900 selection:text-purple-200">
+
+  <!-- Navigation Bar -->
+  <header class="sticky top-0 z-50 backdrop-blur-xl bg-[#06070a]/80 border-b border-red-950/40">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
+      <nav aria-label="Main" class="flex items-center gap-4 sm:gap-8 text-[11px] sm:text-sm font-semibold tracking-wide sm:tracking-wider uppercase text-slate-300">
+        <a href="index.html" class="hover:text-red-400 transition-colors">Home</a>
+        <a href="index.html#livestreams" class="hover:text-red-400 transition-colors">Streams</a>
+        <a href="wow.html" class="hover:text-purple-400 transition-colors">World Of Warcraft</a>
+        <a href="index.html#youtube" class="hover:text-red-400 transition-colors">Videos</a>
+        <a href="mplus.html" class="text-purple-400 font-bold transition-colors">M+ Event</a>
+        <a href="index.html#community" class="hover:text-purple-400 transition-colors">Community</a>
+      </nav>
+      <a href="https://discord.gg/qScBpyq5gM" target="_blank" rel="noopener noreferrer" class="btn-vault-primary flex-shrink-0 px-3 sm:px-4 py-2 text-xs font-bold uppercase tracking-widest text-white rounded-lg flex items-center gap-2">
+        <span>Join Discord</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="main" class="max-w-6xl mx-auto px-5 py-10 flex-grow flex flex-col items-center justify-center w-full space-y-8">
+    
+    <!-- Hub Navigation Buttons -->
+    <div class="flex flex-wrap justify-center gap-3 w-full max-w-4xl">
+      <a href="mplus.html" class="hub-btn flex-1 min-w-[110px] py-3 px-3 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-slate-300 shadow-lg hover:text-white">
+        M+ Event
+      </a>
+      <a href="dashboard.html" class="hub-btn flex-1 min-w-[110px] py-3 px-3 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-slate-300 shadow-lg hover:text-white">
+        Dashboard
+      </a>
+      <a href="participants.html" class="hub-btn flex-1 min-w-[110px] py-3 px-3 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-slate-300 shadow-lg hover:text-white">
+        Participants
+      </a>
+      <a href="betting-desk.html" class="hub-btn flex-1 min-w-[110px] py-3 px-3 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-slate-300 shadow-lg hover:text-white">
+        Betting Desk
+      </a>
+      <a href="team-draw.html" class="hub-btn active flex-1 min-w-[110px] py-3 px-3 rounded-xl font-horde font-bold text-xs sm:text-sm tracking-wider uppercase text-center text-white shadow-lg">
+        Live Draw
+      </a>
+    </div>
+
+    <!-- Title Card & Broadcast Trigger -->
+    <div class="vault-card rounded-2xl p-8 sm:p-10 text-center border border-purple-900/40 space-y-4 shadow-2xl w-full">
+      <h1 class="font-horde text-3xl sm:text-5xl font-black text-white glow-gold">
+        Live Team Draw
+      </h1>
+      <p class="text-slate-400 text-sm uppercase tracking-widest font-semibold">Randomized 5-Man Roster Allocation (1 Tank • 1 Healer • 3 DPS)</p>
+      
+      <!-- Stats Summary Banner -->
+      <div id="stats-banner" class="flex flex-wrap justify-center gap-4 pt-2 text-xs font-mono font-bold">
+        <span class="bg-blue-950/60 text-blue-400 border border-blue-800/60 px-3 py-1.5 rounded-lg">🛡️ Tanks: <span id="count-tanks">0</span></span>
+        <span class="bg-emerald-950/60 text-emerald-400 border border-emerald-800/60 px-3 py-1.5 rounded-lg">✝️ Healers: <span id="count-healers">0</span></span>
+        <span class="bg-red-950/60 text-red-400 border border-red-800/60 px-3 py-1.5 rounded-lg">⚔️ DPS: <span id="count-dps">0</span></span>
+        <span class="bg-purple-950/60 text-purple-300 border border-purple-800/60 px-3 py-1.5 rounded-lg">🔥 Max Teams: <span id="count-max-teams">0</span></span>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="pt-4 flex justify-center gap-4 flex-wrap">
+        <button id="btn-start" onclick="startCinematicDraw()" class="btn-vault-primary px-8 py-3.5 text-sm sm:text-base font-horde font-black uppercase tracking-widest text-white rounded-xl shadow-2xl flex items-center gap-2">
+          <span>🎬 Start Broadcast Draw</span>
+        </button>
+        <button id="btn-reset" onclick="resetDraw()" class="hidden bg-slate-900 border border-slate-700 hover:bg-slate-800 px-6 py-3.5 text-xs font-bold uppercase tracking-widest text-slate-300 rounded-xl transition-all">
+          🔄 Reset Draw
+        </button>
+      </div>
+    </div>
+
+    <!-- Teams Grid Container -->
+    <div id="drawn-teams-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+      <div class="text-center text-slate-500 py-12 col-span-full font-semibold">
+        Click "START BROADCAST DRAW" to initialize the team selection sequence.
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-[#040507] border-t border-slate-900 py-8 text-center text-xs text-slate-400 space-y-2">
+    <p class="font-horde font-bold text-slate-300 tracking-widest text-sm">GREDUSH M+ EVENT BROADCAST</p>
+    <p>© <span id="year"></span> Gredush. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const PARTICIPANTS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQuSfhHzJ10BHHSi0IcNhqxtQQA5giE-YsOzbru5w_-MUwUQn0TKmzzYxTl6RngR6o_ihgdTawNA0gQ/pub?gid=210972549&single=true&output=csv';
+
+    let poolTanks = [];
+    let poolHealers = [];
+    let poolDPS = [];
+    let isDrawing = false;
+
+    function parseCSVLine(line) {
+      const result = [];
+      let current = '';
+      let inQuotes = false;
+      for (let i = 0; i < line.length; i++) {
+        const char = line[i];
+        if (char === '"') {
+          inQuotes = !inQuotes;
+        } else if (char === ',' && !inQuotes) {
+          result.push(current.trim());
+          current = '';
+        } else {
+          current += char;
+        }
+      }
+      result.push(current.trim());
+      return result.map(s => s.replace(/^"|"$/g, ''));
+    }
+
+    async function loadParticipants() {
+      try {
+        const res = await fetch(PARTICIPANTS_CSV_URL + '&_t=' + Date.now());
+        const text = await res.text();
+        const lines = text.split('\n');
+
+        poolTanks = [];
+        poolHealers = [];
+        poolDPS = [];
+
+        for (let r = 5; r <= 104; r++) {
+          if (lines.length > r && lines[r].trim() !== '') {
+            const row = parseCSVLine(lines[r]);
+            const name = row[1] || '';
+            const server = row[3] || '';
+            const rating = row[4] || '0';
+            const role = (row[6] || '').toLowerCase();
+
+            if (name) {
+              const player = { name, server, rating, role };
+              if (role.includes('tank')) {
+                poolTanks.push(player);
+              } else if (role.includes('heal')) {
+                poolHealers.push(player);
+              } else {
+                poolDPS.push(player);
+              }
+            }
+          }
+        }
+
+        document.getElementById('count-tanks').textContent = poolTanks.length;
+        document.getElementById('count-healers').textContent = poolHealers.length;
+        document.getElementById('count-dps').textContent = poolDPS.length;
+
+        const maxTeams = Math.min(poolTanks.length, poolHealers.length, Math.floor(poolDPS.length / 3));
+        document.getElementById('count-max-teams').textContent = maxTeams;
+
+      } catch (err) {
+        console.error('Error loading participants for draw:', err);
+      }
+    }
+
+    function shuffleArray(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    async function startCinematicDraw() {
+      if (isDrawing) return;
+      isDrawing = true;
+
+      document.getElementById('btn-start').disabled = true;
+      document.getElementById('btn-start').classList.add('opacity-50', 'cursor-not-allowed');
+
+      const tanks = shuffleArray(poolTanks);
+      const healers = shuffleArray(poolHealers);
+      const dps = shuffleArray(poolDPS);
+
+      const maxTeams = Math.min(tanks.length, healers.length, Math.floor(dps.length / 3));
+      const container = document.getElementById('drawn-teams-container');
+      container.innerHTML = '';
+
+      if (maxTeams === 0) {
+        container.innerHTML = `<div class="text-center text-red-400 py-8 col-span-full font-bold">Not enough players for a full 5-man team (Needs 1 Tank, 1 Healer, 3 DPS).</div>`;
+        isDrawing = false;
+        return;
+      }
+
+      // Generate HTML structures for teams with empty slots
+      for (let t = 0; t < maxTeams; t++) {
+        const teamCardHTML = `
+          <div id="team-card-${t}" class="vault-card rounded-2xl p-6 space-y-4 border border-purple-900/30 shadow-xl opacity-40 transition-all duration-500">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+              <h3 class="font-horde text-xl font-black text-white tracking-wider flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-purple-600 inline-block shadow-[0_0_10px_rgba(168,85,247,0.8)]"></span>
+                TEAM ${t + 1}
+              </h3>
+              <span id="team-status-${t}" class="text-[11px] font-mono uppercase tracking-widest text-slate-500 font-bold bg-slate-900 px-2.5 py-1 rounded-lg border border-slate-800">
+                PENDING DRAW
+              </span>
+            </div>
+
+            <div class="space-y-2 font-mono">
+              <div id="slot-${t}-tank" class="bg-slate-950/80 p-3 rounded-xl border border-slate-800 flex justify-between items-center">
+                <span class="text-blue-400 font-bold text-xs flex items-center gap-1.5">🛡️ TANK</span>
+                <span class="slot-player text-slate-500 font-bold text-sm">???</span>
+              </div>
+              <div id="slot-${t}-healer" class="bg-slate-950/80 p-3 rounded-xl border border-slate-800 flex justify-between items-center">
+                <span class="text-emerald-400 font-bold text-xs flex items-center gap-1.5">✝️ HEALER</span>
+                <span class="slot-player text-slate-500 font-bold text-sm">???</span>
+              </div>
+              <div id="slot-${t}-dps1" class="bg-slate-950/80 p-3 rounded-xl border border-slate-800 flex justify-between items-center">
+                <span class="text-red-400 font-bold text-xs flex items-center gap-1.5">⚔️ DPS 1</span>
+                <span class="slot-player text-slate-500 font-bold text-sm">???</span>
+              </div>
+              <div id="slot-${t}-dps2" class="bg-slate-950/80 p-3 rounded-xl border border-slate-800 flex justify-between items-center">
+                <span class="text-red-400 font-bold text-xs flex items-center gap-1.5">⚔️ DPS 2</span>
+                <span class="slot-player text-slate-500 font-bold text-sm">???</span>
+              </div>
+              <div id="slot-${t}-dps3" class="bg-slate-950/80 p-3 rounded-xl border border-slate-800 flex justify-between items-center">
+                <span class="text-red-400 font-bold text-xs flex items-center gap-1.5">⚔️ DPS 3</span>
+                <span class="slot-player text-slate-500 font-bold text-sm">???</span>
+              </div>
+            </div>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', teamCardHTML);
+      }
+
+      // Cinematic Reveal Animation Sequence
+      for (let t = 0; t < maxTeams; t++) {
+        const teamCard = document.getElementById(`team-card-${t}`);
+        const statusBadge = document.getElementById(`team-status-${t}`);
+        
+        teamCard.classList.remove('opacity-40');
+        teamCard.classList.add('glow-team', 'border-purple-600/60');
+        statusBadge.textContent = 'DRAWING...';
+        statusBadge.className = 'text-[11px] font-mono uppercase tracking-widest text-amber-400 font-bold bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-500/20';
+
+        // 1. Reveal Tank
+        await animateSlot(`slot-${t}-tank`, tanks[t], poolTanks);
+        await new Promise(r => setTimeout(r, 400));
+
+        // 2. Reveal Healer
+        await animateSlot(`slot-${t}-healer`, healers[t], poolHealers);
+        await new Promise(r => setTimeout(r, 400));
+
+        // 3. Reveal DPS 1, 2, 3
+        await animateSlot(`slot-${t}-dps1`, dps[t * 3], poolDPS);
+        await new Promise(r => setTimeout(r, 300));
+        await animateSlot(`slot-${t}-dps2`, dps[t * 3 + 1], poolDPS);
+        await new Promise(r => setTimeout(r, 300));
+        await animateSlot(`slot-${t}-dps3`, dps[t * 3 + 2], poolDPS);
+
+        // Team Complete FX
+        statusBadge.textContent = 'ROSTER COMPLETE';
+        statusBadge.className = 'text-[11px] font-mono uppercase tracking-widest text-emerald-400 font-bold bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20';
+        
+        confetti({
+          particleCount: 25,
+          spread: 60,
+          origin: { y: 0.7 }
+        });
+
+        await new Promise(r => setTimeout(r, 800));
+      }
+
+      isDrawing = false;
+      document.getElementById('btn-reset').classList.remove('hidden');
+    }
+
+    function animateSlot(slotId, finalPlayer, pool) {
+      return new Promise((resolve) => {
+        const slotEl = document.getElementById(slotId);
+        const playerSpan = slotEl.querySelector('.slot-player');
+        
+        playerSpan.classList.add('slot-spin', 'text-amber-400');
+        
+        let counter = 0;
+        const interval = setInterval(() => {
+          const randomSample = pool[Math.floor(Math.random() * pool.length)];
+          playerSpan.textContent = randomSample ? randomSample.name : '???';
+          counter++;
+
+          if (counter > 12) {
+            clearInterval(interval);
+            playerSpan.classList.remove('slot-spin', 'text-amber-400', 'text-slate-500');
+            playerSpan.classList.add('text-white', 'font-black');
+            playerSpan.textContent = `${finalPlayer.name} (${finalPlayer.rating})`;
+            slotEl.classList.add('border-purple-500/40', 'bg-purple-950/20');
+            resolve();
+          }
+        }, 80);
+      });
+    }
+
+    function resetDraw() {
+      if (isDrawing) return;
+      document.getElementById('drawn-teams-container').innerHTML = `
+        <div class="text-center text-slate-500 py-12 col-span-full font-semibold">
+          Click "START BROADCAST DRAW" to initialize the team selection sequence.
+        </div>
+      `;
+      document.getElementById('btn-start').disabled = false;
+      document.getElementById('btn-start').classList.remove('opacity-50', 'cursor-not-allowed');
+      document.getElementById('btn-reset').classList.add('hidden');
+      loadParticipants();
+    }
+
+    loadParticipants();
+  </script>
+</body>
+</html>
