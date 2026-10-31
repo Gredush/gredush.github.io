@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="el" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -93,7 +93,7 @@
   </header>
 
   <!-- Main Content -->
-  <main id="main" class="max-w-6xl mx-auto px-5 py-10 flex-grow flex flex-col items-center justify-center w-full space-y-6">
+  <main id="main" class="max-w-6xl mx-auto px-5 py-10 flex-grow flex flex-col items-center justify-center w-full space-y-8">
     
     <!-- Hub Navigation Buttons -->
     <div class="flex flex-wrap justify-center gap-3 w-full max-w-2xl">
@@ -111,86 +111,29 @@
       </a>
     </div>
 
-    <!-- Header Banner -->
-    <div class="vault-card rounded-2xl p-8 sm:p-10 text-center border border-purple-900/40 space-y-4 shadow-2xl w-full">
+    <!-- Header Banner (Title από A1:P1) -->
+    <div class="vault-card rounded-2xl p-8 sm:p-12 text-center border border-purple-900/40 space-y-4 shadow-2xl w-full">
       <h1 id="event-title" class="font-horde text-3xl sm:text-5xl font-black text-white glow-gold">
         Loading Title...
       </h1>
       <div class="pt-2">
         <span id="sheet-info" class="text-purple-300 text-sm sm:text-base font-semibold tracking-wider uppercase">
-          Loading Info...
+          Push The Key Live Leaderboard
         </span>
       </div>
     </div>
 
-    <!-- Live Matchup Board -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full items-center">
-      <div class="vault-card rounded-2xl p-6 text-center border-l-4 border-red-500 shadow-xl space-y-2">
-        <span class="text-xs font-bold uppercase text-red-400 tracking-wider">TEAM A</span>
-        <h2 id="team-a" class="font-horde text-2xl font-black text-white">Team Alpha</h2>
-      </div>
-
-      <div class="vault-card rounded-2xl p-6 text-center space-y-2 bg-slate-950/80 shadow-xl border border-purple-900/30">
-        <div class="text-xs uppercase tracking-widest text-slate-400 font-bold">Current Dungeon</div>
-        <div id="current-dungeon" class="text-xl sm:text-2xl font-black font-horde text-purple-300 glow-gold">
-          Dungeon TBD
-        </div>
-      </div>
-
-      <div class="vault-card rounded-2xl p-6 text-center border-r-4 border-purple-500 shadow-xl space-y-2">
-        <span class="text-xs font-bold uppercase text-purple-400 tracking-wider">TEAM B</span>
-        <h2 id="team-b" class="font-horde text-2xl font-black text-white">Team Bravo</h2>
-      </div>
-    </div>
-
-    <!-- Total Bet Pot -->
+    <!-- Total Pot Card (Από A6:P6) -->
     <div class="vault-card rounded-2xl p-6 text-center border border-amber-500/30 shadow-xl w-full max-w-md mx-auto space-y-2">
       <span class="text-xs font-bold uppercase tracking-widest text-amber-400">Total Bet Pot</span>
       <div id="total-pot" class="font-horde text-3xl font-black text-amber-300 glow-gold">
-        0
+        0 Gold
       </div>
     </div>
 
-    <!-- Two Cards Section -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full items-start">
-      
-      <!-- Team Power Ranking -->
-      <div class="vault-card rounded-2xl p-6 space-y-4 shadow-xl border border-purple-900/40">
-        <div class="border-b border-slate-800 pb-3">
-          <h3 class="font-horde text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-purple-500 inline-block"></span> Team Power Ranking
-          </h3>
-        </div>
-
-        <div class="flex justify-between items-center px-3 text-xs font-bold uppercase tracking-widest text-slate-400">
-          <span>Team Name</span>
-          <span>AVG Rating</span>
-        </div>
-
-        <div id="rankings-list" class="space-y-2">
-          <div class="text-slate-500 text-sm text-center py-4">Loading Rankings...</div>
-        </div>
-      </div>
-
-      <!-- Betting Board -->
-      <div class="vault-card rounded-2xl p-6 space-y-4 shadow-xl border border-amber-500/30">
-        <div class="border-b border-slate-800 pb-3">
-          <h3 class="font-horde text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span> Betting Board
-          </h3>
-        </div>
-
-        <div class="grid grid-cols-12 gap-2 px-3 text-xs font-bold uppercase tracking-widest text-slate-400">
-          <span class="col-span-6">Market</span>
-          <span class="col-span-3 text-center">Odds</span>
-          <span class="col-span-3 text-right">Pool</span>
-        </div>
-
-        <div id="betting-list" class="space-y-2">
-          <div class="text-slate-500 text-sm text-center py-4">Loading Betting Board...</div>
-        </div>
-      </div>
-
+    <!-- 10 Team Cards Container -->
+    <div id="teams-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+      <div class="text-center text-slate-500 py-10 col-span-full">Loading Teams...</div>
     </div>
 
   </main>
@@ -204,7 +147,9 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnLyEV_JrIV3Ohaq6jFFNpZhHMLpqpBztTSpVT96e1A__LREOv5T_p-Px5AZZvqzcESzEIwkFJ2XT9/pub?gid=671222144&single=true&output=csv';
+    const DASHBOARD_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQuSfhHzJ10BHHSi0IcNhqxtQQA5giE-YsOzbru5w_-MUwUQn0TKmzzYxTl6RngR6o_ihgdTawNA0gQ/pub?output=csv';
+    const PARTICIPANTS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQuSfhHzJ10BHHSi0IcNhqxtQQA5giE-YsOzbru5w_-MUwUQn0TKmzzYxTl6RngR6o_ihgdTawNA0gQ/pub?gid=210972549&single=true&output=csv';
+    const AVGRATING_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQuSfhHzJ10BHHSi0IcNhqxtQQA5giE-YsOzbru5w_-MUwUQn0TKmzzYxTl6RngR6o_ihgdTawNA0gQ/pub?gid=2009915968&single=true&output=csv';
 
     function parseCSVLine(line) {
       const result = [];
@@ -225,114 +170,164 @@
       return result.map(s => s.replace(/^"|"$/g, ''));
     }
 
+    function getFirstValidValue(row, startCol, endCol) {
+      for (let i = startCol; i <= endCol; i++) {
+        if (row[i] && row[i].trim() !== '') {
+          return row[i].trim();
+        }
+      }
+      return '';
+    }
+
+    function getRoleIcon(role) {
+      const r = role.toLowerCase();
+      if (r.includes('tank')) {
+        return '<span title="Tank" class="text-blue-400 font-bold inline-block mr-1">🛡️</span>';
+      } else if (r.includes('heal')) {
+        return '<span title="Healer" class="text-emerald-400 font-bold inline-block mr-1">✝️</span>';
+      } else {
+        return '<span title="DPS" class="text-red-400 font-bold inline-block mr-1">⚔️</span>';
+      }
+    }
+
     async function fetchData() {
       try {
-        const response = await fetch(CSV_URL + '&_t=' + Date.now() + '&nocache=' + Math.random(), { cache: 'no-store' });
-        const text = await response.text();
-        const lines = text.split('\n');
-        
-        let newTitle = '';
-        if (lines.length > 0) {
-          const row1 = parseCSVLine(lines[0]);
-          if (row1.length > 0 && row1[0] !== '') newTitle = row1[0];
-        }
+        const [dashRes, partRes, avgRes] = await Promise.all([
+          fetch(DASHBOARD_CSV_URL + '&_t=' + Date.now() + '&nocache=' + Math.random(), { cache: 'no-store' }),
+          fetch(PARTICIPANTS_CSV_URL + '&_t=' + Date.now() + '&nocache=' + Math.random(), { cache: 'no-store' }),
+          fetch(AVGRATING_CSV_URL + '&_t=' + Date.now() + '&nocache=' + Math.random(), { cache: 'no-store' })
+        ]);
 
-        let newInfo = '';
-        if (lines.length > 2) {
-          const row3 = parseCSVLine(lines[2]);
-          newInfo = row3.filter(val => val !== '').join(' - ');
-        }
+        const dashText = await dashRes.text();
+        const partText = await partRes.text();
+        const avgText = await avgRes.text();
 
-        let teamAVal = 'Team Alpha';
-        let dungeonVal = 'Dungeon TBD';
-        let teamBVal = 'Team Bravo';
-        if (lines.length > 5) {
-          const row6 = parseCSVLine(lines[5]);
-          for (let i = 0; i <= 3; i++) {
-            if (row6[i] && row6[i] !== '') { teamAVal = row6[i]; break; }
-          }
-          if (row6[6] && row6[6] !== '') dungeonVal = row6[6];
-          for (let i = 12; i <= 15; i++) {
-            if (row6[i] && row6[i] !== '') { teamBVal = row6[i]; break; }
-          }
-        }
+        const dashLines = dashText.split('\n');
+        const partLines = partText.split('\n');
+        const avgLines = avgText.split('\n');
 
-        let totalPotVal = '0';
-        for (let r = 10; r <= 12; r++) {
-          if (lines.length > r) {
-            const potRow = parseCSVLine(lines[r]);
-            for (let i = 0; i <= 3; i++) {
-              if (potRow[i] && potRow[i] !== '') { totalPotVal = potRow[i]; break; }
-            }
-          }
-        }
-
-        const rankingsHTML = [];
-        for (let r = 16; r <= 21; r++) {
-          if (lines.length > r) {
-            const row = parseCSVLine(lines[r]);
-            let teamName = '';
-            for (let i = 1; i <= 3; i++) {
-              if (row[i] && row[i] !== '') { teamName = row[i]; break; }
-            }
-            let teamRating = '';
-            for (let i = 5; i <= 6; i++) {
-              if (row[i] && row[i] !== '') { teamRating = row[i]; break; }
-            }
+        const teamAvgRatings = {};
+        for (let r = 5; r <= 10; r++) {
+          if (avgLines.length > r && avgLines[r].trim() !== '') {
+            const row = parseCSVLine(avgLines[r]);
+            const teamName = row[0] ? row[0].trim() : ''; // A6:A11
+            const avgVal = row[5] ? row[5].trim() : '';    // F6:F11
             if (teamName) {
-              rankingsHTML.push(`
-                <div class="flex justify-between items-center py-2 px-3 rounded-lg bg-slate-900/60 border border-slate-800/80 hover:border-purple-800/50 transition-colors">
-                  <span class="font-bold text-white text-sm">${teamName}</span>
-                  <span class="font-mono font-bold text-purple-400 text-sm">${teamRating || '-'}</span>
+              teamAvgRatings[teamName.toLowerCase()] = avgVal;
+            }
+          }
+        }
+
+        const teamMembers = {};
+        for (let r = 5; r <= 104; r++) {
+          if (partLines.length > r && partLines[r].trim() !== '') {
+            const row = parseCSVLine(partLines[r]);
+            const characterName = row[1] || ''; // Στήλη B
+            const team = row[5] || '';          // Στήλη F
+            const role = row[6] || '';          // Στήλη G
+
+            if (team && characterName) {
+              const cleanTeam = team.trim();
+              if (!teamMembers[cleanTeam]) {
+                teamMembers[cleanTeam] = [];
+              }
+              teamMembers[cleanTeam].push({ name: characterName, role: role || 'DPS' });
+            }
+          }
+        }
+        
+        if (dashLines.length > 0) {
+          const row1 = parseCSVLine(dashLines[0]);
+          const titleVal = getFirstValidValue(row1, 0, 15);
+          if (titleVal) document.getElementById('event-title').textContent = titleVal;
+        }
+
+        if (dashLines.length > 5) {
+          const row6 = parseCSVLine(dashLines[5]);
+          const potVal = getFirstValidValue(row6, 0, 15);
+          if (potVal) document.getElementById('total-pot').textContent = potVal;
+        }
+
+        const teamsHTML = [];
+        for (let r = 9; r <= 18; r++) {
+          if (dashLines.length > r) {
+            const row = parseCSVLine(dashLines[r]);
+            
+            const teamName = getFirstValidValue(row, 0, 4);   // A10:E10
+            const currentDungeon = getFirstValidValue(row, 5, 9); // F10:J10
+            const keyLevel = getFirstValidValue(row, 10, 12);     // K10:M10
+            const winningOdds = getFirstValidValue(row, 13, 15);  // N10:P10
+
+            if (teamName || currentDungeon) {
+              const members = teamMembers[teamName] || [];
+              const membersHTML = members.length > 0 
+                ? members.map(m => `
+                    <div class="text-xs text-slate-300 py-0.5 flex items-center">
+                      ${getRoleIcon(m.role)}
+                      <span class="font-semibold text-slate-200">${m.name}</span>
+                    </div>
+                  `).join('')
+                : `<div class="text-slate-500 text-xs italic">No registered members found.</div>`;
+
+              const avgRatingVal = teamAvgRatings[teamName.trim().toLowerCase()] || '-';
+
+              teamsHTML.push(`
+                <div class="vault-card rounded-2xl p-6 space-y-4 border border-purple-900/30 shadow-xl transition-all hover:border-purple-600/50">
+                  <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                    <h3 class="font-horde text-xl font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                      <span class="w-3 h-3 rounded-full bg-red-600 inline-block shadow-[0_0_10px_rgba(220,38,38,0.8)]"></span>
+                      ${teamName || 'Unassigned Team'}
+                    </h3>
+                    <div class="flex items-center gap-2">
+                      <!-- Green Box for Avg Rating -->
+                      <span class="text-xs uppercase tracking-widest text-emerald-400 font-bold bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20">
+                        Avg: ${avgRatingVal}
+                      </span>
+                      <!-- Yellow/Amber Box for Odds -->
+                      <span class="text-xs uppercase tracking-widest text-amber-400 font-bold bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-500/20">
+                        Odds: ${winningOdds || '-'}
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Team Roster Members -->
+                  <div class="space-y-1">
+                    <span class="text-[10px] uppercase tracking-widest text-slate-400 font-bold block mb-1">Team Roster</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1">
+                      ${membersHTML}
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-4 pt-2 border-t border-slate-800/80">
+                    <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+                      <span class="text-[11px] uppercase tracking-widest text-slate-400 font-bold block mb-1">Current Dungeon</span>
+                      <span class="font-horde text-sm sm:text-base font-bold text-purple-300 truncate block">
+                        ${currentDungeon || 'Waiting...'}
+                      </span>
+                    </div>
+
+                    <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80 text-center">
+                      <span class="text-[11px] uppercase tracking-widest text-slate-400 font-bold block mb-1">Key Level</span>
+                      <span class="font-mono text-lg font-black text-amber-400">
+                        ${keyLevel || '-'}
+                      </span>
+                    </div>
+                  </div>
                 </div>
               `);
             }
           }
         }
 
-        const bettingHTML = [];
-        for (let r = 16; r <= 21; r++) {
-          if (lines.length > r) {
-            const row = parseCSVLine(lines[r]);
-            let market = '';
-            for (let i = 9; i <= 10; i++) {
-              if (row[i] && row[i] !== '') { market = row[i]; break; }
-            }
-            let odds = '';
-            for (let i = 13; i <= 14; i++) {
-              if (row[i] && row[i] !== '') { odds = row[i]; break; }
-            }
-            let pool = '';
-            if (row[15] && row[15] !== '') pool = row[15];
-
-            if (market) {
-              bettingHTML.push(`
-                <div class="grid grid-cols-12 gap-2 items-center py-2 px-3 rounded-lg bg-slate-900/60 border border-slate-800/80 hover:border-amber-500/50 transition-colors">
-                  <span class="col-span-6 font-bold text-white text-sm truncate">${market}</span>
-                  <span class="col-span-3 text-center font-mono font-bold text-amber-400 text-sm">${odds || '-'}</span>
-                  <span class="col-span-3 text-right font-mono font-bold text-slate-300 text-sm">${pool || '-'}</span>
-                </div>
-              `);
-            }
-          }
-        }
-
-        if (newTitle) document.getElementById('event-title').textContent = newTitle;
-        if (newInfo) document.getElementById('sheet-info').textContent = newInfo;
-        document.getElementById('team-a').textContent = teamAVal;
-        document.getElementById('current-dungeon').textContent = dungeonVal;
-        document.getElementById('team-b').textContent = teamBVal;
-        document.getElementById('total-pot').textContent = totalPotVal;
-
-        if (rankingsHTML.length > 0) {
-          document.getElementById('rankings-list').innerHTML = rankingsHTML.join('');
-        }
-        if (bettingHTML.length > 0) {
-          document.getElementById('betting-list').innerHTML = bettingHTML.join('');
+        const container = document.getElementById('teams-container');
+        if (teamsHTML.length > 0) {
+          container.innerHTML = teamsHTML.join('');
+        } else {
+          container.innerHTML = `<div class="text-center text-slate-500 py-10 col-span-full">No active teams found.</div>`;
         }
 
       } catch (err) {
-        console.error('Error fetching sheet data:', err);
+        console.error('Error fetching dashboard data:', err);
       }
     }
 

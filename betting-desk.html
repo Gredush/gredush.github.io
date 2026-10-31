@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="el" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Betting Desk | Gredush</title>
-  <meta name="description" content="Live betting desk and active bets tracker for Gredush Mythic+ events." />
+  <meta name="description" content="Live betting desk and market pools for Gredush Mythic+ events." />
   <meta name="theme-color" content="#06070a" />
 
   <!-- Google tag (gtag.js) -->
@@ -84,7 +84,7 @@
         <a href="wow.html" class="hover:text-purple-400 transition-colors">World Of Warcraft</a>
         <a href="index.html#youtube" class="hover:text-red-400 transition-colors">Videos</a>
         <a href="mplus.html" class="text-purple-400 font-bold transition-colors">M+ Event</a>
-        <a href="index.html#community" class="hover:text-red-400 transition-colors">Community</a>
+        <a href="index.html#community" class="hover:text-purple-400 transition-colors">Community</a>
       </nav>
       <a href="https://discord.gg/qScBpyq5gM" target="_blank" rel="noopener noreferrer" class="btn-vault-primary flex-shrink-0 px-3 sm:px-4 py-2 text-xs font-bold uppercase tracking-widest text-white rounded-lg flex items-center gap-2">
         <span>Join Discord</span>
@@ -93,7 +93,7 @@
   </header>
 
   <!-- Main Content -->
-  <main id="main" class="max-w-7xl mx-auto px-5 py-10 flex-grow flex flex-col items-center justify-center w-full space-y-6">
+  <main id="main" class="max-w-6xl mx-auto px-5 py-10 flex-grow flex flex-col items-center justify-center w-full space-y-8">
     
     <!-- Hub Navigation Buttons -->
     <div class="flex flex-wrap justify-center gap-3 w-full max-w-2xl">
@@ -112,31 +112,60 @@
     </div>
 
     <!-- Header Card -->
-    <div class="vault-card rounded-2xl p-8 sm:p-10 text-center border border-amber-500/30 space-y-2 shadow-2xl w-full">
-      <h1 class="font-horde text-3xl sm:text-5xl font-black text-amber-400 glow-gold">
+    <div class="vault-card rounded-2xl p-8 sm:p-10 text-center border border-purple-900/40 space-y-2 shadow-2xl w-full">
+      <h1 class="font-horde text-3xl sm:text-5xl font-black text-white glow-gold">
         Betting Desk
       </h1>
-      <p class="text-slate-400 text-sm uppercase tracking-wider font-semibold">Live Event Bets & Wagers Tracker</p>
+      <p class="text-slate-400 text-sm uppercase tracking-wider font-semibold">Active Markets & Community Wagers</p>
     </div>
 
-    <!-- Betting Desk Table Card -->
-    <div class="vault-card rounded-2xl p-6 shadow-xl border border-amber-500/20 w-full overflow-x-auto">
+    <!-- Top Grid: Market Pots (Left) & Top 3 Bettors (Right) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+      
+      <!-- Market Pots Card -->
+      <div class="vault-card rounded-2xl p-6 shadow-xl border border-purple-900/30 flex flex-col justify-between">
+        <h3 class="font-horde text-lg font-bold text-white uppercase tracking-wider mb-4 border-b border-slate-800 pb-2 flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span>
+          Market Pot Pools
+        </h3>
+        <div id="market-pots-container" class="space-y-3 flex-grow">
+          <div class="text-slate-500 text-sm py-4 text-center">Loading Market Pools...</div>
+        </div>
+      </div>
+
+      <!-- Top 3 Bettors Card -->
+      <div class="vault-card rounded-2xl p-6 shadow-xl border border-purple-900/30 flex flex-col justify-between">
+        <h3 class="font-horde text-lg font-bold text-white uppercase tracking-wider mb-4 border-b border-slate-800 pb-2 flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-purple-500 inline-block"></span>
+          Top 3 Bettors
+        </h3>
+        <div id="top-bettors-container" class="space-y-3 flex-grow">
+          <div class="text-slate-500 text-sm py-4 text-center">Loading Top Bettors...</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Betting Table Card -->
+    <div class="vault-card rounded-2xl p-6 shadow-xl border border-purple-900/30 w-full overflow-x-auto">
+      <h3 class="font-horde text-lg font-bold text-white uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">
+        Wagers History & Live Bets
+      </h3>
       <table class="w-full text-left border-collapse">
         <thead>
           <tr class="border-b border-slate-800 text-xs font-bold uppercase tracking-widest text-slate-400">
-            <th class="py-3 px-3">Bettor</th>
-            <th class="py-3 px-3">Market</th>
-            <th class="py-3 px-3">Selection</th>
-            <th class="py-3 px-3 text-right">Stake (Gold)</th>
-            <th class="py-3 px-3 text-center">Live Odds</th>
-            <th class="py-3 px-3 text-right">Potential Payout</th>
-            <th class="py-3 px-3 text-center">Result</th>
-            <th class="py-3 px-3 text-center">Paid?</th>
+            <th class="py-3 px-4">Bettor</th>
+            <th class="py-3 px-4">Market</th>
+            <th class="py-3 px-4">Selection</th>
+            <th class="py-3 px-4 text-right">Stake (Gold)</th>
+            <th class="py-3 px-4 text-center">Live Odds</th>
+            <th class="py-3 px-4 text-right">Potential Payout</th>
+            <th class="py-3 px-4 text-center">Result</th>
           </tr>
         </thead>
-        <tbody id="betting-desk-tbody" class="divide-y divide-slate-800/60 text-sm">
+        <tbody id="bets-tbody" class="divide-y divide-slate-800/60 text-sm">
           <tr>
-            <td colspan="8" class="text-center py-8 text-slate-500">Loading Betting Desk...</td>
+            <td colspan="7" class="text-center py-8 text-slate-500">Loading Bets...</td>
           </tr>
         </tbody>
       </table>
@@ -153,7 +182,7 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnLyEV_JrIV3Ohaq6jFFNpZhHMLpqpBztTSpVT96e1A__LREOv5T_p-Px5AZZvqzcESzEIwkFJ2XT9/pub?gid=1049068395&single=true&output=csv';
+    const BETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQuSfhHzJ10BHHSi0IcNhqxtQQA5giE-YsOzbru5w_-MUwUQn0TKmzzYxTl6RngR6o_ihgdTawNA0gQ/pub?gid=637615043&single=true&output=csv';
 
     function parseCSVLine(line) {
       const result = [];
@@ -174,48 +203,105 @@
       return result.map(s => s.replace(/^"|"$/g, ''));
     }
 
-    async function fetchBettingDesk() {
+    async function fetchBetsData() {
       try {
-        const response = await fetch(CSV_URL + '&_t=' + Date.now() + '&nocache=' + Math.random(), { cache: 'no-store' });
+        const response = await fetch(BETS_CSV_URL + '&_t=' + Date.now() + '&nocache=' + Math.random(), { cache: 'no-store' });
         const text = await response.text();
         const lines = text.split('\n');
         
-        const rowsHTML = [];
+        const betsList = [];
+        const marketPots = {};
+        const bettostakes = {};
 
+        // Ανάγνωση από γραμμή 6 έως 205 (Index 5 έως 204)
         for (let r = 5; r <= 204; r++) {
-          if (lines.length > r) {
+          if (lines.length > r && lines[r].trim() !== '') {
             const row = parseCSVLine(lines[r]);
-            const bettor = row[1] || '';
-            const market = row[2] || '';
-            const selection = row[3] || '';
-            const stake = row[4] || '';
-            const odds = row[6] || '';
-            const payout = row[7] || '';
-            const result = row[8] || '';
-            const paid = row[9] || '';
+            
+            const bettor = row[1] || '';   // Στήλη B
+            const market = row[2] || '';   // Στήλη C
+            const selection = row[3] || '';// Στήλη D
+            const stakeStr = row[4] || '0';// Στήλη E
+            const liveOdds = row[6] || ''; // Στήλη G
+            const payout = row[7] || '';   // Στήλη H
+            const result = row[8] || '';   // Στήλη I
 
             if (bettor || market) {
-              rowsHTML.push(`
-                <tr class="hover:bg-slate-900/40 transition-colors">
-                  <td class="py-3 px-3 font-bold text-white">${bettor || '-'}</td>
-                  <td class="py-3 px-3 text-slate-300">${market || '-'}</td>
-                  <td class="py-3 px-3 text-purple-300 font-semibold">${selection || '-'}</td>
-                  <td class="py-3 px-3 text-right font-mono font-bold text-amber-400">${stake || '-'}</td>
-                  <td class="py-3 px-3 text-center font-mono text-slate-300">${odds || '-'}</td>
-                  <td class="py-3 px-3 text-right font-mono font-bold text-amber-300">${payout || '-'}</td>
-                  <td class="py-3 px-3 text-center font-bold text-slate-200">${result || '-'}</td>
-                  <td class="py-3 px-3 text-center font-bold text-slate-300">${paid || '-'}</td>
-                </tr>
-              `);
+              const stakeNum = parseFloat(stakeStr.replace(/[^0-9.-]+/g,"")) || 0;
+
+              betsList.push({ bettor, market, selection, stakeStr, stakeNum, liveOdds, payout, result });
+
+              // Συγκέντρωση Pot ανά Market
+              if (market) {
+                marketPots[market] = (marketPots[market] || 0) + stakeNum;
+              }
+
+              // Συγκέντρωση Stake ανά Bettor
+              if (bettor) {
+                bettostakes[bettor] = (bettostakes[bettor] || 0) + stakeNum;
+              }
             }
           }
         }
 
-        const tbody = document.getElementById('betting-desk-tbody');
-        if (rowsHTML.length > 0) {
-          tbody.innerHTML = rowsHTML.join('');
+        // 1. Render Markets Pot
+        const marketContainer = document.getElementById('market-pots-container');
+        const marketKeys = Object.keys(marketPots);
+        if (marketKeys.length > 0) {
+          marketContainer.innerHTML = marketKeys.map(m => `
+            <div class="flex justify-between items-center bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+              <span class="text-slate-300 font-semibold">${m}</span>
+              <span class="font-mono font-bold text-amber-400">${marketPots[m].toLocaleString()} Gold</span>
+            </div>
+          `).join('');
         } else {
-          tbody.innerHTML = `<tr><td colspan="8" class="text-center py-8 text-slate-500">No bets found in range B6:J205</td></tr>`;
+          marketContainer.innerHTML = `<div class="text-slate-500 text-sm py-4 text-center">No active markets found.</div>`;
+        }
+
+        // 2. Render Top 3 Bettors
+        const topBettorsContainer = document.getElementById('top-bettors-container');
+        const sortedBettors = Object.entries(bettostakes).sort((a, b) => b[1] - a[1]).slice(0, 3);
+        if (sortedBettors.length > 0) {
+          const medals = ['text-amber-400', 'text-slate-300', 'text-amber-600'];
+          topBettorsContainer.innerHTML = sortedBettors.map(([name, total], idx) => `
+            <div class="flex justify-between items-center bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+              <div class="flex items-center gap-3">
+                <span class="font-horde font-bold text-base ${medals[idx] || 'text-slate-400'}">#${idx + 1}</span>
+                <span class="text-white font-bold">${name}</span>
+              </div>
+              <span class="font-mono font-bold text-purple-300">${total.toLocaleString()} Gold</span>
+            </div>
+          `).join('');
+        } else {
+          topBettorsContainer.innerHTML = `<div class="text-slate-500 text-sm py-4 text-center">No bettors found.</div>`;
+        }
+
+        // 3. Render Bets Table
+        const tbody = document.getElementById('bets-tbody');
+        if (betsList.length > 0) {
+          tbody.innerHTML = betsList.map(b => {
+            let resultBadge = `<span class="text-slate-400">Pending</span>`;
+            const resLower = b.result.toLowerCase();
+            if (resLower.includes('win') || resLower.includes('won')) {
+              resultBadge = `<span class="text-emerald-400 font-bold bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20">Won</span>`;
+            } else if (resLower.includes('loss') || resLower.includes('lost')) {
+              resultBadge = `<span class="text-red-400 font-bold bg-red-500/10 px-2.5 py-1 rounded-lg border border-red-500/20">Lost</span>`;
+            }
+
+            return `
+              <tr class="hover:bg-slate-900/40 transition-colors">
+                <td class="py-3 px-4 font-bold text-white">${b.bettor || '-'}</td>
+                <td class="py-3 px-4 text-purple-300 font-semibold">${b.market || '-'}</td>
+                <td class="py-3 px-4 text-slate-300">${b.selection || '-'}</td>
+                <td class="py-3 px-4 text-right font-mono text-amber-400 font-bold">${b.stakeStr || '0'}</td>
+                <td class="py-3 px-4 text-center font-mono text-slate-200">${b.liveOdds || '-'}</td>
+                <td class="py-3 px-4 text-right font-mono text-emerald-300 font-bold">${b.payout || '-'}</td>
+                <td class="py-3 px-4 text-center">${resultBadge}</td>
+              </tr>
+            `;
+          }).join('');
+        } else {
+          tbody.innerHTML = `<tr><td colspan="7" class="text-center py-8 text-slate-500">No bets found in range B6:I205.</td></tr>`;
         }
 
       } catch (err) {
@@ -223,8 +309,8 @@
       }
     }
 
-    fetchBettingDesk();
-    setInterval(fetchBettingDesk, 4000);
+    fetchBetsData();
+    setInterval(fetchBetsData, 4000);
   </script>
 </body>
 </html>

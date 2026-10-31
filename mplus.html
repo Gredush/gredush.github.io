@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="el" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -93,7 +93,7 @@
   </header>
 
   <!-- Main Content -->
-  <main id="main" class="max-w-4xl mx-auto px-5 py-16 flex-grow flex flex-col items-center justify-center w-full space-y-8">
+  <main id="main" class="max-w-4xl mx-auto px-5 py-12 flex-grow flex flex-col items-center justify-center w-full space-y-8">
     
     <!-- Hub Navigation Buttons -->
     <div class="flex flex-wrap justify-center gap-3 w-full max-w-2xl">
@@ -111,15 +111,23 @@
       </a>
     </div>
 
-    <!-- Header Banner -->
+    <!-- Header Banner (Title από Α1:P1) -->
     <div class="vault-card rounded-2xl p-8 sm:p-12 text-center border border-purple-900/40 space-y-4 shadow-2xl w-full">
       <h1 id="event-title" class="font-horde text-3xl sm:text-5xl font-black text-white glow-gold">
         Loading Title...
       </h1>
       <div class="pt-2">
         <span id="sheet-info" class="text-purple-300 text-sm sm:text-base font-semibold tracking-wider uppercase">
-          Loading Info...
+          Live Broadcast Hub
         </span>
+      </div>
+    </div>
+
+    <!-- Total Pot Card (Από Α6:P6) -->
+    <div class="vault-card rounded-2xl p-6 text-center border border-amber-500/30 shadow-xl w-full max-w-md mx-auto space-y-2">
+      <span class="text-xs font-bold uppercase tracking-widest text-amber-400">Total Pot</span>
+      <div id="total-pot" class="font-horde text-3xl font-black text-amber-300 glow-gold">
+        0 Gold
       </div>
     </div>
 
@@ -134,7 +142,7 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnLyEV_JrIV3Ohaq6jFFNpZhHMLpqpBztTSpVT96e1A__LREOv5T_p-Px5AZZvqzcESzEIwkFJ2XT9/pub?gid=671222144&single=true&output=csv';
+    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQuSfhHzJ10BHHSi0IcNhqxtQQA5giE-YsOzbru5w_-MUwUQn0TKmzzYxTl6RngR6o_ihgdTawNA0gQ/pub?output=csv';
 
     function parseCSVLine(line) {
       const result = [];
@@ -161,18 +169,25 @@
         const text = await response.text();
         const lines = text.split('\n');
         
+        // Γραμμή 1 (Title από A1:P1)
         if (lines.length > 0) {
           const row1 = parseCSVLine(lines[0]);
-          if (row1.length > 0 && row1[0] !== '') {
-            document.getElementById('event-title').textContent = row1[0];
+          for (let i = 0; i < row1.length; i++) {
+            if (row1[i] && row1[i] !== '') {
+              document.getElementById('event-title').textContent = row1[i];
+              break;
+            }
           }
         }
 
-        if (lines.length > 2) {
-          const row3 = parseCSVLine(lines[2]);
-          const combinedInfo = row3.filter(val => val !== '').join(' - ');
-          if (combinedInfo) {
-            document.getElementById('sheet-info').textContent = combinedInfo;
+        // Γραμμή 6 (Total Pot από A6:P6)
+        if (lines.length > 5) {
+          const row6 = parseCSVLine(lines[5]);
+          for (let i = 0; i < row6.length; i++) {
+            if (row6[i] && row6[i] !== '') {
+              document.getElementById('total-pot').textContent = row6[i];
+              break;
+            }
           }
         }
       } catch (err) {

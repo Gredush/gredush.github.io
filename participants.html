@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="el" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -93,7 +93,7 @@
   </header>
 
   <!-- Main Content -->
-  <main id="main" class="max-w-6xl mx-auto px-5 py-10 flex-grow flex flex-col items-center justify-center w-full space-y-6">
+  <main id="main" class="max-w-6xl mx-auto px-5 py-10 flex-grow flex flex-col items-center justify-center w-full space-y-8">
     
     <!-- Hub Navigation Buttons -->
     <div class="flex flex-wrap justify-center gap-3 w-full max-w-2xl">
@@ -124,12 +124,12 @@
       <table class="w-full text-left border-collapse">
         <thead>
           <tr class="border-b border-slate-800 text-xs font-bold uppercase tracking-widest text-slate-400">
-            <th class="py-3 px-4">Character</th>
+            <th class="py-3 px-4">Character Name</th>
             <th class="py-3 px-4">Server</th>
             <th class="py-3 px-4">Team</th>
             <th class="py-3 px-4">Role</th>
             <th class="py-3 px-4 text-center">Rating</th>
-            <th class="py-3 px-4 text-right">Raider.io</th>
+            <th class="py-3 px-4 text-right">Profile Link</th>
           </tr>
         </thead>
         <tbody id="participants-tbody" class="divide-y divide-slate-800/60 text-sm">
@@ -151,7 +151,7 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnLyEV_JrIV3Ohaq6jFFNpZhHMLpqpBztTSpVT96e1A__LREOv5T_p-Px5AZZvqzcESzEIwkFJ2XT9/pub?gid=1592864415&single=true&output=csv';
+    const PARTICIPANTS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQuSfhHzJ10BHHSi0IcNhqxtQQA5giE-YsOzbru5w_-MUwUQn0TKmzzYxTl6RngR6o_ihgdTawNA0gQ/pub?gid=210972549&single=true&output=csv';
 
     function parseCSVLine(line) {
       const result = [];
@@ -174,33 +174,35 @@
 
     async function fetchParticipants() {
       try {
-        const response = await fetch(CSV_URL + '&_t=' + Date.now() + '&nocache=' + Math.random(), { cache: 'no-store' });
+        const response = await fetch(PARTICIPANTS_CSV_URL + '&_t=' + Date.now() + '&nocache=' + Math.random(), { cache: 'no-store' });
         const text = await response.text();
         const lines = text.split('\n');
         
         const rowsHTML = [];
 
-        for (let r = 4; r <= 103; r++) {
-          if (lines.length > r) {
+        // Ανάγνωση από γραμμή 6 έως 105 (Index 5 έως 104)
+        for (let r = 5; r <= 104; r++) {
+          if (lines.length > r && lines[r].trim() !== '') {
             const row = parseCSVLine(lines[r]);
-            const raiderIo = row[0] || '';
-            const character = row[1] || '';
-            const server = row[3] || '';
-            const rating = row[4] || '';
-            const team = row[5] || '';
-            const role = row[6] || '';
+            
+            const profileLink = row[0] || ''; // Στήλη A
+            const characterName = row[1] || ''; // Στήλη B
+            const server = row[3] || '';        // Στήλη D
+            const rating = row[4] || '';        // Στήλη E
+            const team = row[5] || '';          // Στήλη F
+            const role = row[6] || '';          // Στήλη G
 
-            if (character || team) {
-              const raiderLinkHTML = raiderIo ? `<a href="${raiderIo}" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 underline font-semibold">Profile</a>` : '-';
+            if (characterName || team) {
+              const profileLinkHTML = profileLink ? `<a href="${profileLink}" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 underline font-semibold">Armory</a>` : '-';
 
               rowsHTML.push(`
                 <tr class="hover:bg-slate-900/40 transition-colors">
-                  <td class="py-3 px-4 font-bold text-white">${character || '-'}</td>
+                  <td class="py-3 px-4 font-bold text-white">${characterName || '-'}</td>
                   <td class="py-3 px-4 text-slate-300">${server || '-'}</td>
                   <td class="py-3 px-4 text-purple-300 font-semibold">${team || '-'}</td>
                   <td class="py-3 px-4 text-slate-300">${role || '-'}</td>
                   <td class="py-3 px-4 text-center font-mono font-bold text-amber-400">${rating || '-'}</td>
-                  <td class="py-3 px-4 text-right">${raiderLinkHTML}</td>
+                  <td class="py-3 px-4 text-right">${profileLinkHTML}</td>
                 </tr>
               `);
             }
@@ -211,7 +213,7 @@
         if (rowsHTML.length > 0) {
           tbody.innerHTML = rowsHTML.join('');
         } else {
-          tbody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-500">No participants found in range A5:G104</td></tr>`;
+          tbody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-500">No participants found in range A6:G105.</td></tr>`;
         }
 
       } catch (err) {
